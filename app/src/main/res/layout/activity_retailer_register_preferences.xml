@@ -56,6 +56,7 @@
                 android:layout_marginTop="20dp">
 
                 <CheckBox
+                    android:id="@+id/register_hobby_nature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
@@ -66,6 +67,7 @@
                     />
 
                 <CheckBox
+                    android:id="@+id/register_hobby_restaurant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
@@ -76,6 +78,7 @@
                     />
 
                 <CheckBox
+                    android:id="@+id/register_hobby_coffeeShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
@@ -86,6 +89,7 @@
                     />
 
                 <CheckBox
+                    android:id="@+id/register_hobby_museum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
