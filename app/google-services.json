@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "259237190647",
+    "project_id": "discover-buc",
+    "storage_bucket": "discover-buc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259237190647:android:336e2f47ed8d4834a4ecf2",
+        "android_client_info": {
+          "package_name": "com.example.discoverbuc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259237190647-6hpcueapjopaamb7toan14nv0rie83of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1C83EfEyeyZEaUxgtanw16x7tdwfsh_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259237190647-6hpcueapjopaamb7toan14nv0rie83of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
