@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.discoverbuc">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DiscoverBuc">
+        <activity android:name=".Register2.RegisterPreferences"></activity>
+        <activity android:name=".Register2.RegisterName"></activity>
+        <activity android:name=".Register2.Register" />
+        <activity android:name=".Register2.Login" />
+        <activity android:name=".Register2.StartupScreen" />
+        <activity
+            android:name=".Register1.WelcomeActivity"
+            android:label="@string/title_activity_welcome"
+            android:theme="@style/Theme.DiscoverBuc.NoActionBar" />
+        <activity android:name=".Common.LoadingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>
