@@ -114,10 +114,10 @@ public class Register extends AppCompatActivity {
             username.setError("Username field must not be empty");
             return false;
         } else if (val.length() > 20) {
-            username.setError("Username is too large");
+            username.setError("Username is too long");
             return false;
         } else if (val.length() < 4) {
-            username.setError("Username is too small");
+            username.setError("Username is too short");
             return false;
         } else if (!val.matches(spaces)) {
             username.setError("Username must not contain any white spaces");
@@ -153,7 +153,7 @@ public class Register extends AppCompatActivity {
 
         String val = password.getEditText().getText().toString().trim();
 
-        String checkPassword ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+        String checkPassword ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
         if (val.isEmpty()) {
             password.setError("Password field must not be empty");
             return false;

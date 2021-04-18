@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DiscoverBuc">
-        <activity android:name=".Register2.RegisterPreferences"></activity>
-        <activity android:name=".Register2.RegisterName"></activity>
+        <activity android:name=".Dashboard"></activity>
+        <activity android:name=".Register2.RegisterPreferences" />
+        <activity android:name=".Register2.RegisterName" />
         <activity android:name=".Register2.Register" />
         <activity android:name=".Register2.Login" />
         <activity android:name=".Register2.StartupScreen" />

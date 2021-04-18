@@ -168,11 +168,11 @@ public class RegisterPreferences extends AppCompatActivity {
         UserHelperClass helperClass = new UserHelperClass(name, username, email, password, birthday);
         PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected);
 
-        UUID id = UUID.randomUUID();
+        //UUID id = UUID.randomUUID();
+        String id = username.toString();
+        reference.child(id).setValue(helperClass);
 
-        reference.child(id.toString()).setValue(helperClass);
-
-        reference = reference.child(id.toString());
+        reference = reference.child(id);
         reference.child("Prefs").setValue(prefsClass);
 
         Toast.makeText(this, "User successfully created", Toast.LENGTH_SHORT).show();
