@@ -61,6 +61,39 @@ public class RegisterPreferences extends AppCompatActivity {
         coffee_shop = findViewById(R.id.register_hobby_coffeeShop);
     }
 
+    public void callVerifyScreen(View view){
+
+        if(!validation()){
+            return;
+        }
+
+
+        Intent intent = new Intent(getApplicationContext(), EmailVerification.class);
+        intent.putExtra("username", username);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        intent.putExtra("name", name);
+        intent.putExtra("birthday", birthday);
+        intent.putExtra("isNatureSelected", natureSelected);
+        intent.putExtra("isMuseumSelected", museumSelected);
+        intent.putExtra("isRestaurantSelected", restaurantSelected);
+        intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
+
+        //Animations
+        Pair[] pairs = new Pair[1];
+        pairs[0] = new Pair(findViewById(R.id.next_to_verification), "transition_verification_page");
+
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterPreferences.this, pairs);
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
+
+
+    }
+
     public void callBackToRegisterName(View view) {
 
 
@@ -102,38 +135,6 @@ public class RegisterPreferences extends AppCompatActivity {
 
     }
 
-    public void createUser(View view){
-        if(!validation()) return;
-
-        Intent intent = new Intent(getApplicationContext(), StartupScreen.class);
-        //Transfer
-//        intent.putExtra("username", username);
-//        intent.putExtra("email", email);
-//        intent.putExtra("password", password);
-//        intent.putExtra("name", name);
-//        intent.putExtra("birthday", birthday);
-//        intent.putExtra("isNatureSelected", natureSelected);
-//        intent.putExtra("isMuseumSelected", museumSelected);
-//        intent.putExtra("isRestaurantSelected", restaurantSelected);
-//        intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
-
-        addUser();
-
-        //Animations
-        Pair[] pairs = new Pair[4];
-        pairs[0] = new Pair<View, String>(back, "transition_back_button");
-        pairs[1] = new Pair<View, String>(headline, "transition_register_headline");
-        pairs[2] = new Pair<View, String>(next, "transition_next_button");
-        pairs[3] = new Pair<View, String>(login, "transition_login_button");
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterPreferences.this, pairs);
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
-    }
-
     private boolean validation(){
         if(nature.isChecked()) {
             counter++;
@@ -160,23 +161,6 @@ public class RegisterPreferences extends AppCompatActivity {
         return true;
     }
 
-    private void addUser(){
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("users");
 
-
-        UserHelperClass helperClass = new UserHelperClass(name, username, email, password, birthday);
-        PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected);
-
-        //UUID id = UUID.randomUUID();
-        String id = username.toString();
-        reference.child(id).setValue(helperClass);
-
-        reference = reference.child(id);
-        reference.child("Prefs").setValue(prefsClass);
-
-        Toast.makeText(this, "User successfully created", Toast.LENGTH_SHORT).show();
-
-    }
 
 }

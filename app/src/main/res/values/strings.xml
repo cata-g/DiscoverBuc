@@ -30,6 +30,9 @@
     <!-- Register -->
     <string name="register">Register</string>
     <string name="register_headline">Join Us <br>Today</br></string>
+    <string name="verify_email">Verify your email account</string>
+    <string name="verify_email_text">Check your email for a verification code!</string>
+    <string name="finish_button">Finish</string>
 
     <!-- Hints -->
     <string name="hint_user">Enter your username</string>
@@ -37,5 +40,6 @@
     <string name="hint_confirm_password">Retype your password</string>
     <string name="hint_email">Enter your email</string>
     <string name="hint_name">Enter your name</string>
+    <string name="hint_code">Enter the code</string>
 
 </resources>
