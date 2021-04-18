@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class Login extends AppCompatActivity {
 
     TextInputLayout username, password;
@@ -121,7 +123,8 @@ public class Login extends AppCompatActivity {
 
                     String passwordDB = snapshot.child(userValue).child("password").getValue(String.class);
 
-                    if (passwordDB.equals(passValue)) {
+                    BCrypt.Result result = BCrypt.verifyer().verify(passValue.toCharArray(), passwordDB);
+                    if (result.verified) {
 
                         password.setError(null);
                         password.setErrorEnabled(false);

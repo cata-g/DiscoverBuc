@@ -60,7 +60,7 @@ public class RegisterName extends AppCompatActivity {
 
         //Birthday
         int day = datePicker.getDayOfMonth();
-        int month = datePicker.getMonth();
+        int month = datePicker.getMonth() + 1;
         int year = datePicker.getYear();
 
         String DateOfBirth = day + "/" + month + "/" + year;

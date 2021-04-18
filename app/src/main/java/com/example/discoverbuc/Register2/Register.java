@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.discoverbuc.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class Register extends AppCompatActivity {
 
     //Animation variables
@@ -48,9 +50,10 @@ public class Register extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), RegisterName.class);
 
+        String hashedPass = BCrypt.withDefaults().hashToString(12, password.getEditText().getText().toString().toCharArray());
         intent.putExtra("username", username.getEditText().getText().toString());
         intent.putExtra("email", email.getEditText().getText().toString());
-        intent.putExtra("password", password.getEditText().getText().toString());
+        intent.putExtra("password", hashedPass);
         //Animations
         Pair[] pairs = new Pair[4];
         pairs[0] = new Pair<View, String>(back, "transition_back_button");
