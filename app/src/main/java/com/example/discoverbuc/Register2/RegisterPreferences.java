@@ -13,6 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.discoverbuc.R;
+import com.example.discoverbuc.Register2.HelperClasses.PrefsHelperClass;
+import com.example.discoverbuc.Register2.HelperClasses.UserHelperClass;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.UUID;
 
 public class RegisterPreferences extends AppCompatActivity {
 
@@ -24,6 +30,10 @@ public class RegisterPreferences extends AppCompatActivity {
     CheckBox nature, museum, restaurant, coffee_shop;
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
     int counter = 0;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,20 +102,22 @@ public class RegisterPreferences extends AppCompatActivity {
 
     }
 
-    public void Next(){
+    public void createUser(View view){
         if(!validation()) return;
 
-        Intent intent = new Intent(getApplicationContext(), RegisterName.class);
+        Intent intent = new Intent(getApplicationContext(), StartupScreen.class);
         //Transfer
-        intent.putExtra("username", username);
-        intent.putExtra("email", email);
-        intent.putExtra("password", password);
-        intent.putExtra("name", name);
-        intent.putExtra("birthday", birthday);
-        intent.putExtra("isNatureSelected", natureSelected);
-        intent.putExtra("isMuseumSelected", museumSelected);
-        intent.putExtra("isRestaurantSelected", restaurantSelected);
-        intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
+//        intent.putExtra("username", username);
+//        intent.putExtra("email", email);
+//        intent.putExtra("password", password);
+//        intent.putExtra("name", name);
+//        intent.putExtra("birthday", birthday);
+//        intent.putExtra("isNatureSelected", natureSelected);
+//        intent.putExtra("isMuseumSelected", museumSelected);
+//        intent.putExtra("isRestaurantSelected", restaurantSelected);
+//        intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
+
+        addUser();
 
         //Animations
         Pair[] pairs = new Pair[4];
@@ -147,4 +159,24 @@ public class RegisterPreferences extends AppCompatActivity {
 
         return true;
     }
+
+    private void addUser(){
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("users");
+
+
+        UserHelperClass helperClass = new UserHelperClass(name, username, email, password, birthday);
+        PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected);
+
+        UUID id = UUID.randomUUID();
+
+        reference.child(id.toString()).setValue(helperClass);
+
+        reference = reference.child(id.toString());
+        reference.child("Prefs").setValue(prefsClass);
+
+        Toast.makeText(this, "User successfully created", Toast.LENGTH_SHORT).show();
+
+    }
+
 }

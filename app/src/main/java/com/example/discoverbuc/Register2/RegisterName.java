@@ -69,7 +69,7 @@ public class RegisterName extends AppCompatActivity {
         intent.putExtra("username", username);
         intent.putExtra("email", email);
         intent.putExtra("password", password);
-        intent.putExtra("name", name.getEditText().getText());
+        intent.putExtra("name", name.getEditText().getText().toString());
         intent.putExtra("birthday", DateOfBirth);
 
         //Animations

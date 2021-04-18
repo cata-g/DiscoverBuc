@@ -48,9 +48,9 @@ public class Register extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), RegisterName.class);
 
-        intent.putExtra("username", username.getEditText().getText());
-        intent.putExtra("email", email.getEditText().getText());
-        intent.putExtra("password", password.getEditText().getText());
+        intent.putExtra("username", username.getEditText().getText().toString());
+        intent.putExtra("email", email.getEditText().getText().toString());
+        intent.putExtra("password", password.getEditText().getText().toString());
         //Animations
         Pair[] pairs = new Pair[4];
         pairs[0] = new Pair<View, String>(back, "transition_back_button");
