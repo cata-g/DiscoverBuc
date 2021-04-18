@@ -113,12 +113,14 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/login_to_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"
             android:onClick="loginUser"
+            android:transitionName="transition_login_to_dashboard"
             />
 
         <Button
