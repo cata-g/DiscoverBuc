@@ -12,10 +12,11 @@ import android.widget.Toast;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.HelperClasses.PrefsHelperClass;
 import com.example.discoverbuc.Register2.HelperClasses.UserHelperClass;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class EmailVerification extends AppCompatActivity {
+public class Verification extends AppCompatActivity {
 
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
     String username, email,password, name, birthday;
@@ -23,7 +24,7 @@ public class EmailVerification extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_email_verification);
+        setContentView(R.layout.activity_retailer_verification);
 
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
@@ -35,9 +36,15 @@ public class EmailVerification extends AppCompatActivity {
         museumSelected = intent.getIntExtra("isMuseumSelected", 0);
         restaurantSelected =  intent.getIntExtra("isRestaurantSelected", 0);
         coffee_shopSelected = intent.getIntExtra("isCoffeeShopSelected", 0);
+
+        sendVerificationCode(email);
     }
 
+    private void sendVerificationCode(String email) {
 
+        EmailAuthProvider.getCredential(email, password).getSignInMethod();
+
+    }
     public void callBackToRegisterPrefs(View view) {
 
 
@@ -49,7 +56,7 @@ public class EmailVerification extends AppCompatActivity {
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(EmailVerification.this, pairs);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Verification.this, pairs);
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
@@ -75,13 +82,12 @@ public class EmailVerification extends AppCompatActivity {
         Pair[] pairs = new Pair[4];
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(EmailVerification.this, pairs);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Verification.this, pairs);
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
         }
     }
-
     private void addUser(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 

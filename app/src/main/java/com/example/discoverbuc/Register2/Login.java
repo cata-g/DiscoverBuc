@@ -4,8 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +39,7 @@ public class Login extends AppCompatActivity {
 
         username = findViewById(R.id.login_username);
         password = findViewById(R.id.login_password);
+
     }
 
     public void callBackToStartup(View view) {
@@ -103,6 +110,8 @@ public class Login extends AppCompatActivity {
         if (!usernameValidation() | !passwordValidation()) return;
         else checkUser();
     }
+
+
 
     private void checkUser() {
 

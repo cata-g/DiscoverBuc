@@ -13,19 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.discoverbuc.R;
-import com.example.discoverbuc.Register2.HelperClasses.PrefsHelperClass;
-import com.example.discoverbuc.Register2.HelperClasses.UserHelperClass;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.UUID;
 
 public class RegisterPreferences extends AppCompatActivity {
 
     TextView headline;
     Button back, next, login;
 
-    String username, email,password, name, birthday;
+    String username, email,password, name, birthday, phone;
 
     CheckBox nature, museum, restaurant, coffee_shop;
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
@@ -53,6 +49,7 @@ public class RegisterPreferences extends AppCompatActivity {
         password = intent.getStringExtra("password");
         name = intent.getStringExtra("name");
         birthday = intent.getStringExtra("birthday");
+        phone = intent.getStringExtra("phone");
 
         //For validation
         nature = findViewById(R.id.register_hobby_nature);
@@ -68,12 +65,13 @@ public class RegisterPreferences extends AppCompatActivity {
         }
 
 
-        Intent intent = new Intent(getApplicationContext(), EmailVerification.class);
+        Intent intent = new Intent(getApplicationContext(), Verification.class);
         intent.putExtra("username", username);
         intent.putExtra("email", email);
         intent.putExtra("password", password);
         intent.putExtra("name", name);
         intent.putExtra("birthday", birthday);
+        intent.putExtra("phone", phone);
         intent.putExtra("isNatureSelected", natureSelected);
         intent.putExtra("isMuseumSelected", museumSelected);
         intent.putExtra("isRestaurantSelected", restaurantSelected);

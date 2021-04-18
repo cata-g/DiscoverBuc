@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.discoverbuc.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.hbb20.CountryCodePicker;
 
 import java.util.Calendar;
 
@@ -23,8 +24,9 @@ public class RegisterName extends AppCompatActivity {
     TextView headline;
     Button back, next, login;
 
-    TextInputLayout name;
+    TextInputLayout name, phoneNr;
     DatePicker datePicker;
+    CountryCodePicker ccp;
 
     String username, email,password;
 
@@ -39,6 +41,8 @@ public class RegisterName extends AppCompatActivity {
         headline = findViewById(R.id.register_headline);
         next = findViewById(R.id.register_next_button);
         login = findViewById(R.id.register_login_button);
+        phoneNr = findViewById(R.id.register_phone);
+        ccp = findViewById(R.id.country_code_picker);
 
         //Activity Transfer
         Intent intent = getIntent();
@@ -53,7 +57,7 @@ public class RegisterName extends AppCompatActivity {
 
     public void callPrefsRegisterScreen(View view) {
 
-        if(!validateAge() | !validateName()){
+        if(!validateAge() | !validateName() | !validatePhone()){
             return;
         }
 
@@ -65,12 +69,18 @@ public class RegisterName extends AppCompatActivity {
 
         String DateOfBirth = day + "/" + month + "/" + year;
 
+        //phone number
+        String usersPhone = phoneNr.getEditText().getText().toString().trim();
+        if(usersPhone.charAt(0) == '0') usersPhone = usersPhone.substring(1);
+        String fullPhone = "+" + ccp.getFullNumber() + usersPhone;
+
         Intent intent = new Intent(getApplicationContext(), RegisterPreferences.class);
         intent.putExtra("username", username);
         intent.putExtra("email", email);
         intent.putExtra("password", password);
         intent.putExtra("name", name.getEditText().getText().toString());
         intent.putExtra("birthday", DateOfBirth);
+        intent.putExtra("phone", fullPhone);
 
         //Animations
         Pair[] pairs = new Pair[4];
@@ -178,5 +188,18 @@ public class RegisterName extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private boolean validatePhone(){
+        String val = phoneNr.getEditText().getText().toString().trim();
+        if(val.isEmpty()){
+            phoneNr.setError("Phone number field must not be empty");
+            return false;
+        }
+        else{
+            phoneNr.setError(null);
+            phoneNr.setErrorEnabled(false);
+            return true;
+        }
     }
 }

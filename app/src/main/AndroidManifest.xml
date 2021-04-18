@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DiscoverBuc">
-        <activity android:name=".Register2.EmailVerification"></activity>
+        <activity android:name=".Register2.Verification"></activity>
         <activity android:name=".Dashboard" />
         <activity android:name=".Register2.RegisterPreferences" />
         <activity android:name=".Register2.RegisterName" />

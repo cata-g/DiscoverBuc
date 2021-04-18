@@ -48,5 +48,6 @@ dependencies {
 
     implementation group: 'at.favre.lib', name: 'bcrypt', version:'0.9.0'
     implementation 'com.chaos.view:pinview:1.4.3'
+    implementation 'com.hbb20:ccp:2.3.1'
 
 }

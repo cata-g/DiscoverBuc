@@ -1,6 +1,14 @@
 package com.example.discoverbuc.Register2;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.app.Application;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.util.Pair;
 
 import android.app.ActivityOptions;
@@ -16,6 +24,9 @@ public class StartupScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup_screen);
+
+        if(!isConnected(this))
+            showCustomDialog();
     }
 
     public void callLoginScreen(View view) {
@@ -53,6 +64,44 @@ public class StartupScreen extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+
+    }
+
+    private boolean isConnected(StartupScreen startupScreen) {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) startupScreen.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobiledata = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if((wifi != null && wifi.isConnected()) || (mobiledata!= null && mobiledata.isConnected())){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    private void showCustomDialog() {
+
+        AlertDialog.Builder constructor = new AlertDialog.Builder(this);
+        constructor.setMessage("Please turn on your internet")
+                .setCancelable(false)
+                .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        System.exit(0);
+                    }
+                });
+
+        AlertDialog alertDialog = constructor.create();
+        alertDialog.show();
 
     }
 }

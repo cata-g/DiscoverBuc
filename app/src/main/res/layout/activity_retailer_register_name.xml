@@ -31,13 +31,13 @@
             android:text="@string/register_headline"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:transitionName="transition_register_headline" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="317dp"
+            android:layout_height="400dp"
             android:layout_marginTop="40dp"
             android:orientation="vertical">
 
@@ -53,7 +53,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:hint="@string/hint_name"
                 app:boxStrokeColor="@color/black"
@@ -80,14 +80,60 @@
             <DatePicker
                 android:id="@+id/register_birthday"
                 android:layout_width="match_parent"
-                android:layout_height="147dp"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:spinnersShown="true"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:calendarTextColor="@color/black"
-                />
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:spinnersShown="true" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/ask_phone"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/country_code_picker"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_showFlag="true"
+                    app:ccp_showFullName="false"
+                    app:ccp_showNameCode="false"
+                    android:background="@color/white"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/register_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/hint_phone"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+                    app:hintTextColor="@color/black"
+                    android:background="@color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="phone" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
