@@ -27,9 +27,6 @@ public class RegisterPreferences extends AppCompatActivity {
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
     int counter = 0;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
