@@ -38,6 +38,7 @@
     <!-- Forgot Pass -->
     <string name="forgot_pass_headline">Forgot your password?</string>
     <string name="forgot_pass_details">Enter your account\'s username</string>
+    <string name="pass_changed">Password changed successfully</string>
 
     <!-- Hints -->
     <string name="hint_user">Enter your username</string>

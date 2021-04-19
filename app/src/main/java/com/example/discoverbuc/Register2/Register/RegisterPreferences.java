@@ -20,7 +20,7 @@ public class RegisterPreferences extends AppCompatActivity {
     TextView headline;
     Button back, next, login;
 
-    String username, email,password, name, birthday, phone;
+    String username,password, name, birthday, phone;
 
     CheckBox nature, museum, restaurant, coffee_shop;
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
@@ -41,7 +41,6 @@ public class RegisterPreferences extends AppCompatActivity {
         //Transfer
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
-        email = intent.getStringExtra("email");
         password = intent.getStringExtra("password");
         name = intent.getStringExtra("name");
         birthday = intent.getStringExtra("birthday");
@@ -63,7 +62,6 @@ public class RegisterPreferences extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), Verification.class);
         intent.putExtra("username", username);
-        intent.putExtra("email", email);
         intent.putExtra("password", password);
         intent.putExtra("name", name);
         intent.putExtra("birthday", birthday);

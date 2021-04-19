@@ -35,7 +35,7 @@ public class Verification extends AppCompatActivity {
     PinView userPin;
     String systemCode;
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
-    String username, email,password, name, birthday, phone;
+    String username,password, name, birthday, phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,6 @@ public class Verification extends AppCompatActivity {
         //TRANSFER
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
-        email = intent.getStringExtra("email");
         password = intent.getStringExtra("password");
         name = intent.getStringExtra("name");
         birthday = intent.getStringExtra("birthday");
@@ -173,7 +172,7 @@ public class Verification extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
 
-        UserHelperClass helperClass = new UserHelperClass(name, username, email, password, birthday, phone);
+        UserHelperClass helperClass = new UserHelperClass(name, username, password, birthday, phone);
         PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected);
 
         //UUID id = UUID.randomUUID();

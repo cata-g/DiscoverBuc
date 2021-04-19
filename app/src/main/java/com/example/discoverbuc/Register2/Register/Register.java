@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
     ProgressBar loading;
 
     //UserInput variables
-    TextInputLayout username, email, password, confirmPassword;
+    TextInputLayout username, phone, password, confirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Register extends AppCompatActivity {
         login = findViewById(R.id.register_login_button);
 
         username = findViewById(R.id.register_username);
-        email = findViewById(R.id.register_email);
+        phone = findViewById(R.id.register_phone);
         password = findViewById(R.id.register_password);
         confirmPassword = findViewById(R.id.register_confirmPassword);
 
@@ -60,7 +60,7 @@ public class Register extends AppCompatActivity {
 
 
         loading.setVisibility(View.VISIBLE);
-        if (!usernameValidation() | !emailValidation() | !passwordValidation() | !confirmPasswordValidation()) {
+        if (!usernameValidation() | !validatePhone() | !passwordValidation() | !confirmPasswordValidation()) {
             loading.setVisibility(View.GONE);
             return;
         }
@@ -80,24 +80,24 @@ public class Register extends AppCompatActivity {
                     username.setErrorEnabled(false);
                     username.setError(null);
 
-                    String val = email.getEditText().getText().toString().trim();
-                    Query checkData = FirebaseDatabase.getInstance().getReference("users").orderByChild("email").equalTo(val);
+                    String val = phone.getEditText().getText().toString().trim();
+                    Query checkData = FirebaseDatabase.getInstance().getReference("users").orderByChild("phone").equalTo(val);
                     checkData.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 loading.setVisibility(View.GONE);
-                                email.setError("Email is already taken!");
-                                email.requestFocus();
+                                phone.setError("Email is already taken!");
+                                phone.requestFocus();
                             } else {
-                                email.setError(null);
-                                email.setErrorEnabled(false);
+                                phone.setError(null);
+                                phone.setErrorEnabled(false);
 
                                 Intent intent = new Intent(getApplicationContext(), RegisterName.class);
 
                                 String hashedPass = BCrypt.withDefaults().hashToString(12, password.getEditText().getText().toString().toCharArray());
                                 intent.putExtra("username", username.getEditText().getText().toString());
-                                intent.putExtra("email", email.getEditText().getText().toString());
+                                intent.putExtra("phone", phone.getEditText().getText().toString());
                                 intent.putExtra("password", hashedPass);
                                 //Animations
                                 Pair[] pairs = new Pair[4];
@@ -204,20 +204,15 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    private boolean emailValidation() {
-
-        String val = email.getEditText().getText().toString().trim();
-        String checkValid = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$";
-
-        if (val.isEmpty()) {
-            email.setError("Email field must not be empty");
+    private boolean validatePhone(){
+        String val = phone.getEditText().getText().toString().trim();
+        if(val.isEmpty()){
+            phone.setError("Phone number field must not be empty");
             return false;
-        } else if (!val.matches(checkValid)) {
-            email.setError("Enter a valid email address");
-            return false;
-        } else {
-            email.setError(null);
-            email.setErrorEnabled(false);
+        }
+        else{
+            phone.setError(null);
+            phone.setErrorEnabled(false);
             return true;
         }
     }
@@ -253,7 +248,7 @@ public class Register extends AppCompatActivity {
             return false;
         } else {
             confirmPassword.setError(null);
-            email.setErrorEnabled(false);
+            confirmPassword.setErrorEnabled(false);
             return true;
         }
 

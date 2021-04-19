@@ -32,11 +32,11 @@ public class RegisterName extends AppCompatActivity {
     TextView headline;
     Button back, next, login;
 
-    TextInputLayout name, phoneNr;
+    TextInputLayout name;
     DatePicker datePicker;
     CountryCodePicker ccp;
 
-    String username, email,password;
+    String username, phone,password;
     ProgressBar loading;
 
     @Override
@@ -52,7 +52,6 @@ public class RegisterName extends AppCompatActivity {
         login = findViewById(R.id.register_login_button);
 
 
-        phoneNr = findViewById(R.id.register_phone);
         ccp = findViewById(R.id.country_code_picker);
         loading =  findViewById(R.id.progress_bar_regname);
 
@@ -61,7 +60,7 @@ public class RegisterName extends AppCompatActivity {
         //Activity Transfer
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
-        email = intent.getStringExtra("email");
+        phone = intent.getStringExtra("phone");
         password = intent.getStringExtra("password");
 
         //Validation
@@ -72,7 +71,7 @@ public class RegisterName extends AppCompatActivity {
     public void callPrefsRegisterScreen(View view) {
 
         loading.setVisibility(View.VISIBLE);
-        if(!validateAge() | !validateName() | !validatePhone()){
+        if(!validateAge() | !validateName()){
             loading.setVisibility(View.GONE);
             return;
         }
@@ -85,56 +84,26 @@ public class RegisterName extends AppCompatActivity {
 
         String DateOfBirth = day + "/" + month + "/" + year;
 
-        //phone number
-        String usersPhone = phoneNr.getEditText().getText().toString().trim();
-        if(usersPhone.charAt(0) == '0') usersPhone = usersPhone.substring(1);
-        String fullPhone = "+" + ccp.getFullNumber() + usersPhone;
+        Intent intent = new Intent(getApplicationContext(), RegisterPreferences.class);
+        intent.putExtra("username", username);
+        intent.putExtra("phone", phone);
+        intent.putExtra("password", password);
+        intent.putExtra("name", name.getEditText().getText().toString());
+        intent.putExtra("birthday", DateOfBirth);
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query validateUser = reference.orderByChild("phone").equalTo(fullPhone);
+        //Animations
+        Pair[] pairs = new Pair[4];
+        pairs[0] = new Pair<View, String>(back, "transition_back_button");
+        pairs[1] = new Pair<View, String>(headline, "transition_register_headline");
+        pairs[2] = new Pair<View, String>(next, "transition_next_button");
+        pairs[3] = new Pair<View, String>(login, "transition_login_button");
 
-        validateUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    phoneNr.setError("Phone already assigned to another account!");
-                    phoneNr.requestFocus();
-                    loading.setVisibility(View.GONE);
-
-                } else {
-                    phoneNr.setError(null);
-                    phoneNr.setErrorEnabled(false);
-
-                    Intent intent = new Intent(getApplicationContext(), RegisterPreferences.class);
-                    intent.putExtra("username", username);
-                    intent.putExtra("email", email);
-                    intent.putExtra("password", password);
-                    intent.putExtra("name", name.getEditText().getText().toString());
-                    intent.putExtra("birthday", DateOfBirth);
-                    intent.putExtra("phone", fullPhone);
-
-                    //Animations
-                    Pair[] pairs = new Pair[4];
-                    pairs[0] = new Pair<View, String>(back, "transition_back_button");
-                    pairs[1] = new Pair<View, String>(headline, "transition_register_headline");
-                    pairs[2] = new Pair<View, String>(next, "transition_next_button");
-                    pairs[3] = new Pair<View, String>(login, "transition_login_button");
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterName.this, pairs);
-                        startActivity(intent, options.toBundle());
-                    } else {
-                        startActivity(intent);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(RegisterName.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterName.this, pairs);
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
 
     }
 
@@ -231,16 +200,5 @@ public class RegisterName extends AppCompatActivity {
         return true;
     }
 
-    private boolean validatePhone(){
-        String val = phoneNr.getEditText().getText().toString().trim();
-        if(val.isEmpty()){
-            phoneNr.setError("Phone number field must not be empty");
-            return false;
-        }
-        else{
-            phoneNr.setError(null);
-            phoneNr.setErrorEnabled(false);
-            return true;
-        }
-    }
+
 }
