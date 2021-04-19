@@ -31,8 +31,8 @@
     <!-- Register -->
     <string name="register">Register</string>
     <string name="register_headline">Join Us Today</string>
-    <string name="verify_email">Verify your email account</string>
-    <string name="verify_email_text">Check your email for a verification code!</string>
+    <string name="verify_code">CODE VALIDATION</string>
+    <string name="verify_code_text">Enter the code received!</string>
     <string name="finish_button">Finish</string>
 
 

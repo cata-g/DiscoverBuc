@@ -1,4 +1,4 @@
-package com.example.discoverbuc.Register2;
+package com.example.discoverbuc.Register2.Register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.discoverbuc.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.discoverbuc.Register2.Login.Login;
 
 public class RegisterPreferences extends AppCompatActivity {
 

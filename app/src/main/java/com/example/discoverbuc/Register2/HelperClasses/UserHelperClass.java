@@ -2,17 +2,26 @@ package com.example.discoverbuc.Register2.HelperClasses;
 
 public class UserHelperClass {
 
-    String fullName, username, email, password, birthday;
+    String fullName, username, email, password, birthday, phone;
 
     public UserHelperClass() {
     }
 
-    public UserHelperClass(String name, String username, String email, String password, String birthday) {
+    public UserHelperClass(String name, String username, String email, String password, String birthday, String phone) {
         this.fullName = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.birthday = birthday;
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getFullName() {

@@ -1,4 +1,4 @@
-package com.example.discoverbuc.Register2;
+package com.example.discoverbuc.Register2.Register;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.discoverbuc.R;
+import com.example.discoverbuc.Register2.Login.Login;
+import com.example.discoverbuc.Register2.StartupScreen;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

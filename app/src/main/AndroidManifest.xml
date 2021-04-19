@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DiscoverBuc">
-        <activity android:name=".Register2.Verification"></activity>
+        <activity android:name=".Register2.Register.Verification"></activity>
         <activity android:name=".Dashboard" />
-        <activity android:name=".Register2.RegisterPreferences" />
-        <activity android:name=".Register2.RegisterName" />
-        <activity android:name=".Register2.Register" />
-        <activity android:name=".Register2.Login" />
+        <activity android:name=".Register2.Register.RegisterPreferences" />
+        <activity android:name=".Register2.Register.RegisterName" />
+        <activity android:name=".Register2.Register.Register" />
+        <activity android:name=".Register2.Login.Login" />
         <activity android:name=".Register2.StartupScreen" />
         <activity
             android:name=".Register1.WelcomeActivity"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register2.Verification"
+    tools:context=".Register2.Register.Verification"
     android:transitionName="transition_verification_page"
     >
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="@string/verify_email"
+            android:text="@string/verify_code"
             android:textColor="@color/black"
             android:textSize="40sp"
             android:padding="20dp"
@@ -38,30 +38,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/verify_email_text"
+            android:text="@string/verify_code_text"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginTop="20dp"
             android:padding="20dp"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_code"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="match_parent"
+        <com.chaos.view.PinView
+            android:id="@+id/pinView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_code"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeWidthFocused="2dp"
-            app:hintTextColor="@color/black">
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:layout_marginTop="20dp"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:itemCount="6"
+            app:itemWidth="50dp"
+            app:itemHeight="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            app:lineColor="@color/colorPrimary"
+            style="@style/PinWidget.PinView"
+            android:inputType="number"
+            android:cursorVisible="true"
+            app:cursorColor="@color/black"
+            app:hideLineWhenFilled="true"
+            app:itemRadius="15dp"
+            />
 
         <Button
             android:id="@+id/finish_registration_button"
@@ -70,6 +69,8 @@
             android:text="@string/finish_button"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"
+            android:onClick="Finish"
+            android:transitionName="transition_login_to_dashboard"
             />
 
 

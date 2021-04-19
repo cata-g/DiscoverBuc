@@ -3,7 +3,6 @@ package com.example.discoverbuc.Register2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -17,6 +16,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.discoverbuc.R;
+import com.example.discoverbuc.Register2.Login.Login;
+import com.example.discoverbuc.Register2.Register.Register;
 
 public class StartupScreen extends AppCompatActivity {
 
