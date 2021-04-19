@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class Register extends AppCompatActivity {
     //Animation variables
     TextView headline;
     Button back, next, login;
+    ProgressBar loading;
 
     //UserInput variables
     TextInputLayout username, email, password, confirmPassword;
@@ -49,12 +51,17 @@ public class Register extends AppCompatActivity {
         password = findViewById(R.id.register_password);
         confirmPassword = findViewById(R.id.register_confirmPassword);
 
+        loading = findViewById(R.id.progress_bar_reg);
+        loading.setVisibility(View.GONE);
+
     }
 
     public void callNameRegisterScreen(View view) {
 
 
+        loading.setVisibility(View.VISIBLE);
         if (!usernameValidation() | !emailValidation() | !passwordValidation() | !confirmPasswordValidation()) {
+            loading.setVisibility(View.GONE);
             return;
         }
 
@@ -65,11 +72,11 @@ public class Register extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    loading.setVisibility(View.GONE);
                     username.setError("Username is already taken!");
                     username.requestFocus();
 
                 }else {
-
                     username.setErrorEnabled(false);
                     username.setError(null);
 
@@ -79,6 +86,7 @@ public class Register extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
+                                loading.setVisibility(View.GONE);
                                 email.setError("Email is already taken!");
                                 email.requestFocus();
                             } else {

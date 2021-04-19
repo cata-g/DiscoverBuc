@@ -9,6 +9,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class RegisterName extends AppCompatActivity {
     CountryCodePicker ccp;
 
     String username, email,password;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,13 @@ public class RegisterName extends AppCompatActivity {
         headline = findViewById(R.id.register_headline);
         next = findViewById(R.id.register_next_button);
         login = findViewById(R.id.register_login_button);
+
+
         phoneNr = findViewById(R.id.register_phone);
         ccp = findViewById(R.id.country_code_picker);
+        loading =  findViewById(R.id.progress_bar_regname);
+
+        loading.setVisibility(View.GONE);
 
         //Activity Transfer
         Intent intent = getIntent();
@@ -57,7 +64,9 @@ public class RegisterName extends AppCompatActivity {
 
     public void callPrefsRegisterScreen(View view) {
 
+        loading.setVisibility(View.VISIBLE);
         if(!validateAge() | !validateName() | !validatePhone()){
+            loading.setVisibility(View.GONE);
             return;
         }
 
@@ -177,6 +186,7 @@ public class RegisterName extends AppCompatActivity {
 
             if(month < currentMonth){
                 Toast.makeText(this, "You must be at least 12", Toast.LENGTH_SHORT).show();
+
                 return false;
             }
 

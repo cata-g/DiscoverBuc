@@ -32,9 +32,12 @@
     <string name="register">Register</string>
     <string name="register_headline">Join Us Today</string>
     <string name="verify_code">CODE VALIDATION</string>
-    <string name="verify_code_text">Enter the code received!</string>
+    <string name="verify_code_text">Enter the code you have received!</string>
     <string name="finish_button">Finish</string>
 
+    <!-- Forgot Pass -->
+    <string name="forgot_pass_headline">Forgot your password?</string>
+    <string name="forgot_pass_details">Enter your account\'s username</string>
 
     <!-- Hints -->
     <string name="hint_user">Enter your username</string>

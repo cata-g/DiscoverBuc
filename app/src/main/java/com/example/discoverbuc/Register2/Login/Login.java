@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.discoverbuc.Dashboard;
@@ -27,6 +28,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class Login extends AppCompatActivity {
 
     TextInputLayout username, password;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class Login extends AppCompatActivity {
 
         username = findViewById(R.id.login_username);
         password = findViewById(R.id.login_password);
+        loading = findViewById(R.id.progress_bar_login);
+
+        loading.setVisibility(View.GONE);
 
     }
 
@@ -92,9 +97,11 @@ public class Login extends AppCompatActivity {
 
         String val = password.getEditText().getText().toString().trim();
         if (val.isEmpty()) {
+            loading.setVisibility(View.GONE);
             password.setError("Password field must not be empty");
             return false;
         } else {
+            loading.setVisibility(View.GONE);
             password.setError(null);
             password.setErrorEnabled(false);
             return true;
@@ -103,7 +110,12 @@ public class Login extends AppCompatActivity {
 
     public void loginUser(View view) {
 
-        if (!usernameValidation() | !passwordValidation()) return;
+        loading.setVisibility(View.VISIBLE);
+        if (!usernameValidation() | !passwordValidation()) {
+
+            loading.setVisibility(View.GONE);
+            return;
+        }
         else checkUser();
     }
 
@@ -113,6 +125,8 @@ public class Login extends AppCompatActivity {
 
         String userValue = username.getEditText().getText().toString().trim();
         String passValue = password.getEditText().getText().toString().trim();
+
+        loading.setVisibility(View.VISIBLE);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         Query validateUser = reference.orderByChild("username").equalTo(userValue);
@@ -170,10 +184,12 @@ public class Login extends AppCompatActivity {
 
 
                     } else {
+                        loading.setVisibility(View.GONE);
                         password.setError("Wrong Password");
                         password.requestFocus();
                     }
                 } else {
+                    loading.setVisibility(View.GONE);
                     username.setError("User not exists!");
                     username.requestFocus();
                 }

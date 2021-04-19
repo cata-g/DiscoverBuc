@@ -23,25 +23,22 @@
             android:transitionName="transition_back_button"
             android:onClick="callBackToRegister"/>
 
-        <TextView
-            android:id="@+id/register_headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/register_headline"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:transitionName="transition_register_headline" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="40dp"
-            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/register_headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="20dp"
+                android:text="@string/register_headline"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:transitionName="transition_register_headline" />
+
+        <TextView
+                android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ask_name"
@@ -77,21 +74,32 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <DatePicker
-                android:id="@+id/register_birthday"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/white"
-                android:calendarTextColor="@color/black"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:spinnersShown="true" />
 
-            <TextView
+
+
+        <DatePicker
+            android:id="@+id/register_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:calendarTextColor="@color/black"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true" />
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar_regname"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/loadingbg"
+            android:elevation="10dp" />
+
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:text="@string/ask_phone"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -133,7 +141,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -158,6 +165,13 @@
             android:text="@string/login"
             android:transitionName="transition_login"
             android:onClick="callLoginScreenFromRegName"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+        </RelativeLayout>
 
 
     </LinearLayout>
