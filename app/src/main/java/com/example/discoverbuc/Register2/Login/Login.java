@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,6 +33,9 @@ public class Login extends AppCompatActivity {
     TextInputLayout username, password;
     ProgressBar loading;
 
+    CheckBox remember_me;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +44,36 @@ public class Login extends AppCompatActivity {
         username = findViewById(R.id.login_username);
         password = findViewById(R.id.login_password);
         loading = findViewById(R.id.progress_bar_login);
+        remember_me = findViewById(R.id.remember_me_login);
 
         loading.setVisibility(View.GONE);
+
+        SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
+        Boolean checkbox = preferences.getBoolean("remember_me", false);
+        remember_me.setChecked(checkbox);
+
+        remember_me.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isChecked()){
+
+                    SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("remember_me", true);
+                    editor.apply();
+
+                }else{
+
+                    SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("remember_me", false);
+                    editor.apply();
+
+                }
+
+            }
+        });
 
     }
 
@@ -118,8 +152,6 @@ public class Login extends AppCompatActivity {
         }
         else checkUser();
     }
-
-
 
     private void checkUser() {
 

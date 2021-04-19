@@ -47,4 +47,8 @@
     <string name="hint_name">Enter your name</string>
     <string name="hint_code">Enter the code</string>
     <string name="hint_phone">Enter your phone number</string>
+
+    <!-- Buttons -->
+    <string name="sign_out">Log out</string>
+
 </resources>

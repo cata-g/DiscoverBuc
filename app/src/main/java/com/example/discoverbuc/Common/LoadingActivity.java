@@ -3,11 +3,13 @@ package com.example.discoverbuc.Common;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register1.WelcomeActivity;
 import com.example.discoverbuc.Register2.StartupScreen;
@@ -36,11 +38,24 @@ public class LoadingActivity extends AppCompatActivity {
         appName.animate().translationX(-1000).setDuration(1000).setStartDelay(3500);
         logo.animate().translationX(-1000).setDuration(1000).setStartDelay(3500);
         loadingAnimation.animate().translationX(1000).setDuration(1000).setStartDelay(3500);
+
+        SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
+        Boolean checkbox = preferences.getBoolean("remember_me", false);
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(LoadingActivity.this, StartupScreen.class);
+
+                Intent intent;
+                if(checkbox)
+                {
+                    intent = new Intent(LoadingActivity.this, Dashboard.class);
+                }
+                else
+                {
+                    intent = new Intent(LoadingActivity.this, StartupScreen.class);
+                }
                 startActivity(intent);
             }
         }, 5000);
