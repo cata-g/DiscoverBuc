@@ -107,7 +107,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/country_code_picker"

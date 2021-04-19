@@ -1,5 +1,6 @@
 package com.example.discoverbuc.Register2.Register;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -16,6 +17,12 @@ import android.widget.Toast;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.Login.Login;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 import java.util.Calendar;
@@ -83,27 +90,51 @@ public class RegisterName extends AppCompatActivity {
         if(usersPhone.charAt(0) == '0') usersPhone = usersPhone.substring(1);
         String fullPhone = "+" + ccp.getFullNumber() + usersPhone;
 
-        Intent intent = new Intent(getApplicationContext(), RegisterPreferences.class);
-        intent.putExtra("username", username);
-        intent.putExtra("email", email);
-        intent.putExtra("password", password);
-        intent.putExtra("name", name.getEditText().getText().toString());
-        intent.putExtra("birthday", DateOfBirth);
-        intent.putExtra("phone", fullPhone);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        Query validateUser = reference.orderByChild("phone").equalTo(fullPhone);
 
-        //Animations
-        Pair[] pairs = new Pair[4];
-        pairs[0] = new Pair<View, String>(back, "transition_back_button");
-        pairs[1] = new Pair<View, String>(headline, "transition_register_headline");
-        pairs[2] = new Pair<View, String>(next, "transition_next_button");
-        pairs[3] = new Pair<View, String>(login, "transition_login_button");
+        validateUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    phoneNr.setError("Phone already assigned to another account!");
+                    phoneNr.requestFocus();
+                    loading.setVisibility(View.GONE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterName.this, pairs);
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
+                } else {
+                    phoneNr.setError(null);
+                    phoneNr.setErrorEnabled(false);
+
+                    Intent intent = new Intent(getApplicationContext(), RegisterPreferences.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
+                    intent.putExtra("name", name.getEditText().getText().toString());
+                    intent.putExtra("birthday", DateOfBirth);
+                    intent.putExtra("phone", fullPhone);
+
+                    //Animations
+                    Pair[] pairs = new Pair[4];
+                    pairs[0] = new Pair<View, String>(back, "transition_back_button");
+                    pairs[1] = new Pair<View, String>(headline, "transition_register_headline");
+                    pairs[2] = new Pair<View, String>(next, "transition_next_button");
+                    pairs[3] = new Pair<View, String>(login, "transition_login_button");
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterName.this, pairs);
+                        startActivity(intent, options.toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(RegisterName.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
