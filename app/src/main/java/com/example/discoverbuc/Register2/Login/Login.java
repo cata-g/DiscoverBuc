@@ -18,6 +18,7 @@ import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.Register.Register;
 import com.example.discoverbuc.Register2.StartupScreen;
+import com.example.discoverbuc.SessionManager;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,17 +59,13 @@ public class Login extends AppCompatActivity {
 
                 if(buttonView.isChecked()){
 
-                    SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("remember_me", true);
-                    editor.apply();
+                    SessionManager sm = new SessionManager(Login.this);
+                    sm.rememberUser();
 
                 }else{
 
-                    SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("remember_me", false);
-                    editor.apply();
+                    SessionManager sm = new SessionManager(Login.this);
+                    sm.dontRememberUser();
 
                 }
 
@@ -182,26 +179,20 @@ public class Login extends AppCompatActivity {
 
                         //Basic Info
                         String name = snapshot.child(userValue).child("fullName").getValue(String.class);
-                        String email = snapshot.child(userValue).child("email").getValue(String.class);
+                        //String email = snapshot.child(userValue).child("email").getValue(String.class);
+                        String phoneNo = snapshot.child(userValue).child("phone").getValue(String.class);
                         String birthday = snapshot.child(userValue).child("birthday").getValue(String.class);
 
                         //Interests info
-                        boolean interestInCS = snapshot.child(userValue).child("Prefs").child("coffee_shopSelected").getValue(Boolean.class);
-                        boolean interestInMuseums = snapshot.child(userValue).child("Prefs").child("museumSelected").getValue(Boolean.class);
-                        boolean interestInNature = snapshot.child(userValue).child("Prefs").child("natureSelected").getValue(Boolean.class);
-                        boolean interestInRestaurants = snapshot.child(userValue).child("Prefs").child("restaurantSelected").getValue(Boolean.class);
+                        String interestInCS = snapshot.child(userValue).child("Prefs").child("coffee_shopSelected").getValue(Boolean.class).toString();
+                        String interestInMuseums = snapshot.child(userValue).child("Prefs").child("museumSelected").getValue(Boolean.class).toString();
+                        String interestInNature = snapshot.child(userValue).child("Prefs").child("natureSelected").getValue(Boolean.class).toString();
+                        String interestInRestaurants = snapshot.child(userValue).child("Prefs").child("restaurantSelected").getValue(Boolean.class).toString();
+
+                        SessionManager sessionManager = new SessionManager(Login.this);
+                        sessionManager.createLoginSession(name, userValue, passValue, phoneNo, birthday, interestInNature, interestInMuseums, interestInRestaurants, interestInCS);
 
                         Intent intent = new Intent(getApplicationContext(), Dashboard.class);
-                        //Transfer Info
-                        intent.putExtra("name", name);
-                        intent.putExtra("email", email);
-                        intent.putExtra("birthday", birthday);
-
-                        //Transfer Interests
-                        intent.putExtra("CS", interestInCS);
-                        intent.putExtra("MUSEUMS", interestInMuseums);
-                        intent.putExtra("NATURE", interestInNature);
-                        intent.putExtra("RESTAURANTS", interestInRestaurants);
 
                         Pair[] pairs = new Pair[1];
                         pairs[0] = new Pair(findViewById(R.id.login_to_dashboard), "transition_login_to_dashboard");

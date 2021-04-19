@@ -13,6 +13,7 @@ import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register1.WelcomeActivity;
 import com.example.discoverbuc.Register2.StartupScreen;
+import com.example.discoverbuc.SessionManager;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -39,8 +40,8 @@ public class LoadingActivity extends AppCompatActivity {
         logo.animate().translationX(-1000).setDuration(1000).setStartDelay(3500);
         loadingAnimation.animate().translationX(1000).setDuration(1000).setStartDelay(3500);
 
-        SharedPreferences preferences = getSharedPreferences("remember_checkbox", MODE_PRIVATE);
-        Boolean checkbox = preferences.getBoolean("remember_me", false);
+        SessionManager sm = new SessionManager(this);
+        Boolean checkbox = sm.checkLoginStatus();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

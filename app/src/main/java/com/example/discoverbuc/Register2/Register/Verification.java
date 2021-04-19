@@ -134,20 +134,10 @@ public class Verification extends AppCompatActivity {
                             createUser();
 
                             Intent intent = new Intent(getApplicationContext(), Dashboard.class);
-                            //Transfer
-                            intent.putExtra("username", username);
-                            intent.putExtra("email", email);
-                            intent.putExtra("password", password);
-                            intent.putExtra("name", name);
-                            intent.putExtra("birthday", birthday);
-                            intent.putExtra("phone", phone);
-                            intent.putExtra("isNatureSelected", natureSelected);
-                            intent.putExtra("isMuseumSelected", museumSelected);
-                            intent.putExtra("isRestaurantSelected", restaurantSelected);
-                            intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
 
                             //Animations
-                            Pair[] pairs = new Pair[4];
+                            Pair[] pairs = new Pair[1];
+                            pairs[0] = new Pair(findViewById(R.id.login_to_dashboard), "transition_login");
 
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Verification.this, pairs);
