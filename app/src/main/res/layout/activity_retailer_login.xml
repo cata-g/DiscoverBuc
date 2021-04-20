@@ -123,6 +123,7 @@
                 android:layout_centerVertical="true"/>
 
             <Button
+                android:id="@+id/go_to_forgetPass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/forgotPass"
@@ -130,6 +131,8 @@
                 android:textSize="12sp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:transitionName="transition_to_forgetpass"
+                android:onClick="callForgetPassword"
                 />
 
         </RelativeLayout>

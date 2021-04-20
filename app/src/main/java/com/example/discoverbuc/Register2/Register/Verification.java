@@ -15,6 +15,9 @@ import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.HelperClasses.PrefsHelperClass;
 import com.example.discoverbuc.Register2.HelperClasses.UserHelperClass;
+import com.example.discoverbuc.Register2.Login.Login;
+import com.example.discoverbuc.Register2.PasswordRecovery.CreateNewPass;
+import com.example.discoverbuc.Register2.StartupScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -35,7 +38,7 @@ public class Verification extends AppCompatActivity {
     PinView userPin;
     String systemCode;
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
-    String username,password, name, birthday, phone;
+    String username,password, name, birthday, phone, activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +49,22 @@ public class Verification extends AppCompatActivity {
 
         //TRANSFER
         Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        password = intent.getStringExtra("password");
-        name = intent.getStringExtra("name");
-        birthday = intent.getStringExtra("birthday");
+        activity = intent.getStringExtra("activity");
         phone = intent.getStringExtra("phone");
-        natureSelected = intent.getIntExtra("isNatureSelected", 0);
-        museumSelected = intent.getIntExtra("isMuseumSelected", 0);
-        restaurantSelected =  intent.getIntExtra("isRestaurantSelected", 0);
-        coffee_shopSelected = intent.getIntExtra("isCoffeeShopSelected", 0);
+        username = intent.getStringExtra("username");
+
+
+        if(!activity.equals("changePass")){
+            password = intent.getStringExtra("password");
+            name = intent.getStringExtra("name");
+            birthday = intent.getStringExtra("birthday");
+            natureSelected = intent.getIntExtra("isNatureSelected", 0);
+            museumSelected = intent.getIntExtra("isMuseumSelected", 0);
+            restaurantSelected =  intent.getIntExtra("isRestaurantSelected", 0);
+            coffee_shopSelected = intent.getIntExtra("isCoffeeShopSelected", 0);
+        }
+
+
 
         sendVerificationCode(phone);
     }
@@ -98,17 +108,16 @@ public class Verification extends AppCompatActivity {
 
     private void validateCode(String code){
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(systemCode, code);
-        createUser();
         signInWithPhoneAuthCredential(credential);
     }
-    public void callBackToRegisterPrefs(View view) {
+    public void closeVerif(View view) {
 
 
-        Intent intent = new Intent(getApplicationContext(), RegisterPreferences.class);
+        Intent intent = new Intent(getApplicationContext(), StartupScreen.class);
 
         //Animations
         Pair[] pairs = new Pair[1];
-        pairs[0] = new Pair(findViewById(R.id.next_to_verification), "transition_verification_page");
+        pairs[0] = new Pair(findViewById(R.id.close_validation), "transition_next_button");
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -117,6 +126,7 @@ public class Verification extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+        finish();
 
     }
 
@@ -130,13 +140,23 @@ public class Verification extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            createUser();
+                            Intent intent;
 
-                            Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                            if(activity.equals("changePass")){
+
+                                intent = new Intent(getApplicationContext(), CreateNewPass.class);
+                                intent.putExtra("username", username);
+
+                            }
+                            else{
+                                createUser();
+                                intent = new Intent(getApplicationContext(), Login.class);
+
+                            }
 
                             //Animations
                             Pair[] pairs = new Pair[1];
-                            pairs[0] = new Pair(findViewById(R.id.login_to_dashboard), "transition_login");
+                            pairs[0] = new Pair(findViewById(R.id.next_verifyButton), "transition_login");
 
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Verification.this, pairs);
@@ -144,10 +164,12 @@ public class Verification extends AppCompatActivity {
                             } else {
                                 startActivity(intent);
                             }
+                            finish();
 
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 Toast.makeText(Verification.this, "Try Again", Toast.LENGTH_SHORT).show();
+                                userPin.getText().clear();
                             }
                         }
                     }

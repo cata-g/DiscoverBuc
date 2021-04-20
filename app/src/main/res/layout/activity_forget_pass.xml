@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Register2.PasswordRecovery.ForgetPass"
-    android:padding="30dp">
+    android:padding="30dp"
+    android:transitionName="transition_to_forgetpass">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,11 +14,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/back_to_login_from_passChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/back_button"
             android:textSize="20dp"
-            android:padding="20dp" />
+            android:padding="20dp"
+            android:onClick="callBackToLoginFromPass"
+            android:transitionName="transition_login"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,12 +63,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_bar_forgotpassuname"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/loadingbg"
+            android:elevation="10dp" />
+
         <Button
+            android:id="@+id/next_to_verif_forgetpass"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:text="@string/next_button"
+            android:onClick="callVerifyScreenFromPass"
+            android:transitionName="transition_verification_page"
             />
 
 

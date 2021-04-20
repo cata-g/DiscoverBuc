@@ -13,6 +13,7 @@
     <string name="remember_me">Remember me</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="next_button">Next</string>
+    <string name="close_button">Close</string>
     <string name="ask_name">How should we call you?</string>
     <string name="ask_age">Select your age</string>
     <string name="ask_prefs">What do you prefer?</string>
@@ -39,6 +40,7 @@
     <string name="forgot_pass_headline">Forgot your password?</string>
     <string name="forgot_pass_details">Enter your account\'s username</string>
     <string name="pass_changed">Password changed successfully</string>
+    <string name="new_pass_headline">Create a new password</string>
 
     <!-- Hints -->
     <string name="hint_user">Enter your username</string>
@@ -48,6 +50,8 @@
     <string name="hint_name">Enter your name</string>
     <string name="hint_code">Enter the code</string>
     <string name="hint_phone">Enter your phone number</string>
+    <string name="hint_new_pass">Enter a new password</string>
+    <string name="hint_new_pass_confirm">Confirm your new password</string>
 
     <!-- Buttons -->
     <string name="sign_out">Log out</string>

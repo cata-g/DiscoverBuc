@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
+import com.example.discoverbuc.Register2.PasswordRecovery.ForgetPass;
 import com.example.discoverbuc.Register2.Register.Register;
 import com.example.discoverbuc.Register2.StartupScreen;
 import com.example.discoverbuc.SessionManager;
@@ -225,6 +226,24 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    public void callForgetPassword(View view){
+
+        Intent intent = new Intent(getApplicationContext(), ForgetPass.class);
+
+
+        Pair[] pairs = new Pair[1];
+        pairs[0] = new Pair(findViewById(R.id.go_to_forgetPass), "transition_to_forgetpass");
+
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Login.this, pairs);
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
 
     }
 
