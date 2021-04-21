@@ -105,6 +105,7 @@ public class RegisterName extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
     }
 
     public void callBackToRegister(View view) {
@@ -124,6 +125,7 @@ public class RegisterName extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+        finish();
 
     }
 
@@ -144,6 +146,7 @@ public class RegisterName extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
 
     }
 

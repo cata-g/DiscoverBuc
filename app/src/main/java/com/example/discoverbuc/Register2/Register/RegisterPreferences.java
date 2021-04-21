@@ -83,6 +83,7 @@ public class RegisterPreferences extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
 
     }
 
@@ -104,6 +105,7 @@ public class RegisterPreferences extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+        finish();
 
     }
 
@@ -124,6 +126,7 @@ public class RegisterPreferences extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
 
     }
 

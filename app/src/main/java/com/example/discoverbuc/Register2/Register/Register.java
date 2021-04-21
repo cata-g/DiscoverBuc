@@ -113,6 +113,7 @@ public class Register extends AppCompatActivity {
                                     startActivity(intent);
                                 }
 
+                                finish();
 
                             }
 
@@ -157,6 +158,7 @@ public class Register extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
     }
 
     public void callLoginScreenFromReg(View view) {
@@ -175,6 +177,8 @@ public class Register extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+
+        finish();
 
 
     }

@@ -10,6 +10,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.discoverbuc.Menu.UserMenu;
 import com.example.discoverbuc.Register2.Login.Login;
 import com.example.discoverbuc.Register2.StartupScreen;
 
@@ -51,6 +52,15 @@ public class Dashboard extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
+
+    }
+
+    public void goToMenu(View view){
+
+        Intent intent = new Intent(this, UserMenu.class);
+        startActivity(intent);
+        finish();
 
     }
 }

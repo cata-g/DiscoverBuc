@@ -49,6 +49,7 @@ public class StartupScreen extends AppCompatActivity {
             startActivity(intent);
         }
 
+        finish();
 
     }
 
@@ -67,6 +68,7 @@ public class StartupScreen extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+        finish();
 
     }
 
@@ -94,6 +96,7 @@ public class StartupScreen extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        finish();
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {

@@ -13,6 +13,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/gotomenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GO TO MENU"
+            android:textSize="30sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:onClick="goToMenu"
+            />
+
         <TextView
             android:layout_marginTop="350dp"
             android:layout_width="wrap_content"
@@ -25,6 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_gravity="center"/>
+
 
         <TextView
             android:id="@+id/textView"
