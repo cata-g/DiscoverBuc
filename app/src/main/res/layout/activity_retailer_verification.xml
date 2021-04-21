@@ -44,23 +44,36 @@
             android:layout_marginTop="20dp"
             android:padding="20dp"/>
 
-        <com.chaos.view.PinView
+<!--        <com.chaos.view.PinView-->
+<!--            android:id="@+id/pinView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:itemCount="6"-->
+<!--            app:itemWidth="50dp"-->
+<!--            app:itemHeight="50dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            app:lineColor="@color/colorPrimary"-->
+<!--            style="@style/PinWidget.PinView"-->
+<!--            android:inputType="number"-->
+<!--            android:cursorVisible="true"-->
+<!--            app:cursorColor="@color/black"-->
+<!--            app:hideLineWhenFilled="true"-->
+<!--            app:itemRadius="15dp"-->
+<!--            />-->
+
+        <com.goodiebag.pinview.Pinview
             android:id="@+id/pinView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemCount="6"
-            app:itemWidth="50dp"
-            app:itemHeight="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            app:lineColor="@color/colorPrimary"
-            style="@style/PinWidget.PinView"
-            android:inputType="number"
-            android:cursorVisible="true"
-            app:cursorColor="@color/black"
-            app:hideLineWhenFilled="true"
-            app:itemRadius="15dp"
-            />
+            app:pinWidth="50dp"
+            app:pinHeight="50dp"
+            app:pinLength="6"
+            app:inputType="number"
+            app:password="false"
+            app:splitWidth="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/next_verifyButton"

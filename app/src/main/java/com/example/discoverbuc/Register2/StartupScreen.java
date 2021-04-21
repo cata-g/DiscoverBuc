@@ -18,6 +18,8 @@ import android.view.View;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.Login.Login;
 import com.example.discoverbuc.Register2.Register.Register;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 public class StartupScreen extends AppCompatActivity {
 
@@ -80,6 +82,7 @@ public class StartupScreen extends AppCompatActivity {
         else{
             return false;
         }
+
 
     }
     private void showCustomDialog() {

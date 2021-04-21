@@ -2,15 +2,21 @@ package com.example.discoverbuc.Register2.Register;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.chaos.view.PinView;
+//import com.chaos.view.PinView;
 import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.HelperClasses.PrefsHelperClass;
@@ -18,6 +24,7 @@ import com.example.discoverbuc.Register2.HelperClasses.UserHelperClass;
 import com.example.discoverbuc.Register2.Login.Login;
 import com.example.discoverbuc.Register2.PasswordRecovery.CreateNewPass;
 import com.example.discoverbuc.Register2.StartupScreen;
+import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -35,7 +42,8 @@ import java.util.concurrent.TimeUnit;
 public class Verification extends AppCompatActivity {
 
 
-    PinView userPin;
+    //PinView userPin;
+    Pinview userPin;
     String systemCode;
     int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
     String username,password, name, birthday, phone, activity;
@@ -95,7 +103,7 @@ public class Verification extends AppCompatActivity {
             //Automatic entered code
             String smsCode = phoneAuthCredential.getSmsCode();
             if(smsCode != null){
-                userPin.setText(smsCode);
+                userPin.setValue(smsCode);
                 validateCode(smsCode);
             }
         }
@@ -136,6 +144,7 @@ public class Verification extends AppCompatActivity {
 
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -169,7 +178,7 @@ public class Verification extends AppCompatActivity {
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 Toast.makeText(Verification.this, "Try Again", Toast.LENGTH_SHORT).show();
-                                userPin.getText().clear();
+
                             }
                         }
                     }
@@ -178,14 +187,14 @@ public class Verification extends AppCompatActivity {
 
     public void Finish(View view){
 
-        String codeEnteredByUser = userPin.getText().toString();
+        String codeEnteredByUser = userPin.getValue().toString();
         if(!codeEnteredByUser.isEmpty()){
 
-            userPin.setError(null);
+            //userPin.setError(null);
             userPin.setFocusable(false);
             validateCode(codeEnteredByUser);
         }else{
-            userPin.setError("Pin cannot be empty!");
+            //userPin.setError("Pin cannot be empty!");
             userPin.requestFocus();
         }
 
