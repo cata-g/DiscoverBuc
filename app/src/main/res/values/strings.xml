@@ -56,4 +56,8 @@
     <!-- Buttons -->
     <string name="sign_out">Log out</string>
 
+    <!-- UsersMenu -->
+    <string name="todaysRec">Today\'s Recommendation</string>
+    <string name="otherRec">Other Recommendations</string>
+
 </resources>
