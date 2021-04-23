@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
+import com.example.discoverbuc.Menu.HelperClasses.WeatherFetch;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.SessionManager;
 import com.google.firebase.database.ChildEventListener;
@@ -25,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,9 +47,10 @@ public class UserMenu extends AppCompatActivity {
     boolean usersPrefs[];
 
     int todaysRec,date;
-    TextView todaysTitle, todaysDesc;
+    TextView todaysTitle, todaysDesc, weatherText;
     RatingBar todaysRating;
     ImageView todaysCover;
+    WeatherFetch weatherData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,18 @@ public class UserMenu extends AppCompatActivity {
         todaysDesc = findViewById(R.id.todaysDesc);
         todaysRating = findViewById(R.id.todaysRating);
         todaysTitle = findViewById(R.id.todaysTitle);
+        weatherText = findViewById(R.id.weatherText);
+
+        weatherData = new WeatherFetch();
+        JSONObject weatherDataJson = weatherData.getJSON(getApplicationContext());
+
+        if(weatherDataJson != null){
+            try{
+                weatherText.setText(weatherDataJson.getString("temp"));
+            }catch(JSONException e){
+                weatherText.setText("Error");
+            }
+        }
 
         sm = new SessionManager(this);
         data = sm.getDataFromSession();
