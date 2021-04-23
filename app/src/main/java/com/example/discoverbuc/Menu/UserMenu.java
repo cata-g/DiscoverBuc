@@ -44,8 +44,8 @@ public class UserMenu extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         ArrayList<CardHelperClass> locationsArray = new ArrayList<>();
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
+
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -65,12 +65,12 @@ public class UserMenu extends AppCompatActivity {
                         String imageName = detail.child("image").getValue(String.class);
                         int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
                         locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc));
-                        Log.d("Message", "MERGE PANA AICI");
-                        Log.d("name", title);
-                        Log.d("imageloc", imageName);
-                        Log.d("desc", desc);
+
                     }
                 }
+
+                adapter = new AdapterHelperClass(locationsArray);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -81,8 +81,8 @@ public class UserMenu extends AppCompatActivity {
 
         ref.addListenerForSingleValueEvent(valueEventListener);
 
-        adapter = new AdapterHelperClass(locationsArray);
-        recyclerView.setAdapter(adapter);
+
 
     }
+
 }

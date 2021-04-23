@@ -90,6 +90,7 @@ public class Login extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+        finish();
 
     }
 
@@ -108,6 +109,7 @@ public class Login extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+        finish();
 
     }
 
@@ -206,6 +208,8 @@ public class Login extends AppCompatActivity {
                             startActivity(intent);
                         }
 
+                        finish();
+
 
                     } else {
                         loading.setVisibility(View.GONE);
@@ -244,6 +248,8 @@ public class Login extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
+
+        finish();
 
     }
 
