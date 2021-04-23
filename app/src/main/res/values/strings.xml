@@ -58,6 +58,6 @@
 
     <!-- UsersMenu -->
     <string name="todaysRec">Today\'s Recommendation</string>
-    <string name="otherRec">Other Recommendations</string>
+    <string name="otherRec">Other Recommendations Based On Your Preferences</string>
 
 </resources>

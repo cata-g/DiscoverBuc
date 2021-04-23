@@ -70,6 +70,7 @@ public class RegisterPreferences extends AppCompatActivity {
         intent.putExtra("isMuseumSelected", museumSelected);
         intent.putExtra("isRestaurantSelected", restaurantSelected);
         intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
+        intent.putExtra("activity", "register");
 
         //Animations
         Pair[] pairs = new Pair[1];

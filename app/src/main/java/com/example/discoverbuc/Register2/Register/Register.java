@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.hbb20.CountryCodePicker;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -32,6 +33,7 @@ public class Register extends AppCompatActivity {
     TextView headline;
     Button back, next, login;
     ProgressBar loading;
+    CountryCodePicker ccp;
 
     //UserInput variables
     TextInputLayout username, phone, password, confirmPassword;
@@ -50,6 +52,7 @@ public class Register extends AppCompatActivity {
         phone = findViewById(R.id.register_phone);
         password = findViewById(R.id.register_password);
         confirmPassword = findViewById(R.id.register_confirmPassword);
+        ccp = findViewById(R.id.country_code_picker);
 
         loading = findViewById(R.id.progress_bar_reg);
         loading.setVisibility(View.GONE);
@@ -80,7 +83,10 @@ public class Register extends AppCompatActivity {
                     username.setErrorEnabled(false);
                     username.setError(null);
 
-                    String val = phone.getEditText().getText().toString().trim();
+                    String phoneEntered = phone.getEditText().getText().toString().trim();
+                    if(phoneEntered.charAt(0) == '0') phoneEntered = phoneEntered.substring(1);
+                    String fullPhone = "+"+ ccp.getFullNumber() + phoneEntered;
+                    String val = fullPhone;
                     Query checkData = FirebaseDatabase.getInstance().getReference("users").orderByChild("phone").equalTo(val);
                     checkData.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -90,6 +96,8 @@ public class Register extends AppCompatActivity {
                                 phone.setError("Email is already taken!");
                                 phone.requestFocus();
                             } else {
+
+
                                 phone.setError(null);
                                 phone.setErrorEnabled(false);
 
@@ -97,7 +105,7 @@ public class Register extends AppCompatActivity {
 
                                 String hashedPass = BCrypt.withDefaults().hashToString(12, password.getEditText().getText().toString().toCharArray());
                                 intent.putExtra("username", username.getEditText().getText().toString());
-                                intent.putExtra("phone", phone.getEditText().getText().toString());
+                                intent.putExtra("phone", fullPhone);
                                 intent.putExtra("password", hashedPass);
                                 //Animations
                                 Pair[] pairs = new Pair[4];

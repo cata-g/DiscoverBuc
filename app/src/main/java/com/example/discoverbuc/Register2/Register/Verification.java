@@ -207,7 +207,7 @@ public class Verification extends AppCompatActivity {
         PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected);
 
         //UUID id = UUID.randomUUID();
-        String id = username.toString();
+        String id = username;
         reference.child(id).setValue(helperClass);
 
         reference = reference.child(id);

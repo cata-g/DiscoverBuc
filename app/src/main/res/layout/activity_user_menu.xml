@@ -32,8 +32,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="@color/teal_200"
+            android:layout_height="300dp"
             android:orientation="horizontal"
             android:padding="5dp">
 
@@ -57,7 +56,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/CardView"
                 android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="40dp"
                 app:cardElevation="10dp"
@@ -68,14 +67,15 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/todaysCover"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="25dp"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
+                    android:id="@+id/todaysTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -84,11 +84,20 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
+                <RatingBar
+                    android:id="@+id/todaysRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="90dp" />
+
                 <TextView
+                    android:id="@+id/todaysDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="90dp"
+                    android:layout_marginTop="110dp"
                     android:text="10km away"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -119,8 +128,18 @@
             android:layout_gravity="center"
             />
 
+        <ProgressBar
+            android:id="@+id/progress_bar_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/loadingbg"
+            android:elevation="10dp"
+            />
+
+
         <TextView
-            android:layout_marginTop="30dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/otherRec"
