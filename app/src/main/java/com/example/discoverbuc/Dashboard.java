@@ -60,7 +60,6 @@ public class Dashboard extends AppCompatActivity {
 
         Intent intent = new Intent(this, UserMenu.class);
         startActivity(intent);
-        finish();
 
     }
 }

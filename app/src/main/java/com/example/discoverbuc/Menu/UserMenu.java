@@ -2,34 +2,38 @@ package com.example.discoverbuc.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
-import com.example.discoverbuc.Menu.HelperClasses.WeatherFetch;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.SessionManager;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -50,7 +54,8 @@ public class UserMenu extends AppCompatActivity {
     TextView todaysTitle, todaysDesc, weatherText;
     RatingBar todaysRating;
     ImageView todaysCover;
-    WeatherFetch weatherData;
+
+    DecimalFormat decimalFormat = new DecimalFormat("#.#");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +70,6 @@ public class UserMenu extends AppCompatActivity {
         todaysTitle = findViewById(R.id.todaysTitle);
         weatherText = findViewById(R.id.weatherText);
 
-        weatherData = new WeatherFetch();
-        JSONObject weatherDataJson = weatherData.getJSON(getApplicationContext());
-
-        if(weatherDataJson != null){
-            try{
-                weatherText.setText(weatherDataJson.getString("temp"));
-            }catch(JSONException e){
-                weatherText.setText("Error");
-            }
-        }
-
         sm = new SessionManager(this);
         data = sm.getDataFromSession();
 
@@ -88,6 +82,7 @@ public class UserMenu extends AppCompatActivity {
         date = Calendar.DAY_OF_MONTH;
         date = date/10 + date%10;
 
+        getWeatherDetails();
         recyclerView();
 
     }
@@ -154,6 +149,40 @@ public class UserMenu extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(valueEventListener);
 
 
+
+    }
+
+    public void getWeatherDetails(){
+
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=Bucharest,RO&appid=a6b1360c11727203d8744d2d3dad55a6&units=metric";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("weather");
+                    JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
+                    String desc = jsonObjectWeather.getString("description");
+
+                    JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
+                    double temp = jsonObjectMain.getDouble("temp");
+
+                    String textShown = decimalFormat.format(temp) + "°C";
+                    weatherText.setText(textShown);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
 
     }
 
