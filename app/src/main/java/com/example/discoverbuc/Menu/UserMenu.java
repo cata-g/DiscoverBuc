@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -51,7 +52,7 @@ public class UserMenu extends AppCompatActivity {
     boolean usersPrefs[];
 
     int todaysRec,date;
-    TextView todaysTitle, todaysDesc, weatherText;
+    TextView todaysTitle, todaysDesc, weatherText, casesText;
     RatingBar todaysRating;
     ImageView todaysCover;
 
@@ -69,6 +70,7 @@ public class UserMenu extends AppCompatActivity {
         todaysRating = findViewById(R.id.todaysRating);
         todaysTitle = findViewById(R.id.todaysTitle);
         weatherText = findViewById(R.id.weatherText);
+        casesText = findViewById(R.id.casesText);
 
         sm = new SessionManager(this);
         data = sm.getDataFromSession();
@@ -83,6 +85,7 @@ public class UserMenu extends AppCompatActivity {
         date = date/10 + date%10;
 
         getWeatherDetails();
+        getCoronaData();
         recyclerView();
 
     }
@@ -184,6 +187,38 @@ public class UserMenu extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+    }
+
+    public void getCoronaData(){
+
+        String url = "https://wrapapi.com/use/imN0oB/corona_virus_buc/cases_buc/0.0.2?wrapAPIKey=T4wPZdfHGDGzU6WIaHXPUtKKmNn41FMF";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    JSONObject dataObject = jsonObject.getJSONObject("data");
+                    JSONArray outputArray = dataObject.getJSONArray("output");
+
+                    double cases = outputArray.getDouble(3);
+
+
+                    String textShown = decimalFormat.format(cases) + "‰";
+                    casesText.setText(textShown);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 
 }
