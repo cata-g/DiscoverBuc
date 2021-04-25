@@ -44,7 +44,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="28dp"
                 android:layout_marginRight="28dp"
-                android:text="2.22C"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="70dp"
-                    android:text="Titlu"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="110dp"
-                    android:text="10km away"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </androidx.cardview.widget.CardView>
@@ -112,7 +112,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="3%"
+                android:text=""
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
