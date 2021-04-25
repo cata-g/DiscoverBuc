@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -81,8 +82,10 @@ public class UserMenu extends AppCompatActivity {
         usersPrefs[2] = data.get(sm.KEY_INTERESTS_NATURE).equals("true");
         usersPrefs[3] = data.get(sm.KEY_INTERESTS_RESTAURANT).equals("true");
 
-        date = Calendar.DAY_OF_MONTH;
+        Calendar cal = Calendar.getInstance();
+        date = cal.get(Calendar.DAY_OF_MONTH);
         date = date/10 + date%10;
+
 
         getWeatherDetails();
         getCoronaData();
@@ -128,7 +131,7 @@ public class UserMenu extends AppCompatActivity {
                 }
 
                 int size = locationsArray.size();
-                todaysRec = size % date-1;
+                    todaysRec = Math.max(size,date) % Math.min(size,date) -1;
 
                 todaysCover.setImageResource(locationsArray.get(todaysRec).getImageSrc());
                 todaysTitle.setText(locationsArray.get(todaysRec).getTitle());
