@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -131,7 +132,7 @@ public class UserMenu extends AppCompatActivity {
                 }
 
                 int size = locationsArray.size();
-                    todaysRec = Math.max(size,date) % Math.min(size,date) -1;
+                    todaysRec = Math.max(size,date) % Math.min(size,date);
 
                 todaysCover.setImageResource(locationsArray.get(todaysRec).getImageSrc());
                 todaysTitle.setText(locationsArray.get(todaysRec).getTitle());
@@ -195,7 +196,7 @@ public class UserMenu extends AppCompatActivity {
     public void getCoronaData(){
 
         String url = "https://wrapapi.com/use/imN0oB/corona_virus_buc/cases_buc/0.0.2?wrapAPIKey=T4wPZdfHGDGzU6WIaHXPUtKKmNn41FMF";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -222,6 +223,13 @@ public class UserMenu extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+    }
+
+    public void showMoreDetails(View view){
+
+        Intent intent = new Intent(getApplicationContext(), PopActivity.class);
+        startActivity(intent);
+
     }
 
 }
