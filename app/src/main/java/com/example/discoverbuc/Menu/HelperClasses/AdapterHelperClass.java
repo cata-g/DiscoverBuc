@@ -53,6 +53,11 @@ public class AdapterHelperClass extends RecyclerView.Adapter<AdapterHelperClass.
             public void onClick(View v) {
                 Intent intent = new Intent(context, PopActivity.class);
                 intent.putExtra("tag", cardHelperClass.getTag());
+                intent.putExtra("imageRes", cardHelperClass.getImageSrc());
+                intent.putExtra("title", cardHelperClass.getTitle());
+                intent.putExtra("desc", cardHelperClass.getDesc());
+                intent.putExtra("rating", cardHelperClass.getRating());
+                intent.putExtra("category", cardHelperClass.getCategoryTag());
                 context.startActivity(intent);
             }
         });

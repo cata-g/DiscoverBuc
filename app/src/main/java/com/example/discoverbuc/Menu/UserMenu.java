@@ -121,12 +121,13 @@ public class UserMenu extends AppCompatActivity {
                         while(locationDetails.hasNext()){
                             DataSnapshot detail = (DataSnapshot) locationDetails.next();
                             String tag = detail.getKey();
+                            String categoryTag = next.getKey();
                             String title = detail.child("name").getValue(String.class);
                             String desc = detail.child("desc").getValue(String.class);
                             float rating = detail.child("rating").getValue(float.class);
                             String imageName = detail.child("image").getValue(String.class);
                             int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
-                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag));
+                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag));
 
                         }
                     }

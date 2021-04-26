@@ -4,14 +4,15 @@ public class CardHelperClass {
 
     int imageSrc;
     float rating;
-    String title, desc, tag;
+    String title, desc, tag, categoryTag;
 
-    public CardHelperClass(int imageSrc, float rating, String title, String desc, String tag) {
+    public CardHelperClass(int imageSrc, float rating, String title, String desc, String tag, String categoryTag) {
         this.imageSrc = imageSrc;
         this.rating = rating;
         this.title = title;
         this.desc = desc;
         this.tag = tag;
+        this.categoryTag = categoryTag;
     }
 
     public int getImageSrc() {
@@ -32,5 +33,9 @@ public class CardHelperClass {
 
     public String getTag() {
         return tag;
+    }
+
+    public String getCategoryTag() {
+        return categoryTag;
     }
 }
