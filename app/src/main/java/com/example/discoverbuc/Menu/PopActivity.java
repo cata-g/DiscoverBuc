@@ -1,7 +1,6 @@
 package com.example.discoverbuc.Menu;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,10 +8,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,13 +20,10 @@ import android.widget.Toast;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselAdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselCardHelperClass;
 import com.example.discoverbuc.R;
-import com.example.discoverbuc.Register2.Login.Login;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -45,7 +41,7 @@ public class PopActivity extends Activity {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    ArrayList<CarouselCardHelperClass> images;
+    ArrayList<CarouselCardHelperClass> imagesArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +81,8 @@ public class PopActivity extends Activity {
         tag = intent.getStringExtra("tag");
         categoryTag = intent.getStringExtra("category");
 
+        imagesArray = new ArrayList<>();
+
         clearActivity();
         setDetails();
     }
@@ -93,7 +91,6 @@ public class PopActivity extends Activity {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        images = new ArrayList<>();
 
         title_text.setText("");
         desc_text.setText("");
@@ -104,8 +101,6 @@ public class PopActivity extends Activity {
         website_text.setText("");
 
         ratingBar.setRating(0);
-
-        loading.setVisibility(View.VISIBLE);
     }
 
     private void setDetails(){
@@ -121,6 +116,19 @@ public class PopActivity extends Activity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                if(snapshot.child("images").exists()){
+                    Iterable<DataSnapshot> images = snapshot.child("images").getChildren();
+                    Iterator<DataSnapshot> image = images.iterator();
+
+                    while(image.hasNext()){
+                        DataSnapshot imageDetail = (DataSnapshot) image.next();
+                        String imageName = imageDetail.getValue().toString();
+                        int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
+                        imagesArray.add(new CarouselCardHelperClass(imageLoc));
+                    }
+
+                }
+
                 if(snapshot.child("contact").exists()){
                     details_headline.setText("Details");
                     String emailToSet = "Email " + snapshot.child("contact").child("email").getValue();
@@ -133,15 +141,14 @@ public class PopActivity extends Activity {
                     program_text.setText(programToSet);
                     website_text.setText(websiteToSet);
 
-                    loading.setVisibility(View.GONE);
                 }
 
-                else{
-                    loading.setVisibility(View.GONE);
-                    return;
-                }
+                adapter = new CarouselAdapterHelperClass(imagesArray);
+                recyclerView.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
 
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -149,14 +156,9 @@ public class PopActivity extends Activity {
             }
         };
 
+        loading.setVisibility(View.VISIBLE);
         reference.addListenerForSingleValueEvent(valueEventListener);
 
-        images.add(new CarouselCardHelperClass(R.drawable.arc_triumf));
-        images.add(new CarouselCardHelperClass(R.drawable.palatul_parlamentului));
-        images.add(new CarouselCardHelperClass(R.drawable.manuc_cover));
-
-        adapter = new CarouselAdapterHelperClass(images);
-        recyclerView.setAdapter(adapter);
 
     }
 }
