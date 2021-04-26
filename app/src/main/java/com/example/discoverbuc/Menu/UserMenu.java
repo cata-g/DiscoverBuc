@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -119,12 +120,13 @@ public class UserMenu extends AppCompatActivity {
                         Iterator<DataSnapshot> locationDetails = locations.iterator();
                         while(locationDetails.hasNext()){
                             DataSnapshot detail = (DataSnapshot) locationDetails.next();
+                            String tag = detail.getKey();
                             String title = detail.child("name").getValue(String.class);
                             String desc = detail.child("desc").getValue(String.class);
                             float rating = detail.child("rating").getValue(float.class);
                             String imageName = detail.child("image").getValue(String.class);
                             int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
-                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc));
+                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag));
 
                         }
                     }
@@ -225,11 +227,14 @@ public class UserMenu extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void showMoreDetails(View view){
-
-        Intent intent = new Intent(getApplicationContext(), PopActivity.class);
-        startActivity(intent);
-
-    }
+//    public void showMoreDetails(View view){
+//
+//        Button btn = findViewById(R.id.btn_more);
+//        String tag = btn.getTag().toString();
+//        Toast.makeText(this, tag, Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(getApplicationContext(), PopActivity.class);
+//        startActivity(intent);
+//
+//    }
 
 }
