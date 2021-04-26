@@ -3,17 +3,13 @@ package com.example.discoverbuc.Common;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
-import com.example.discoverbuc.Register1.WelcomeActivity;
 import com.example.discoverbuc.Register2.StartupScreen;
-import com.example.discoverbuc.SessionManager;
 
 public class LoadingActivity extends AppCompatActivity {
 

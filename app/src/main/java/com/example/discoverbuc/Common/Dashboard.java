@@ -1,17 +1,16 @@
-package com.example.discoverbuc;
+package com.example.discoverbuc.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.discoverbuc.Menu.UserMenu;
-import com.example.discoverbuc.Register2.Login.Login;
+import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.StartupScreen;
 
 import java.util.HashMap;

@@ -14,12 +14,12 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.discoverbuc.Dashboard;
+import com.example.discoverbuc.Common.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.PasswordRecovery.ForgetPass;
 import com.example.discoverbuc.Register2.Register.Register;
 import com.example.discoverbuc.Register2.StartupScreen;
-import com.example.discoverbuc.SessionManager;
+import com.example.discoverbuc.Common.SessionManager;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

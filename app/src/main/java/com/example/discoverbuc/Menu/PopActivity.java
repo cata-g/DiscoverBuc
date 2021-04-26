@@ -2,6 +2,8 @@ package com.example.discoverbuc.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +18,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.discoverbuc.Menu.HelperClasses.CarouselAdapterHelperClass;
+import com.example.discoverbuc.Menu.HelperClasses.CarouselCardHelperClass;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.Login.Login;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -26,18 +30,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PopActivity extends Activity {
 
     TextView title_text, desc_text, details_headline, email_text, phone_text, program_text, website_text;
-    ShapeableImageView image;
     RatingBar ratingBar;
     ProgressBar loading;
 
     String title, desc, tag, categoryTag;
     int imgRes;
     float rating;
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    ArrayList<CarouselCardHelperClass> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +73,9 @@ public class PopActivity extends Activity {
         phone_text = findViewById(R.id.phone_detail);
         program_text = findViewById(R.id.program_detail);
         website_text = findViewById(R.id.website_detail);
-        image = findViewById(R.id.image_detail);
         ratingBar = findViewById(R.id.rating_detail);
         loading = findViewById(R.id.progress_bar_popactivity);
+        recyclerView = findViewById(R.id.recyclerView_carousel);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -83,6 +91,10 @@ public class PopActivity extends Activity {
 
     private void clearActivity(){
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        images = new ArrayList<>();
+
         title_text.setText("");
         desc_text.setText("");
         details_headline.setText("");
@@ -91,7 +103,6 @@ public class PopActivity extends Activity {
         program_text.setText("");
         website_text.setText("");
 
-        image.setImageResource(0);
         ratingBar.setRating(0);
 
         loading.setVisibility(View.VISIBLE);
@@ -100,7 +111,6 @@ public class PopActivity extends Activity {
     private void setDetails(){
 
         title_text.setText(title);
-        image.setImageResource(imgRes);
         ratingBar.setRating(rating);
         desc_text.setText(desc);
 
@@ -141,6 +151,12 @@ public class PopActivity extends Activity {
 
         reference.addListenerForSingleValueEvent(valueEventListener);
 
+        images.add(new CarouselCardHelperClass(R.drawable.arc_triumf));
+        images.add(new CarouselCardHelperClass(R.drawable.palatul_parlamentului));
+        images.add(new CarouselCardHelperClass(R.drawable.manuc_cover));
+
+        adapter = new CarouselAdapterHelperClass(images);
+        recyclerView.setAdapter(adapter);
 
     }
 }

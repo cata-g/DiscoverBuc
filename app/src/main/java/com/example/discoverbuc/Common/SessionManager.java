@@ -1,4 +1,4 @@
-package com.example.discoverbuc;
+package com.example.discoverbuc.Common;
 
 import android.content.Context;
 import android.content.SharedPreferences;

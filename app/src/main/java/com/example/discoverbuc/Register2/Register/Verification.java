@@ -4,12 +4,8 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +13,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 //import com.chaos.view.PinView;
-import com.example.discoverbuc.Dashboard;
 import com.example.discoverbuc.R;
 import com.example.discoverbuc.Register2.HelperClasses.PrefsHelperClass;
 import com.example.discoverbuc.Register2.HelperClasses.UserHelperClass;
