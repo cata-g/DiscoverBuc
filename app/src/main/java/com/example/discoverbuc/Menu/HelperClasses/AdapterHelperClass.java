@@ -1,5 +1,7 @@
 package com.example.discoverbuc.Menu.HelperClasses;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.discoverbuc.Menu.PopActivity;
 import com.example.discoverbuc.Menu.UserMenu;
 import com.example.discoverbuc.R;
 
@@ -21,9 +24,11 @@ import java.util.ArrayList;
 public class AdapterHelperClass extends RecyclerView.Adapter<AdapterHelperClass.ViewHolder> {
 
     ArrayList<CardHelperClass> locations;
+    Context context;
 
-    public AdapterHelperClass(ArrayList<CardHelperClass> locations) {
+    public AdapterHelperClass(ArrayList<CardHelperClass> locations, Context context) {
         this.locations = locations;
+        this.context = context;
     }
 
     @NonNull
@@ -46,7 +51,9 @@ public class AdapterHelperClass extends RecyclerView.Adapter<AdapterHelperClass.
         holder.moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", cardHelperClass.getTag());
+                Intent intent = new Intent(context, PopActivity.class);
+                intent.putExtra("tag", cardHelperClass.getTag());
+                context.startActivity(intent);
             }
         });
 

@@ -144,7 +144,7 @@ public class UserMenu extends AppCompatActivity {
                 locationsArray.remove(todaysRec);
 
                 loading.setVisibility(View.GONE);
-                adapter = new AdapterHelperClass(locationsArray);
+                adapter = new AdapterHelperClass(locationsArray, UserMenu.this);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -227,14 +227,5 @@ public class UserMenu extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-//    public void showMoreDetails(View view){
-//
-//        Button btn = findViewById(R.id.btn_more);
-//        String tag = btn.getTag().toString();
-//        Toast.makeText(this, tag, Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(getApplicationContext(), PopActivity.class);
-//        startActivity(intent);
-//
-//    }
 
 }

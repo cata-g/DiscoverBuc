@@ -65,7 +65,6 @@
                 android:text="See More"
                 android:layout_gravity="center"
                 android:textSize="12sp"
-                android:onClick="showMoreDetails"
                 />
         </LinearLayout>
 
