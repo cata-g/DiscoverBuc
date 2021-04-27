@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -58,12 +60,13 @@ public class UserMenu extends AppCompatActivity {
     TextView todaysTitle, todaysDesc, weatherText, casesText;
     RatingBar todaysRating;
     ImageView todaysCover;
+    Button moreDetails;
 
     double temp;
     int weatherCode;
     String weatherDesc;
     boolean shouldRecommendOutdoor;
-    DecimalFormat decimalFormat = new DecimalFormat("#.#");
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     TextView dailyAdvice;
     String[] coronaMessages = {"Don't forget to use the mask!", "Take care of your friends and family!", "If you have symptoms of any kind remain at home!",
@@ -84,6 +87,7 @@ public class UserMenu extends AppCompatActivity {
         weatherText = findViewById(R.id.weatherText);
         casesText = findViewById(R.id.casesText);
         dailyAdvice = findViewById(R.id.DailyAdvice);
+        moreDetails = findViewById(R.id.todaysMore);
 
         sm = new SessionManager(this);
         data = sm.getDataFromSession();
@@ -122,7 +126,6 @@ public class UserMenu extends AppCompatActivity {
                 Iterator<DataSnapshot> category = categories.iterator();
 
                 int i = 0;
-
                 while(category.hasNext()){
                     DataSnapshot next = (DataSnapshot) category.next();
                     if(usersPrefs[i])
@@ -162,10 +165,31 @@ public class UserMenu extends AppCompatActivity {
                 int size = locationsArray.size();
                     todaysRec = Math.max(size,date) % Math.min(size,date);
 
-                todaysCover.setImageResource(locationsArray.get(todaysRec).getImageSrc());
-                todaysTitle.setText(locationsArray.get(todaysRec).getTitle());
-                todaysRating.setRating(locationsArray.get(todaysRec).getRating());
-                todaysDesc.setText(locationsArray.get(todaysRec).getDesc());
+                String tag = locationsArray.get(todaysRec).getTag();
+                String categoryTag = locationsArray.get(todaysRec).getCategoryTag();
+                String title = locationsArray.get(todaysRec).getTitle();
+                String desc = locationsArray.get(todaysRec).getDesc();
+                float rating = locationsArray.get(todaysRec).getRating();
+                int imageLoc =  locationsArray.get(todaysRec).getImageSrc();
+
+                todaysCover.setImageResource(imageLoc);
+                todaysTitle.setText(title);
+                todaysRating.setRating(rating);
+                todaysDesc.setText(desc);
+
+                moreDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(UserMenu.this, PopActivity.class);
+                        intent.putExtra("tag",tag);
+                        intent.putExtra("imageRes", imageLoc);
+                        intent.putExtra("title", title);
+                        intent.putExtra("desc", desc);
+                        intent.putExtra("rating", rating);
+                        intent.putExtra("category", categoryTag);
+                        UserMenu.this.startActivity(intent);
+                    }
+                });
 
                 locationsArray.remove(todaysRec);
 

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -79,7 +80,6 @@ public class PopActivity extends Activity {
         rating = intent.getFloatExtra("rating", 0);
         tag = intent.getStringExtra("tag");
         categoryTag = intent.getStringExtra("category");
-
         imagesArray = new ArrayList<>();
 
         clearActivity();
