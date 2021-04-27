@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -55,6 +56,9 @@ public class UserMenu extends AppCompatActivity {
     RatingBar todaysRating;
     ImageView todaysCover;
 
+    double temp;
+    int weatherCode;
+    boolean shouldRecommendOutdoor;
     DecimalFormat decimalFormat = new DecimalFormat("#.#");
 
     @Override
@@ -87,6 +91,9 @@ public class UserMenu extends AppCompatActivity {
 
         getWeatherDetails();
         getCoronaData();
+
+        weatherCode /= 100;
+        shouldRecommendOutdoor = weatherCode == 8;
         recyclerView();
 
     }
@@ -116,14 +123,28 @@ public class UserMenu extends AppCompatActivity {
                         Iterator<DataSnapshot> locationDetails = locations.iterator();
                         while(locationDetails.hasNext()){
                             DataSnapshot detail = (DataSnapshot) locationDetails.next();
-                            String tag = detail.getKey();
-                            String categoryTag = next.getKey();
-                            String title = detail.child("name").getValue(String.class);
-                            String desc = detail.child("desc").getValue(String.class);
-                            float rating = detail.child("rating").getValue(float.class);
-                            String imageName = detail.child("image").getValue(String.class);
-                            int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
-                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag));
+                            if(!shouldRecommendOutdoor){
+                                boolean detailOutdoor = detail.child("outdoor").getValue(boolean.class);
+                                if(!detailOutdoor){
+                                    String tag = detail.getKey();
+                                    String categoryTag = next.getKey();
+                                    String title = detail.child("name").getValue(String.class);
+                                    String desc = detail.child("desc").getValue(String.class);
+                                    float rating = detail.child("rating").getValue(float.class);
+                                    String imageName = detail.child("image").getValue(String.class);
+                                    int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
+                                    locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag));
+                                }
+                            }else{
+                                String tag = detail.getKey();
+                                String categoryTag = next.getKey();
+                                String title = detail.child("name").getValue(String.class);
+                                String desc = detail.child("desc").getValue(String.class);
+                                float rating = detail.child("rating").getValue(float.class);
+                                String imageName = detail.child("image").getValue(String.class);
+                                int imageLoc = getApplicationContext().getResources().getIdentifier(imageName, "drawable", getApplicationContext().getPackageName());
+                                locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag));
+                            }
 
                         }
                     }
@@ -169,10 +190,10 @@ public class UserMenu extends AppCompatActivity {
 
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
-                    String desc = jsonObjectWeather.getString("description");
+                    weatherCode = jsonObjectWeather.getInt("id");
 
                     JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
-                    double temp = jsonObjectMain.getDouble("temp");
+                    temp = jsonObjectMain.getDouble("temp");
 
                     String textShown = decimalFormat.format(temp) + "°C";
                     weatherText.setText(textShown);
