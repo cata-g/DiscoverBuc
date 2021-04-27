@@ -1,10 +1,12 @@
 package com.example.discoverbuc.Menu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class UserMenu extends AppCompatActivity {
 
@@ -58,9 +61,15 @@ public class UserMenu extends AppCompatActivity {
 
     double temp;
     int weatherCode;
+    String weatherDesc;
     boolean shouldRecommendOutdoor;
     DecimalFormat decimalFormat = new DecimalFormat("#.#");
 
+    TextView dailyAdvice;
+    String[] coronaMessages = {"Don't forget to use the mask!", "Take care of your friends and family!", "If you have symptoms of any kind remain at home!",
+    "Use the hand sanitizer as often as you can!", "Don't go out in groups larger than six!", "Respect the circulation rules!", "Keep the distance from the people around!"};
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +83,7 @@ public class UserMenu extends AppCompatActivity {
         todaysTitle = findViewById(R.id.todaysTitle);
         weatherText = findViewById(R.id.weatherText);
         casesText = findViewById(R.id.casesText);
+        dailyAdvice = findViewById(R.id.DailyAdvice);
 
         sm = new SessionManager(this);
         data = sm.getDataFromSession();
@@ -91,10 +101,8 @@ public class UserMenu extends AppCompatActivity {
 
         getWeatherDetails();
         getCoronaData();
-
-        weatherCode /= 100;
-        shouldRecommendOutdoor = weatherCode == 8;
         recyclerView();
+        dailyAdvice.setText(coronaMessages[ThreadLocalRandom.current().nextInt(0, coronaMessages.length)]);
 
     }
 
@@ -191,12 +199,15 @@ public class UserMenu extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
                     weatherCode = jsonObjectWeather.getInt("id");
+                    weatherDesc = jsonObjectWeather.getString("main");
 
                     JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
                     temp = jsonObjectMain.getDouble("temp");
 
-                    String textShown = decimalFormat.format(temp) + "°C";
+                    String textShown = decimalFormat.format(temp) + "°C" + "\n" + weatherDesc;
                     weatherText.setText(textShown);
+                    weatherCode /= 100;
+                    shouldRecommendOutdoor = weatherCode == 8;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
