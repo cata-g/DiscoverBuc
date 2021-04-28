@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_nav_home"
+        android:title="Home"
+        android:icon="@drawable/icon_home"
+        app:cnb_backgroundColor = "@color/colorPrimaryDark"
+        />
+
+    <item
+        android:id="@+id/bottom_nav_wishlist"
+        android:title="Wishlist"
+        android:icon="@drawable/icon_wishlist"
+        app:cnb_backgroundColor = "@color/colorPrimaryDark"
+        />
+
+    <item
+        android:id="@+id/bottom_nav_profile"
+        android:title="Profile"
+        android:icon="@drawable/icon_user"
+        app:cnb_backgroundColor = "@color/colorPrimaryDark"
+        />
+
+
+</menu>
