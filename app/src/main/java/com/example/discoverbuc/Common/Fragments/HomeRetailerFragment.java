@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
+import com.example.discoverbuc.Menu.HelperClasses.AdapterVerticalHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
 import com.example.discoverbuc.Menu.PopActivity;
 import com.example.discoverbuc.R;
@@ -104,15 +106,18 @@ public class HomeRetailerFragment extends Fragment {
         seeMoreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.setHasFixedSize(!recyclerHorizontal);
                 recyclerHorizontal = !recyclerHorizontal;
 
                 if(recyclerHorizontal == true){
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
                     seeMoreDetails.setText("SEE MORE");
+                    adapter = new AdapterHelperClass(locationsArray, getActivity());
+                    recyclerView.setAdapter(adapter);
                 }else{
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                     seeMoreDetails.setText("SEE LESS");
+                    adapter = new AdapterVerticalHelperClass(locationsArray, getActivity());
+                    recyclerView.setAdapter(adapter);
                 }
 
 
