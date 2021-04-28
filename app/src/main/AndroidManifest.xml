@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DiscoverBuc">
         <activity android:name=".Menu.PopActivity" android:theme="@style/Theme.DiscoverBuc.PopMe"></activity>
-        <activity android:name=".Menu.UserMenu" />
         <activity android:name=".Register2.PasswordRecovery.CreateNewPass" />
         <activity android:name=".Register2.PasswordRecovery.PasswordChanged" />
         <activity android:name=".Register2.PasswordRecovery.ForgetPass" />
