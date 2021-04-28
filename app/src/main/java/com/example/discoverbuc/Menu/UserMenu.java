@@ -70,7 +70,7 @@ public class UserMenu extends AppCompatActivity {
 
     TextView dailyAdvice;
     String[] coronaMessages = {"Don't forget to use the mask!", "Take care of your friends and family!", "If you have symptoms of any kind remain at home!",
-    "Use the hand sanitizer as often as you can!", "Don't go out in groups larger than six!", "Respect the circulation rules!", "Keep the distance from the people around!"};
+    "Use the hand sanitizer as often as you can!", "Don't go out in groups larger than six!", "Respect the circulation rules!", "Keep the distance from the people around!", "Respect the hygiene rules!"};
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
