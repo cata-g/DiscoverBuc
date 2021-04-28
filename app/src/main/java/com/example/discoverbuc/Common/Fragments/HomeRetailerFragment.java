@@ -49,8 +49,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class HomeRetailerFragment extends Fragment {
 
-    TextView tv;
-    Button gotomenu;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     ProgressBar loading;
@@ -76,6 +74,8 @@ public class HomeRetailerFragment extends Fragment {
     String[] coronaMessages = {"Don't forget to use the mask!", "Take care of your friends and family!", "If you have symptoms of any kind remain at home!",
             "Use the hand sanitizer as often as you can!", "Don't go out in groups larger than six!", "Respect the circulation rules!", "Keep the distance from the people around!", "Respect the hygiene rules!"};
 
+    Button seeMoreDetails;
+    boolean recyclerHorizontal = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +98,26 @@ public class HomeRetailerFragment extends Fragment {
         casesText = getView().findViewById(R.id.casesText);
         dailyAdvice = getView().findViewById(R.id.DailyAdvice);
         moreDetails = getView().findViewById(R.id.todaysMore);
+
+
+        seeMoreDetails = getView().findViewById(R.id.details_otherrec);
+        seeMoreDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setHasFixedSize(!recyclerHorizontal);
+                recyclerHorizontal = !recyclerHorizontal;
+
+                if(recyclerHorizontal == true){
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                    seeMoreDetails.setText("SEE MORE");
+                }else{
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                    seeMoreDetails.setText("SEE LESS");
+                }
+
+
+            }
+        });
 
         sm = new SessionManager(getActivity());
         data = sm.getDataFromSession();
@@ -290,5 +310,6 @@ public class HomeRetailerFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
 
 }

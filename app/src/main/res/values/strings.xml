@@ -58,6 +58,11 @@
 
     <!-- UsersMenu -->
     <string name="todaysRec">Today\'s Recommendation</string>
-    <string name="otherRec">Other Recommendations Based On Your Preferences</string>
+    <string name="otherRec">Other Recommendations For You</string>
+
+    <!-- Menu Buttons -->
+    <string name="nav_home">HOME</string>
+    <string name="nav_wishlist">WISHLIST</string>
+    <string name="nav_prof">PROFILE</string>
 
 </resources>

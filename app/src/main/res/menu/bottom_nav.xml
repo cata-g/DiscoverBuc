@@ -4,21 +4,21 @@
 
     <item
         android:id="@+id/bottom_nav_home"
-        android:title="Home"
+        android:title="@string/nav_home"
         android:icon="@drawable/icon_home"
         app:cnb_backgroundColor = "@color/colorPrimaryDark"
         />
 
     <item
         android:id="@+id/bottom_nav_wishlist"
-        android:title="Wishlist"
+        android:title="@string/nav_wishlist"
         android:icon="@drawable/icon_wishlist"
         app:cnb_backgroundColor = "@color/colorPrimaryDark"
         />
 
     <item
         android:id="@+id/bottom_nav_profile"
-        android:title="Profile"
+        android:title="@string/nav_prof"
         android:icon="@drawable/icon_user"
         app:cnb_backgroundColor = "@color/colorPrimaryDark"
         />
