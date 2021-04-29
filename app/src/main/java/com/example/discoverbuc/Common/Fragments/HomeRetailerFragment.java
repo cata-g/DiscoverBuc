@@ -7,9 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +32,10 @@ import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterVerticalHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
+import com.example.discoverbuc.Menu.HelperClasses.SwipeToWishlistCallback;
 import com.example.discoverbuc.Menu.PopActivity;
 import com.example.discoverbuc.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -118,6 +122,7 @@ public class HomeRetailerFragment extends Fragment {
                     seeMoreDetails.setText("SEE LESS");
                     adapter = new AdapterVerticalHelperClass(locationsArray, getActivity());
                     recyclerView.setAdapter(adapter);
+                    enableSwipeToWishlistAndUndo();
                 }
 
 
@@ -316,5 +321,26 @@ public class HomeRetailerFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    private void enableSwipeToWishlistAndUndo(){
+
+        AdapterVerticalHelperClass verticalHelperClass = new AdapterVerticalHelperClass(locationsArray, getActivity());
+        SwipeToWishlistCallback swipeToWishlistCallback = new SwipeToWishlistCallback(getActivity()){
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int pos = viewHolder.getAdapterPosition();
+                CardHelperClass actualItem = verticalHelperClass.getData().get(pos);
+
+                verticalHelperClass.removeItem(pos);
+                locationsArray.remove(pos);
+                Toast.makeText(getActivity(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToWishlistCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+    }
 
 }

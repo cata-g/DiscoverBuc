@@ -58,12 +58,15 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
             }
         });
 
+
     }
 
     @Override
     public int getItemCount() {
         return locations.size();
     }
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -82,6 +85,20 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
             moreDetails = itemView.findViewById(R.id.btn_more);
 
         }
+    }
+
+    public void removeItem(int pos){
+        locations.remove(pos);
+        notifyItemRemoved(pos);
+    }
+
+    public void restoreItem(CardHelperClass item, int pos){
+        locations.add(pos, item);
+        notifyItemInserted(pos);
+    }
+
+    public ArrayList<CardHelperClass> getData() {
+        return locations;
     }
 
 }
