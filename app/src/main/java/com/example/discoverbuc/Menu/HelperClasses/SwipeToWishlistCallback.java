@@ -52,15 +52,14 @@ public class SwipeToWishlistCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        super.onChildDraw(c, recyclerView, viewHolder, dX * 0.8f, dY, actionState, isCurrentlyActive);
         View itemView = viewHolder.itemView;
-        int itemHeight = itemView.getHeight();
 
         boolean isCanceled = dX == 0 && !isCurrentlyActive;
 
-        if(isCanceled){
+        if(isCanceled ){
             clearCanvas(c, (float) itemView.getLeft(), (float) itemView.getTop(), itemView.getRight() + dX, (float) itemView.getBottom());
-            super.onChildDraw(c,recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            super.onChildDraw(c,recyclerView, viewHolder, dX * 0.8f, dY, actionState, isCurrentlyActive);
             return;
         }
 

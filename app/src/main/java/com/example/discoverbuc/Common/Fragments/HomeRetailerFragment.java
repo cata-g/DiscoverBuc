@@ -117,11 +117,13 @@ public class HomeRetailerFragment extends Fragment {
                     seeMoreDetails.setText("SEE MORE");
                     adapter = new AdapterHelperClass(locationsArray, getActivity());
                     recyclerView.setAdapter(adapter);
+                    recyclerView.setHasFixedSize(true);
                 }else{
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                     seeMoreDetails.setText("SEE LESS");
                     adapter = new AdapterVerticalHelperClass(locationsArray, getActivity());
                     recyclerView.setAdapter(adapter);
+                    recyclerView.setHasFixedSize(true);
                     enableSwipeToWishlistAndUndo();
                 }
 
@@ -323,24 +325,45 @@ public class HomeRetailerFragment extends Fragment {
 
     private void enableSwipeToWishlistAndUndo(){
 
-        AdapterVerticalHelperClass verticalHelperClass = new AdapterVerticalHelperClass(locationsArray, getActivity());
         SwipeToWishlistCallback swipeToWishlistCallback = new SwipeToWishlistCallback(getActivity()){
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = viewHolder.getAdapterPosition();
-                CardHelperClass actualItem = verticalHelperClass.getData().get(pos);
-
-                verticalHelperClass.removeItem(pos);
-                locationsArray.remove(pos);
-                Toast.makeText(getActivity(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+                addToWishlist(locationsArray.get(pos).getTag());
                 adapter.notifyDataSetChanged();
-
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToWishlistCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
+    }
+
+    private void addToWishlist(String tagToAdd) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(data.get("username"));
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.child("wishlist").exists()) {
+                    ref.child("wishlist").child(tagToAdd).setValue(tagToAdd);
+                } else {
+                    if (snapshot.child("wishlist").child(tagToAdd).exists()) {
+                        ref.child("wishlist").child(tagToAdd).removeValue();
+                        Toast.makeText(getActivity(), "ITEM REMOVED FROM WISHLIST", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ref.child("wishlist").child(tagToAdd).setValue(tagToAdd);
+                        Toast.makeText(getActivity(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("ERROR", error.toString());
+            }
+        });
     }
 
 }
