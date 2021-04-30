@@ -87,16 +87,6 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
         }
     }
 
-    public void removeItem(int pos){
-        locations.remove(pos);
-        notifyItemRemoved(pos);
-    }
-
-    public void restoreItem(CardHelperClass item, int pos){
-        locations.add(pos, item);
-        notifyItemInserted(pos);
-    }
-
     public ArrayList<CardHelperClass> getData() {
         return locations;
     }
