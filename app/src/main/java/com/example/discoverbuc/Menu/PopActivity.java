@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -35,6 +36,7 @@ public class PopActivity extends Activity {
 
     TextView title_text, desc_text, details_headline, email_text, phone_text, program_text, website_text;
     RatingBar ratingBar;
+    Button voteRating;
     ProgressBar loading;
 
     ImageButton addWishlist;
@@ -77,6 +79,7 @@ public class PopActivity extends Activity {
         loading = findViewById(R.id.progress_bar_popactivity);
         recyclerView = findViewById(R.id.recyclerView_carousel);
         addWishlist = findViewById(R.id.add_to_wishlist);
+        voteRating = findViewById(R.id.vote_rating_button);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -88,6 +91,21 @@ public class PopActivity extends Activity {
         wishedSrc = intent.getIntExtra("wished", 0);
         imagesArray = new ArrayList<>();
 
+        voteRating.setVisibility(View.INVISIBLE);
+
+        voteRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vote();
+            }
+        });
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                voteRating.setVisibility(View.VISIBLE);
+            }
+        });
 
         addWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +115,14 @@ public class PopActivity extends Activity {
         });
         clearActivity();
         setDetails();
+    }
+
+
+    private void vote() {
+
+        float selectedRating = ratingBar.getRating();
+        Log.d("RATING", String.valueOf(selectedRating));
+
     }
 
     private void clearActivity(){
@@ -175,7 +201,6 @@ public class PopActivity extends Activity {
 
         loading.setVisibility(View.VISIBLE);
         reference.addListenerForSingleValueEvent(valueEventListener);
-
 
     }
 

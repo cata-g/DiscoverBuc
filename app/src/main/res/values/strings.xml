@@ -73,4 +73,7 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
 
+    <!-- Pop Activities -->
+    <string name="vote_rating">Vote</string>
+
 </resources>
