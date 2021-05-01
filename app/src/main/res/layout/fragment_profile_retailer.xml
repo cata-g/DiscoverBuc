@@ -1,17 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Common.Fragments.ProfileRetailerFragment"
-    android:background="@color/teal_200">
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@color/teal_700">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="PROFILE"
-        android:gravity="center"/>
+        android:layout_margin="20dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_preferences"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textAllCaps="true"
+            />
+
+        <Button
+            android:id="@+id/edit_prefs_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:background="#00000000"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/profile_cf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:text="@string/coffee_shops"
+        android:buttonTint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:enabled="false"
+        />
+
+    <CheckBox
+        android:id="@+id/profile_museum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:text="@string/museums"
+        android:buttonTint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:enabled="false"
+        />
+
+    <CheckBox
+        android:id="@+id/profile_nature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:text="@string/nature"
+        android:buttonTint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:enabled="false"
+        />
+
+    <CheckBox
+        android:id="@+id/profile_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:text="@string/restaurants"
+        android:buttonTint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:enabled="false"
+        />
+
+    <Button
+        android:id="@+id/save_edit_prefs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        />
 
     <Button
         android:id="@+id/logout_button"
@@ -24,4 +115,4 @@
         android:transitionName="transition_next_button"
         />
 
-</FrameLayout>
+</LinearLayout>

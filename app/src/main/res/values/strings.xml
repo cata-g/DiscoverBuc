@@ -68,4 +68,9 @@
     <!-- Wishlist -->
     <string name="wishlist_not_found">Your wishlist is empty! Add some locations from menu!</string>
 
+    <!-- Profile -->
+    <string name="edit_preferences">Edit your preferences</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+
 </resources>

@@ -91,9 +91,25 @@ public class SessionManager {
         editor.putBoolean(REMEMBER_STATUS, true);
         editor.commit();
     }
+
     public void dontRememberUser(){
         editor.putBoolean(REMEMBER_STATUS, false);
         editor.commit();
+    }
+
+    public void changePrefs(int nat, int mus, int res, int cf ){
+
+        String natInterest = String.valueOf(nat == 1);
+        String musInterest = String.valueOf(mus == 1);
+        String resInterest = String.valueOf(res == 1);
+        String cfInterest = String.valueOf(cf == 1);
+
+        editor.putString(KEY_INTERESTS_NATURE, natInterest);
+        editor.putString(KEY_INTERESTS_MUSEUM, musInterest);
+        editor.putString(KEY_INTERESTS_RESTAURANT, resInterest);
+        editor.putString(KEY_INTERESTS_COFFEESHOP, cfInterest);
+        editor.commit();
+
     }
 
 
