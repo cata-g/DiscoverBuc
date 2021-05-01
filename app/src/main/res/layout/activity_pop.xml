@@ -39,6 +39,16 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"/>
 
+        <ImageButton
+            android:id="@+id/add_to_wishlist"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/empty_heart"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:background="#00000000"
+            />
+
         <ProgressBar
             android:id="@+id/progress_bar_popactivity"
             android:layout_width="50dp"
@@ -52,7 +62,7 @@
             android:id="@+id/desc_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sddfs dfsd fjskd fkjsdf jsdlflsdkjf kljsd flkjsdf jksd fsdjk asd as dasd asd asad asd asdasd asdasd"
+            android:text="Desc"
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="@color/black"

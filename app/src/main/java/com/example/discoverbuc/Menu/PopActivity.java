@@ -12,11 +12,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselAdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselCardHelperClass;
 import com.example.discoverbuc.R;
@@ -35,8 +37,10 @@ public class PopActivity extends Activity {
     RatingBar ratingBar;
     ProgressBar loading;
 
+    ImageButton addWishlist;
+
     String title, desc, tag, categoryTag;
-    int imgRes;
+    int imgRes, wishedSrc;
     float rating;
 
     RecyclerView recyclerView;
@@ -72,6 +76,7 @@ public class PopActivity extends Activity {
         ratingBar = findViewById(R.id.rating_detail);
         loading = findViewById(R.id.progress_bar_popactivity);
         recyclerView = findViewById(R.id.recyclerView_carousel);
+        addWishlist = findViewById(R.id.add_to_wishlist);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -80,8 +85,16 @@ public class PopActivity extends Activity {
         rating = intent.getFloatExtra("rating", 0);
         tag = intent.getStringExtra("tag");
         categoryTag = intent.getStringExtra("category");
+        wishedSrc = intent.getIntExtra("wished", 0);
         imagesArray = new ArrayList<>();
 
+
+        addWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToWishlist(tag, categoryTag);
+            }
+        });
         clearActivity();
         setDetails();
     }
@@ -107,6 +120,11 @@ public class PopActivity extends Activity {
         title_text.setText(title);
         ratingBar.setRating(rating);
         desc_text.setText(desc);
+
+        if(wishedSrc == 0)
+            addWishlist.setImageResource(wishedSrc);
+        else
+            addWishlist.setImageResource(R.drawable.full_heart);
 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("locations").child(categoryTag).child(tag);
@@ -159,5 +177,36 @@ public class PopActivity extends Activity {
         reference.addListenerForSingleValueEvent(valueEventListener);
 
 
+    }
+
+    private void addToWishlist(String tagToAdd, String catToAdd) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(new SessionManager(getApplicationContext()).getDataFromSession().get("username"));
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.child("wishlist").exists()) {
+                    ref.child("wishlist").child(tagToAdd).setValue(catToAdd);
+                    Toast.makeText(getApplicationContext(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+                    addWishlist.setImageResource(R.drawable.full_heart);
+                } else {
+                    if (snapshot.child("wishlist").child(tagToAdd).exists()) {
+                        ref.child("wishlist").child(tagToAdd).removeValue();
+                        Toast.makeText(getApplicationContext(), "ITEM REMOVED FROM WISHLIST", Toast.LENGTH_SHORT).show();
+                        addWishlist.setImageResource(R.drawable.empty_heart);
+                    } else {
+                        ref.child("wishlist").child(tagToAdd).setValue(catToAdd);
+                        Toast.makeText(getApplicationContext(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+                        addWishlist.setImageResource(R.drawable.full_heart);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("ERROR", error.toString());
+            }
+        });
     }
 }
