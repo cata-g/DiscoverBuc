@@ -65,4 +65,7 @@
     <string name="nav_wishlist">WISHLIST</string>
     <string name="nav_prof">PROFILE</string>
 
+    <!-- Wishlist -->
+    <string name="wishlist_not_found">Your wishlist is empty! Add some locations from menu!</string>
+
 </resources>

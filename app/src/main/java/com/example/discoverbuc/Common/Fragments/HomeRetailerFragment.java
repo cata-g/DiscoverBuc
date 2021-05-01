@@ -40,6 +40,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
@@ -52,6 +53,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class HomeRetailerFragment extends Fragment {
 
@@ -82,6 +84,9 @@ public class HomeRetailerFragment extends Fragment {
 
     Button seeMoreDetails;
     boolean recyclerHorizontal = true;
+
+    ImageView heartImage;
+    int wishedSrc = R.drawable.empty_heart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -187,7 +192,22 @@ public class HomeRetailerFragment extends Fragment {
                                     float rating = detail.child("rating").getValue(float.class);
                                     String imageName = detail.child("image").getValue(String.class);
                                     int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
-                                    locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag));
+                                    DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
+                                    wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.exists()){
+                                                wishedSrc = R.drawable.full_heart;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                    locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
                                 }
                             }else{
                                 String tag = detail.getKey();
@@ -197,7 +217,22 @@ public class HomeRetailerFragment extends Fragment {
                                 float rating = detail.child("rating").getValue(float.class);
                                 String imageName = detail.child("image").getValue(String.class);
                                 int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
-                                locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag));
+                                DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
+                                wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.exists()){
+                                            wishedSrc = R.drawable.full_heart;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                                locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
                             }
 
                         }
@@ -329,7 +364,7 @@ public class HomeRetailerFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = viewHolder.getAdapterPosition();
-                addToWishlist(locationsArray.get(pos).getTag());
+                addToWishlist(locationsArray.get(pos).getTag(), locationsArray.get(pos).getCategoryTag(), pos);
                 adapter.notifyDataSetChanged();
             }
         };
@@ -339,7 +374,7 @@ public class HomeRetailerFragment extends Fragment {
 
     }
 
-    private void addToWishlist(String tagToAdd) {
+    private void addToWishlist(String tagToAdd, String catToAdd, int pos) {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(data.get("username"));
 
@@ -347,14 +382,24 @@ public class HomeRetailerFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.child("wishlist").exists()) {
-                    ref.child("wishlist").child(tagToAdd).setValue(tagToAdd);
+                    ref.child("wishlist").child(tagToAdd).setValue(catToAdd);
+                    Toast.makeText(getActivity(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+
+                    locationsArray.get(pos).setWishedSrc(R.drawable.full_heart);
+                    adapter.notifyDataSetChanged();
                 } else {
                     if (snapshot.child("wishlist").child(tagToAdd).exists()) {
                         ref.child("wishlist").child(tagToAdd).removeValue();
                         Toast.makeText(getActivity(), "ITEM REMOVED FROM WISHLIST", Toast.LENGTH_SHORT).show();
+
+                        locationsArray.get(pos).setWishedSrc(R.drawable.empty_heart);
+                        adapter.notifyDataSetChanged();
                     } else {
-                        ref.child("wishlist").child(tagToAdd).setValue(tagToAdd);
+                        ref.child("wishlist").child(tagToAdd).setValue(catToAdd);
                         Toast.makeText(getActivity(), "ITEM ADDED TO WISHLIST", Toast.LENGTH_SHORT).show();
+
+                        locationsArray.get(pos).setWishedSrc(R.drawable.full_heart);
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }

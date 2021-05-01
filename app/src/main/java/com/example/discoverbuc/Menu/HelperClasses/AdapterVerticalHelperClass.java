@@ -18,7 +18,7 @@ import com.example.discoverbuc.R;
 
 import java.util.ArrayList;
 
-public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelperClass.ViewHolder> {
+public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterVerticalHelperClass.ViewHolder> {
     ArrayList<CardHelperClass> locations;
     Context context;
 
@@ -29,14 +29,14 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
 
     @NonNull
     @Override
-    public AdapterHelperClass.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterVerticalHelperClass.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.locations_card_design_vertical, parent,false);
-        AdapterHelperClass.ViewHolder viewHolder = new AdapterHelperClass.ViewHolder(view);
+        AdapterVerticalHelperClass.ViewHolder viewHolder = new AdapterVerticalHelperClass.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterHelperClass.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterVerticalHelperClass.ViewHolder holder, int position) {
 
         CardHelperClass cardHelperClass = locations.get(position);
 
@@ -54,9 +54,12 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
                 intent.putExtra("desc", cardHelperClass.getDesc());
                 intent.putExtra("rating", cardHelperClass.getRating());
                 intent.putExtra("category", cardHelperClass.getCategoryTag());
+                intent.putExtra("wishedSrc", cardHelperClass.getWishedSrc());
                 context.startActivity(intent);
             }
         });
+
+        holder.heartImage.setImageResource(cardHelperClass.getWishedSrc());
 
 
     }
@@ -74,6 +77,7 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
         TextView title, desc;
         RatingBar rating;
         Button moreDetails;
+        ImageView heartImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +87,7 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterHelp
             desc = itemView.findViewById(R.id.locationCard_desc);
             rating = itemView.findViewById(R.id.locationCard_rating);
             moreDetails = itemView.findViewById(R.id.btn_more);
+            heartImage = itemView.findViewById(R.id.heart_image);
 
         }
     }
