@@ -23,6 +23,11 @@ import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselAdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselCardHelperClass;
 import com.example.discoverbuc.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class PopActivity extends Activity {
 
@@ -206,7 +212,7 @@ public class PopActivity extends Activity {
 
     private void addToWishlist(String tagToAdd, String catToAdd) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(new SessionManager(getApplicationContext()).getDataFromSession().get("username"));
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(Objects.requireNonNull(new SessionManager(getApplicationContext()).getDataFromSession().get("username")));
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -234,4 +240,5 @@ public class PopActivity extends Activity {
             }
         });
     }
+
 }

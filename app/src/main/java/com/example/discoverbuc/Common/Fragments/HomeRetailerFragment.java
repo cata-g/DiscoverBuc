@@ -29,9 +29,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.discoverbuc.Common.SessionManager;
+import com.example.discoverbuc.Menu.HelperClasses.AdapterCategoryHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterVerticalHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
+import com.example.discoverbuc.Menu.HelperClasses.CategoryCardsHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.SwipeToWishlistCallback;
 import com.example.discoverbuc.Menu.PopActivity;
 import com.example.discoverbuc.R;
@@ -59,11 +61,18 @@ public class HomeRetailerFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
+
+    RecyclerView categoriesView;
+    RecyclerView.Adapter categoriesAdapter;
+
     ProgressBar loading;
 
     SessionManager sm;
     HashMap<String, String> data;
+
     ArrayList<CardHelperClass> locationsArray;
+    ArrayList<CategoryCardsHelperClass> categoriesArray;
+
     boolean usersPrefs[];
 
     int todaysRec,date;
@@ -99,6 +108,7 @@ public class HomeRetailerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = getView().findViewById(R.id.recyclerView);
+        categoriesView = getView().findViewById(R.id.categories_recycler);
         loading = getView().findViewById(R.id.progress_bar_menu);
         loading.setVisibility(View.GONE);
         todaysCover = getView().findViewById(R.id.todaysCover);
@@ -163,7 +173,13 @@ public class HomeRetailerFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
+        categoriesView.setHasFixedSize(true);
+        categoriesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
         locationsArray = new ArrayList<>();
+        categoriesArray = new ArrayList<>();
+        categoriesArray.add(new CategoryCardsHelperClass("all"));
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -176,6 +192,7 @@ public class HomeRetailerFragment extends Fragment {
                 int i = 0;
                 while(category.hasNext()){
                     DataSnapshot next = (DataSnapshot) category.next();
+                    categoriesArray.add(new CategoryCardsHelperClass(next.getKey()));
                     if(usersPrefs[i])
                     {
                         Iterable<DataSnapshot> locations = next.getChildren();
@@ -274,6 +291,9 @@ public class HomeRetailerFragment extends Fragment {
                 loading.setVisibility(View.GONE);
                 adapter = new AdapterHelperClass(locationsArray, getActivity());
                 recyclerView.setAdapter(adapter);
+
+                categoriesAdapter = new AdapterCategoryHelperClass(categoriesArray, getActivity());
+                categoriesView.setAdapter(categoriesAdapter);
             }
 
             @Override
