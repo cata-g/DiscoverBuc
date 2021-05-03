@@ -19,6 +19,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.discoverbuc.Common.Fragments.HomeRetailerFragment;
 import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselAdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselCardHelperClass;
@@ -35,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -49,11 +51,14 @@ public class PopActivity extends Activity {
 
     String title, desc, tag, categoryTag;
     int imgRes, wishedSrc;
-    float rating;
+    float rating, firstRating;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     ArrayList<CarouselCardHelperClass> imagesArray;
+
+    SessionManager sm;
+    HashMap<String, String> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,8 @@ public class PopActivity extends Activity {
         addWishlist = findViewById(R.id.add_to_wishlist);
         voteRating = findViewById(R.id.vote_rating_button);
 
+        voteRating.setVisibility(View.GONE);
+
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         desc = intent.getStringExtra("desc");
@@ -97,7 +104,8 @@ public class PopActivity extends Activity {
         wishedSrc = intent.getIntExtra("wished", 0);
         imagesArray = new ArrayList<>();
 
-        voteRating.setVisibility(View.INVISIBLE);
+        sm = new SessionManager(this);
+        data = sm.getDataFromSession();
 
         voteRating.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +117,7 @@ public class PopActivity extends Activity {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                voteRating.setVisibility(View.VISIBLE);
+                    checkEligibilityForVote();
             }
         });
 
@@ -123,11 +131,46 @@ public class PopActivity extends Activity {
         setDetails();
     }
 
+    private void checkEligibilityForVote() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations").child(categoryTag).child(tag).child("votedBy").child(data.get(sm.KEY_USERNAME));
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    ratingBar.setEnabled(false);
+                }
+                else{
+                    voteRating.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Error", error.toString());
+            }
+        });
+
+    }
+
 
     private void vote() {
 
-        float selectedRating = ratingBar.getRating();
-        Log.d("RATING", String.valueOf(selectedRating));
+        float changedRating = ratingBar.getRating();
+
+        firstRating = rating;
+        float newRating = firstRating + changedRating;
+        newRating /= 2;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations").child(categoryTag).child(tag);
+        ref.child("rating").setValue(newRating);
+        ref.child("votedBy").child(data.get(sm.KEY_USERNAME)).setValue(data.get(sm.KEY_USERNAME));
+
+        Toast.makeText(this, "Thank you for your vote!", Toast.LENGTH_SHORT).show();
+
+        ratingBar.setRating(newRating);
+        ratingBar.setEnabled(false);
+        voteRating.setVisibility(View.GONE);
 
     }
 

@@ -43,7 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:focusable="true"/>
+                android:focusable="true"
+                />
 
             <Button
                 android:id="@+id/vote_rating_button"
@@ -55,6 +56,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
+                android:visibility="invisible"
                 />
 
         </LinearLayout>
