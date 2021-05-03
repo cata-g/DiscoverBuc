@@ -59,6 +59,8 @@ import java.util.concurrent.TimeUnit;
 
 public class HomeRetailerFragment extends Fragment {
 
+    private static HomeRetailerFragment instance;
+
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
@@ -71,6 +73,7 @@ public class HomeRetailerFragment extends Fragment {
     HashMap<String, String> data;
 
     ArrayList<CardHelperClass> locationsArray;
+    ArrayList<CardHelperClass> showArray;
     ArrayList<CategoryCardsHelperClass> categoriesArray;
 
     boolean usersPrefs[];
@@ -101,6 +104,7 @@ public class HomeRetailerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        instance = this;
         return inflater.inflate(R.layout.fragment_home_retailer, container, false);
     }
 
@@ -178,6 +182,7 @@ public class HomeRetailerFragment extends Fragment {
 
         locationsArray = new ArrayList<>();
         categoriesArray = new ArrayList<>();
+        showArray = new ArrayList<>();
         categoriesArray.add(new CategoryCardsHelperClass("all"));
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
@@ -199,58 +204,29 @@ public class HomeRetailerFragment extends Fragment {
                         Iterator<DataSnapshot> locationDetails = locations.iterator();
                         while(locationDetails.hasNext()){
                             DataSnapshot detail = (DataSnapshot) locationDetails.next();
-                            if(!shouldRecommendOutdoor){
-                                boolean detailOutdoor = detail.child("outdoor").getValue(boolean.class);
-                                if(!detailOutdoor){
-                                    String tag = detail.getKey();
-                                    String categoryTag = next.getKey();
-                                    String title = detail.child("name").getValue(String.class);
-                                    String desc = detail.child("desc").getValue(String.class);
-                                    float rating = detail.child("rating").getValue(float.class);
-                                    String imageName = detail.child("image").getValue(String.class);
-                                    int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
-                                    DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
-                                    wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if(snapshot.exists()){
-                                                wishedSrc = R.drawable.full_heart;
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-
-                                    locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
+                            String tag = detail.getKey();
+                            String categoryTag = next.getKey();
+                            String title = detail.child("name").getValue(String.class);
+                            String desc = detail.child("desc").getValue(String.class);
+                            float rating = detail.child("rating").getValue(float.class);
+                            String imageName = detail.child("image").getValue(String.class);
+                            int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                            DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
+                            wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                        wishedSrc = R.drawable.full_heart;
+                                    }
                                 }
-                            }else{
-                                String tag = detail.getKey();
-                                String categoryTag = next.getKey();
-                                String title = detail.child("name").getValue(String.class);
-                                String desc = detail.child("desc").getValue(String.class);
-                                float rating = detail.child("rating").getValue(float.class);
-                                String imageName = detail.child("image").getValue(String.class);
-                                int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
-                                DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
-                                wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if(snapshot.exists()){
-                                            wishedSrc = R.drawable.full_heart;
-                                        }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                                    }
-                                });
+                                }
+                            });
 
-                                locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
-                            }
+                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
 
                         }
                     }
@@ -287,9 +263,10 @@ public class HomeRetailerFragment extends Fragment {
                 });
 
                 locationsArray.remove(todaysRec);
-
                 loading.setVisibility(View.GONE);
-                adapter = new AdapterHelperClass(locationsArray, getActivity());
+
+                populateShowArray("all");
+                adapter = new AdapterHelperClass(showArray, getActivity());
                 recyclerView.setAdapter(adapter);
 
                 categoriesAdapter = new AdapterCategoryHelperClass(categoriesArray, getActivity());
@@ -306,6 +283,23 @@ public class HomeRetailerFragment extends Fragment {
         ref.addListenerForSingleValueEvent(valueEventListener);
 
 
+
+    }
+
+    public void populateShowArray(String category){
+
+        showArray = new ArrayList<>();
+
+        if(category.equals("all")){
+            showArray.addAll(locationsArray);
+        }else{
+            for(CardHelperClass card : locationsArray)
+                if(card.getCategoryTag().equals(category))
+                    showArray.add(card);
+        }
+
+        adapter = new AdapterHelperClass(showArray, getActivity());
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -429,6 +423,10 @@ public class HomeRetailerFragment extends Fragment {
                 Log.d("ERROR", error.toString());
             }
         });
+    }
+
+    public  static  HomeRetailerFragment getInstance(){
+        return instance;
     }
 
 }

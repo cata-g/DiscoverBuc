@@ -11,19 +11,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.discoverbuc.Common.Dashboard;
+import com.example.discoverbuc.Common.Fragments.HomeRetailerFragment;
+import com.example.discoverbuc.MainActivity;
 import com.example.discoverbuc.R;
 
 import java.util.ArrayList;
 
-public class AdapterCategoryHelperClass extends RecyclerView.Adapter<AdapterCategoryHelperClass.ViewHolder> {
+public class AdapterCategoryHelperClass extends RecyclerView.Adapter<AdapterCategoryHelperClass.ViewHolder>{
 
     ArrayList<CategoryCardsHelperClass> categories;
     Context context;
+
 
     public AdapterCategoryHelperClass(ArrayList<CategoryCardsHelperClass> categories, Context context) {
         this.categories = categories;
         this.context = context;
     }
+
 
     @NonNull
     @Override
@@ -42,11 +47,13 @@ public class AdapterCategoryHelperClass extends RecyclerView.Adapter<AdapterCate
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("moglinz", categoryCardsHelperClass.getTitle());
+                HomeRetailerFragment.getInstance().populateShowArray(categoryCardsHelperClass.getTitle());
             }
         });
 
     }
+
+
 
     @Override
     public int getItemCount() {
