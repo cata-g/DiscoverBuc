@@ -1,6 +1,7 @@
 package com.example.discoverbuc.Menu;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,14 +20,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.discoverbuc.Common.Fragments.HomeRetailerFragment;
 import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselAdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CarouselCardHelperClass;
 import com.example.discoverbuc.R;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +44,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 
-public class PopActivity extends Activity {
+public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
 
     TextView title_text, desc_text, details_headline, email_text, phone_text, program_text, website_text;
     RatingBar ratingBar;
@@ -59,6 +63,8 @@ public class PopActivity extends Activity {
 
     SessionManager sm;
     HashMap<String, String> data;
+
+    GoogleMap mGoogleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +135,8 @@ public class PopActivity extends Activity {
         });
         clearActivity();
         setDetails();
+
+
     }
 
     private void checkEligibilityForVote() {
@@ -152,7 +160,6 @@ public class PopActivity extends Activity {
         });
 
     }
-
 
     private void vote() {
 
@@ -251,6 +258,10 @@ public class PopActivity extends Activity {
         loading.setVisibility(View.VISIBLE);
         reference.addListenerForSingleValueEvent(valueEventListener);
 
+
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+        supportMapFragment.getMapAsync(this);
+
     }
 
     private void addToWishlist(String tagToAdd, String catToAdd) {
@@ -284,4 +295,15 @@ public class PopActivity extends Activity {
         });
     }
 
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mGoogleMap = googleMap;
+        LatLng latLng = new LatLng(44.429693173911424, 26.101934718905948);
+        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+        mGoogleMap.moveCamera(cameraUpdate);
+
+    }
 }
