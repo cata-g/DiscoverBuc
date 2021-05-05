@@ -114,8 +114,6 @@ public class WishlistRetailerFragment extends Fragment {
                             int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
                             locationsWished.add(new CardHelperClass(imageLoc, rating, title, desc, locId, locCat, R.drawable.full_heart));
 
-                            Log.d("TEEEEEEEEEEEEEEEEST", locCat + locId);
-
                             adapter = new AdapterVerticalHelperClass(locationsWished, getContext());
                             recyclerView.setAdapter(adapter);
 

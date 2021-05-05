@@ -234,21 +234,6 @@ public class HomeRetailerFragment extends Fragment {
                                 continue;
                             }
 
-                            DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
-                            wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.exists()){
-                                        wishedSrc = R.drawable.full_heart;
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
                             locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
 
                         }
@@ -287,6 +272,11 @@ public class HomeRetailerFragment extends Fragment {
 
                 locationsArray.remove(todaysRec);
 
+                for(int j = 0; j < locationsArray.size();j++)
+                    checkWishlist(j);
+
+
+
                 populateShowArray("for you");
                 adapter = new AdapterHelperClass(showArray, getActivity());
                 recyclerView.setAdapter(adapter);
@@ -296,7 +286,6 @@ public class HomeRetailerFragment extends Fragment {
 
                 loading.setVisibility(View.GONE);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -452,5 +441,28 @@ public class HomeRetailerFragment extends Fragment {
     public  static  HomeRetailerFragment getInstance(){
         return instance;
     }
+
+    private void checkWishlist(int pos){
+        DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(locationsArray.get(pos).getTag());
+        wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    wishedSrc = R.drawable.full_heart;
+                    locationsArray.get(pos).setWishedSrc(wishedSrc);
+
+
+                }
+                Log.d("TESSSST",  pos + String.valueOf(pos == locationsArray.size()-1));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 
 }
