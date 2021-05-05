@@ -111,6 +111,8 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
         categoryTag = intent.getStringExtra("category");
         wishedSrc = intent.getIntExtra("wishedSrc", 0);
 
+        Log.d("TEEEEEEEEEEEEEEEEST", tag + categoryTag);
+
         imagesArray = new ArrayList<>();
 
         sm = new SessionManager(this);
