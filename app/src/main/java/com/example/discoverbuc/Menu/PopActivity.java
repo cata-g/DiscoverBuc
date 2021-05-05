@@ -111,7 +111,6 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
         categoryTag = intent.getStringExtra("category");
         wishedSrc = intent.getIntExtra("wishedSrc", 0);
 
-        Log.d("TEEEEEEEEEEEEEEEEST", tag + categoryTag);
 
         imagesArray = new ArrayList<>();
 
@@ -202,6 +201,7 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
         website_text.setText("");
 
         ratingBar.setRating(0);
+        addWishlist.setImageResource(R.drawable.empty_heart);
     }
 
     private void setDetails(){
@@ -210,11 +210,9 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
         ratingBar.setRating(rating);
         desc_text.setText(desc);
 
-        if(wishedSrc == 0)
+        if(wishedSrc != 0){
             addWishlist.setImageResource(wishedSrc);
-        else
-            addWishlist.setImageResource(R.drawable.full_heart);
-
+        }
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("locations").child(categoryTag).child(tag);
 

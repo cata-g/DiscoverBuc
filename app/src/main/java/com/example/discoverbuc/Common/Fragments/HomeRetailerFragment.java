@@ -450,10 +450,7 @@ public class HomeRetailerFragment extends Fragment {
                 if(snapshot.exists()){
                     wishedSrc = R.drawable.full_heart;
                     locationsArray.get(pos).setWishedSrc(wishedSrc);
-
-
                 }
-                Log.d("TESSSST",  pos + String.valueOf(pos == locationsArray.size()-1));
             }
 
             @Override
