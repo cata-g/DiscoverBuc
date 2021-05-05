@@ -32,6 +32,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +66,7 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
     HashMap<String, String> data;
 
     GoogleMap mGoogleMap;
+    double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,11 +301,27 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        mGoogleMap = googleMap;
-        LatLng latLng = new LatLng(44.429693173911424, 26.101934718905948);
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title));
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-        mGoogleMap.moveCamera(cameraUpdate);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("locations").child(categoryTag).child(tag).child("loc");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    lat = snapshot.child("lat").getValue(double.class);
+                    lng = snapshot.child("lng").getValue(double.class);
+                    mGoogleMap = googleMap;
+                    LatLng latLng = new LatLng(lat, lng);
+                    Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title));
+                    marker.showInfoWindow();
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+                    mGoogleMap.moveCamera(cameraUpdate);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("ERROR", error.toString());
+            }
+        });
 
     }
 }
