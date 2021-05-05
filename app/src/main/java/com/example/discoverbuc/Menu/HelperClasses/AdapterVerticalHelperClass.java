@@ -2,6 +2,7 @@ package com.example.discoverbuc.Menu.HelperClasses;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterVert
         holder.moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, PopActivity.class);
                 intent.putExtra("tag", cardHelperClass.getTag());
                 intent.putExtra("imageRes", cardHelperClass.getImageSrc());

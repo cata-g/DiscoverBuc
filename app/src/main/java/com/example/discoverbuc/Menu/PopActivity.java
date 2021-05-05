@@ -109,7 +109,8 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
         rating = intent.getFloatExtra("rating", 0);
         tag = intent.getStringExtra("tag");
         categoryTag = intent.getStringExtra("category");
-        wishedSrc = intent.getIntExtra("wished", 0);
+        wishedSrc = intent.getIntExtra("wishedSrc", 0);
+
         imagesArray = new ArrayList<>();
 
         sm = new SessionManager(this);
@@ -244,10 +245,12 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
                     program_text.setText(programToSet);
                     website_text.setText(websiteToSet);
 
+
                 }
 
                 adapter = new CarouselAdapterHelperClass(imagesArray);
                 recyclerView.setAdapter(adapter);
+
                 loading.setVisibility(View.GONE);
 
             }
@@ -265,6 +268,7 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
         supportMapFragment.getMapAsync(this);
+
 
     }
 

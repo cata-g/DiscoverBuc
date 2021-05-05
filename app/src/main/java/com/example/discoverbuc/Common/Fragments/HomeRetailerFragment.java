@@ -97,8 +97,9 @@ public class HomeRetailerFragment extends Fragment {
     Button seeMoreDetails;
     boolean recyclerHorizontal = true;
 
-    ImageView heartImage;
-    int wishedSrc = R.drawable.empty_heart;
+    String tag, categoryTag, title, desc, imageName;
+    float rating;
+    int wishedSrc = R.drawable.empty_heart, imageLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,13 +135,13 @@ public class HomeRetailerFragment extends Fragment {
                 if(recyclerHorizontal == true){
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
                     seeMoreDetails.setText("SEE MORE");
-                    adapter = new AdapterHelperClass(locationsArray, getActivity());
+                    adapter = new AdapterHelperClass(showArray, getActivity());
                     recyclerView.setAdapter(adapter);
                     recyclerView.setHasFixedSize(true);
                 }else{
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                     seeMoreDetails.setText("SEE LESS");
-                    adapter = new AdapterVerticalHelperClass(locationsArray, getActivity());
+                    adapter = new AdapterVerticalHelperClass(showArray, getActivity());
                     recyclerView.setAdapter(adapter);
                     recyclerView.setHasFixedSize(true);
                     enableSwipeToWishlistAndUndo();
@@ -204,13 +205,35 @@ public class HomeRetailerFragment extends Fragment {
                         Iterator<DataSnapshot> locationDetails = locations.iterator();
                         while(locationDetails.hasNext()){
                             DataSnapshot detail = (DataSnapshot) locationDetails.next();
-                            String tag = detail.getKey();
-                            String categoryTag = next.getKey();
-                            String title = detail.child("name").getValue(String.class);
-                            String desc = detail.child("desc").getValue(String.class);
-                            float rating = detail.child("rating").getValue(float.class);
-                            String imageName = detail.child("image").getValue(String.class);
-                            int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                            tag = detail.getKey();
+                            categoryTag = next.getKey();
+
+                            if(detail.child("name").exists()){
+                                title = detail.child("name").getValue(String.class);
+                            }else{
+                                continue;
+                            }
+
+                            if(detail.child("desc").exists()){
+                                desc = detail.child("desc").getValue(String.class);
+                            }else{
+                                continue;
+                            }
+
+                            if(detail.child("rating").exists()){
+                                rating = detail.child("rating").getValue(float.class);
+                            }else{
+                                continue;
+                            }
+
+                            if(detail.child("rating").exists())
+                            {
+                                imageName = detail.child("image").getValue(String.class);
+                                imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                            }else{
+                                continue;
+                            }
+
                             DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get("username")).child("wishlist").child(tag);
                             wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -263,14 +286,15 @@ public class HomeRetailerFragment extends Fragment {
                 });
 
                 locationsArray.remove(todaysRec);
-                loading.setVisibility(View.GONE);
 
-                populateShowArray("all");
+                populateShowArray("for you");
                 adapter = new AdapterHelperClass(showArray, getActivity());
                 recyclerView.setAdapter(adapter);
 
                 categoriesAdapter = new AdapterCategoryHelperClass(categoriesArray, getActivity());
                 categoriesView.setAdapter(categoriesAdapter);
+
+                loading.setVisibility(View.GONE);
             }
 
             @Override

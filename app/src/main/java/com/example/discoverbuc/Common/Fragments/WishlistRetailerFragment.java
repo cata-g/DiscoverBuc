@@ -96,11 +96,9 @@ public class WishlistRetailerFragment extends Fragment {
                 wishlist_not_found.setLayoutParams(params);
 
                 Iterable<DataSnapshot> locationsWish = snapshot.getChildren();
-                Iterator<DataSnapshot> ids = locationsWish.iterator();
 
-                while(ids.hasNext()){
+                for (DataSnapshot id : locationsWish) {
 
-                    DataSnapshot id = (DataSnapshot) ids.next();
                     String locId = id.getKey();
                     String locCat = id.getValue().toString();
 
@@ -118,8 +116,10 @@ public class WishlistRetailerFragment extends Fragment {
                             int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
                             locationsWished.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, R.drawable.full_heart));
 
-                            adapter = new AdapterVerticalHelperClass(locationsWished, getActivity());
+
+                            adapter = new AdapterVerticalHelperClass(locationsWished, getContext());
                             recyclerView.setAdapter(adapter);
+
                         }
 
                         @Override
@@ -127,9 +127,12 @@ public class WishlistRetailerFragment extends Fragment {
                             Log.d("ERROR", error.toString());
                         }
                     });
+
+
                 }
 
-                loading.setVisibility(View.INVISIBLE);
+
+                loading.setVisibility(View.GONE);
                 loading.setLayoutParams(params);
 
             }
