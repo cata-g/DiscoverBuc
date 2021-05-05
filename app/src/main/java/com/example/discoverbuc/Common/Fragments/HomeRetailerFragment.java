@@ -183,7 +183,7 @@ public class HomeRetailerFragment extends Fragment {
         locationsArray = new ArrayList<>();
         categoriesArray = new ArrayList<>();
         showArray = new ArrayList<>();
-        categoriesArray.add(new CategoryCardsHelperClass("all"));
+        categoriesArray.add(new CategoryCardsHelperClass("for you"));
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
 
@@ -290,7 +290,7 @@ public class HomeRetailerFragment extends Fragment {
 
         showArray = new ArrayList<>();
 
-        if(category.equals("all")){
+        if(category.equals("for you")){
             showArray.addAll(locationsArray);
         }else{
             for(CardHelperClass card : locationsArray)

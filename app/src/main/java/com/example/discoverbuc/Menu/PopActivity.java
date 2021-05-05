@@ -169,7 +169,9 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
 
         firstRating = rating;
         float newRating = firstRating + changedRating;
-        newRating /= 2;
+
+        if(firstRating != 0)
+            newRating /= 2;
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations").child(categoryTag).child(tag);
         ref.child("rating").setValue(newRating);
