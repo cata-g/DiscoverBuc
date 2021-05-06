@@ -64,6 +64,7 @@
     <string name="nav_home">HOME</string>
     <string name="nav_wishlist">WISHLIST</string>
     <string name="nav_prof">PROFILE</string>
+    <string name="nav_map">MAP</string>
 
     <!-- Wishlist -->
     <string name="wishlist_not_found">Your wishlist is empty! Add some locations from menu!</string>

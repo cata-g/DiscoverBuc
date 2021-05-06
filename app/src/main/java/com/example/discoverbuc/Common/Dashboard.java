@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.example.discoverbuc.Common.Fragments.HomeRetailerFragment;
+import com.example.discoverbuc.Common.Fragments.MapRetailerFragment;
 import com.example.discoverbuc.Common.Fragments.ProfileRetailerFragment;
 import com.example.discoverbuc.Common.Fragments.WishlistRetailerFragment;
 import com.example.discoverbuc.R;
@@ -44,6 +45,10 @@ public class Dashboard extends AppCompatActivity {
 
                     case R.id.bottom_nav_profile:
                         fragment = new ProfileRetailerFragment();
+                        break;
+
+                    case R.id.bottom_nav_map:
+                        fragment = new MapRetailerFragment();
                         break;
                 }
 
