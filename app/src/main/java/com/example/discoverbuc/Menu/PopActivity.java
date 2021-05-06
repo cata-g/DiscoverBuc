@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,6 +33,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -316,7 +319,7 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
                     lng = snapshot.child("lng").getValue(double.class);
                     mGoogleMap = googleMap;
                     LatLng latLng = new LatLng(lat, lng);
-                    Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title));
+                    Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(BitmapDescriptorFactory.fromBitmap(mapIcons(categoryTag))));
                     marker.showInfoWindow();
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
                     mGoogleMap.moveCamera(cameraUpdate);
@@ -330,4 +333,28 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
         });
 
     }
+
+    public Bitmap mapIcons(String cat){
+
+        int src = 0;
+
+        if(cat.equals("museums")){
+            src =  R.drawable.icon_museum;
+        }else if(cat.equals("coffeeshops")){
+            src = R.drawable.icon_coffee;
+        }else if(cat.equals("nature")){
+            src = R.drawable.icon_nature;
+        }else if(cat.equals("restaurants")){
+            src = R.drawable.icon_restaurant;
+        }
+
+        int height = 75;
+        int width = 75;
+        BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(src);
+        Bitmap b = bitmapDrawable.getBitmap();
+        Bitmap icon = Bitmap.createScaledBitmap(b, width, height, false);
+        return icon;
+
+    }
+
 }
