@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.discoverbuc.Common.HelperClasses.BikeRentPlaceHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterCategoryHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
@@ -38,6 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerClickListener,OnMapReadyCallback {
@@ -60,6 +62,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
         super.onViewCreated(view, savedInstanceState);
         loading = getView().findViewById(R.id.progress_bar_map);
 
+        addBikes();
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.bigmap_fragment);
         supportMapFragment.getMapAsync(this::onMapReady);
     }
@@ -124,7 +127,6 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                     mGoogleMap.setOnMarkerClickListener(MapRetailerFragment.this::onMarkerClick);
                     mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
                     mGoogleMap.setPadding(0,0,0,150);
-                    mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
                 }
 
@@ -136,9 +138,6 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
         };
 
         ref.addListenerForSingleValueEvent(valueEventListener);
-
-
-
 
     }
 
@@ -154,6 +153,8 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
             src = R.drawable.icon_nature;
         }else if(cat.equals("restaurants")){
             src = R.drawable.icon_restaurant;
+        }else if(cat.equals("bicycle")){
+            src = R.drawable.icon_bicycle;
         }
 
         int height = 75;
@@ -177,5 +178,44 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
         }
 
         return false;
+    }
+
+    private void addBikes(){
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bikerentloc");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Iterable<DataSnapshot> locations = snapshot.getChildren();
+                    Iterator<DataSnapshot> location = locations.iterator();
+
+                    while(location.hasNext()){
+                        DataSnapshot next = (DataSnapshot) location.next();
+
+                        String name = next.getKey();
+                        double lat = next.child("lat").getValue(double.class);
+                        double lng = next.child("lng").getValue(double.class);
+
+                        LatLng locLatLng = new LatLng(lat, lng);
+                        Marker marker = mGoogleMap.addMarker(new MarkerOptions()
+                                .position(locLatLng)
+                                .title(name)
+                                .icon(BitmapDescriptorFactory.fromBitmap(mapIcons("bicycle")
+                                )));
+                        marker.setTag(0);
+                        marker.showInfoWindow();
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Error", error.toString());
+            }
+        });
+
     }
 }
