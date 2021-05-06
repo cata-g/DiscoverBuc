@@ -11,6 +11,7 @@ import com.example.discoverbuc.Common.Fragments.ProfileRetailerFragment;
 import com.example.discoverbuc.Common.Fragments.WishlistRetailerFragment;
 import com.example.discoverbuc.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+import com.google.android.gms.location.LocationListener;
 
 public class Dashboard extends AppCompatActivity {
 
