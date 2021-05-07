@@ -81,5 +81,6 @@
     <!-- MAP ACTIVITY -->
     <string name="cannot_access_loc">You haven\'t permitted the location access</string>
     <string name="ok">Ok</string>
+    <string name="click_info">Click for info</string>
 
 </resources>

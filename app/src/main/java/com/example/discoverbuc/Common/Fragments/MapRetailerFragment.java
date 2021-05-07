@@ -32,6 +32,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.discoverbuc.Common.HelperClasses.BikeRentPlaceHelperClass;
+import com.example.discoverbuc.Common.HelperClasses.CustomInfoWindowAdapter;
+import com.example.discoverbuc.Common.HelperClasses.MapMarkerInfoHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterCategoryHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
@@ -92,19 +94,18 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
         checkPermission();
 
-        addBikes();
+
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.bigmap_fragment);
         supportMapFragment.getMapAsync(this::onMapReady);
+        addBikes();
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        lat = 44.439663;
-        lng = 26.096306;
         mGoogleMap = googleMap;
-        LatLng latLng = new LatLng(lat, lng);
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -120,9 +121,12 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                     Iterator<DataSnapshot> locationDetails = locations.iterator();
                     while (locationDetails.hasNext()) {
                         DataSnapshot detail = (DataSnapshot) locationDetails.next();
-                        String title;
+                        String title,desc, imageName;
+                        float rating;
+                        int imageLoc;
                         double locLat, locLng;
                         String categoryTag = next.getKey();
+                        String tag = detail.getKey();
 
                         if (detail.child("name").exists()) {
                             title = detail.child("name").getValue(String.class);
@@ -142,21 +146,43 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                             continue;
                         }
 
+                        if(detail.child("desc").exists()){
+                            desc = detail.child("desc").getValue(String.class);
+                        }else{
+                            continue;
+                        }
+
+                        if(detail.child("rating").exists()){
+                            rating = detail.child("rating").getValue(float.class);
+                        }else{
+                            continue;
+                        }
+
+                        if(detail.child("rating").exists())
+                        {
+                            imageName = detail.child("image").getValue(String.class);
+                            imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                        }else{
+                            continue;
+                        }
+
+                        int clickcount = 0;
+                        MapMarkerInfoHelperClass mapMarkerInfo = new MapMarkerInfoHelperClass(clickcount, tag, categoryTag, title, desc, rating, imageLoc, getActivity());
+
                         LatLng locLatLng = new LatLng(lat, lng);
                         Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                                 .position(locLatLng)
                                 .title(title)
                                 .icon(BitmapDescriptorFactory.fromBitmap(mapIcons(categoryTag)
                                 )));
-                        marker.setTag(0);
+                        marker.setTag(mapMarkerInfo);
                         marker.showInfoWindow();
                     }
                     loading.setVisibility(View.GONE);
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 12.5f);
-                    mGoogleMap.moveCamera(cameraUpdate);
                     mGoogleMap.setOnMarkerClickListener(MapRetailerFragment.this::onMarkerClick);
                     mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
                     mGoogleMap.setPadding(0, 0, 0, 150);
+                    mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getActivity()));
 
                 }
 
@@ -196,16 +222,25 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
     }
 
+
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        Integer clickCount = (Integer) marker.getTag();
-        if(clickCount != null){
-            clickCount += 1;
-            marker.setTag(clickCount);
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15);
+        MapMarkerInfoHelperClass markerInfo = (MapMarkerInfoHelperClass) marker.getTag();
+        int clickCount = markerInfo.getClickCount();
+
+        if(clickCount == 0){
+            markerInfo.setClickCount(clickCount++);
+            marker.setTag(markerInfo);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 20);
             mGoogleMap.animateCamera(cameraUpdate);
         }
+        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                markerInfo.openPop();
+            }
+        });
 
         return false;
     }
@@ -233,7 +268,8 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                 .title(name)
                                 .icon(BitmapDescriptorFactory.fromBitmap(mapIcons("bicycle")
                                 )));
-                        marker.setTag(0);
+                        marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
+                        marker.showInfoWindow();
                         marker.showInfoWindow();
 
                     }
@@ -265,7 +301,12 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
         if(requestCode == 100 && (grantResults.length > 0) && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)){
             getCurrentLocation();
         }else{
-            Toast.makeText(getActivity(), "Locaiton Permission Denied!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Location Permission Denied!", Toast.LENGTH_SHORT).show();
+            lat = 44.439663;
+            lng = 26.096306;
+            LatLng latLng = new LatLng(lat, lng);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            mGoogleMap.animateCamera(cameraUpdate);
         }
 
     }
@@ -290,7 +331,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                 .title("You are here")
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 );
-                        marker.setTag(0);
+                        marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
                         marker.showInfoWindow();
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
                         mGoogleMap.animateCamera(cameraUpdate);
@@ -315,7 +356,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 );
 
-                                marker.setTag(0);
+                                marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
                                 marker.showInfoWindow();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
                                 mGoogleMap.animateCamera(cameraUpdate);
