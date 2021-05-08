@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.CheckBox;
@@ -182,18 +183,19 @@ public class Login extends AppCompatActivity {
 
                         //Basic Info
                         String name = snapshot.child(userValue).child("fullName").getValue(String.class);
-                        //String email = snapshot.child(userValue).child("email").getValue(String.class);
                         String phoneNo = snapshot.child(userValue).child("phone").getValue(String.class);
                         String birthday = snapshot.child(userValue).child("birthday").getValue(String.class);
 
                         //Interests info
-                        String interestInCS = snapshot.child(userValue).child("Prefs").child("coffee_shopSelected").getValue(Boolean.class).toString();
-                        String interestInMuseums = snapshot.child(userValue).child("Prefs").child("museumSelected").getValue(Boolean.class).toString();
-                        String interestInNature = snapshot.child(userValue).child("Prefs").child("natureSelected").getValue(Boolean.class).toString();
-                        String interestInRestaurants = snapshot.child(userValue).child("Prefs").child("restaurantSelected").getValue(Boolean.class).toString();
+                        String interestInCS = checkInterest("coffee_shopSelected", snapshot, userValue);
+                        String interestInMuseums = checkInterest("museumSelected", snapshot, userValue);
+                        String interestInNature = checkInterest("natureSelected", snapshot, userValue);
+                        String interestInRestaurants = checkInterest("restaurantSelected", snapshot, userValue);
+                        String interestInMalls = checkInterest("mallSelected", snapshot, userValue);
+                        String interestInPubs = checkInterest("pubSelected", snapshot, userValue);
 
                         SessionManager sessionManager = new SessionManager(Login.this);
-                        sessionManager.createLoginSession(name, userValue, passValue, phoneNo, birthday, interestInNature, interestInMuseums, interestInRestaurants, interestInCS);
+                        sessionManager.createLoginSession(name, userValue, passValue, phoneNo, birthday, interestInNature, interestInMuseums, interestInRestaurants, interestInCS, interestInMalls, interestInPubs);
 
                         Intent intent = new Intent(getApplicationContext(), Dashboard.class);
 
@@ -251,6 +253,15 @@ public class Login extends AppCompatActivity {
 
         finish();
 
+    }
+
+    private String checkInterest(String interest, DataSnapshot snapshot, String userValue){
+        String toReturn = "false";
+        if(snapshot.child(userValue).child("Prefs").hasChild(interest)){
+            toReturn = snapshot.child(userValue).child("Prefs").child(interest).getValue(Boolean.class).toString();
+        }
+
+        return toReturn;
     }
 
 }

@@ -22,8 +22,8 @@ public class RegisterPreferences extends AppCompatActivity {
 
     String username,password, name, birthday, phone;
 
-    CheckBox nature, museum, restaurant, coffee_shop;
-    int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
+    CheckBox nature, museum, restaurant, coffee_shop, mall, pub;
+    int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected, mall_selected, pub_selected;
     int counter = 0;
 
 
@@ -51,6 +51,8 @@ public class RegisterPreferences extends AppCompatActivity {
         museum = findViewById(R.id.register_hobby_museum);
         restaurant = findViewById(R.id.register_hobby_restaurant);
         coffee_shop = findViewById(R.id.register_hobby_coffeeShop);
+        mall = findViewById(R.id.register_hobby_mall);
+        pub = findViewById(R.id.register_hobby_pub);
     }
 
     public void callVerifyScreen(View view){
@@ -70,6 +72,8 @@ public class RegisterPreferences extends AppCompatActivity {
         intent.putExtra("isMuseumSelected", museumSelected);
         intent.putExtra("isRestaurantSelected", restaurantSelected);
         intent.putExtra("isCoffeeShopSelected", coffee_shopSelected);
+        intent.putExtra("isMallSelected", mall_selected);
+        intent.putExtra("isPubSelected", pub_selected);
         intent.putExtra("activity", "register");
 
         //Animations
@@ -147,6 +151,14 @@ public class RegisterPreferences extends AppCompatActivity {
         if(restaurant.isChecked()){
             counter++;
             restaurantSelected = 1;
+        }
+        if(mall.isChecked()){
+            counter++;
+            mall_selected = 1;
+        }
+        if(pub.isChecked()){
+            counter++;
+            pub_selected = 1;
         }
 
         if(counter == 0){

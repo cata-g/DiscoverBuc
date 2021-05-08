@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#fab73d</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -14,4 +12,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pink">#f469a9</color>
     <color name="blue">#88bef5</color>
+
+    <!-- Custom Color Pallete -->
+    <color name="yellow">#fab73d</color>
+    <color name="pale_yellow">#fddca5</color>
+    <color name="grey">#bbc8ba</color>
+    <color name="green">#546747</color>
+    <color name="dark_green">#2b331f</color>
+    <color name="light_black">#4a4b4e</color>
+
 </resources>

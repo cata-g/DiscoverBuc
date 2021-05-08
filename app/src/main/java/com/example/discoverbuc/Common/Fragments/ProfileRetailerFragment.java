@@ -26,14 +26,14 @@ import java.util.HashMap;
 
 public class ProfileRetailerFragment extends Fragment {
 
-    CheckBox cf, museum, nature, restaurant;
+    CheckBox cf, museum, nature, restaurant, mall, pub;
     Button logout,save, edit;
 
     HashMap<String, String> data;
     boolean[] usersPrefs;
     SessionManager sm;
 
-    int counter = 0, pref_Cf = 0, pref_Mus = 0, pref_Rest = 0, pref_Nat = 0;
+    int counter = 0, pref_Cf = 0, pref_Mus = 0, pref_Rest = 0, pref_Nat = 0, pref_Mall = 0, pref_Pub = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +56,8 @@ public class ProfileRetailerFragment extends Fragment {
         museum = getView().findViewById(R.id.profile_museum);
         nature = getView().findViewById(R.id.profile_nature);
         restaurant = getView().findViewById(R.id.profile_restaurant);
+        mall = getView().findViewById(R.id.profile_mall);
+        pub = getView().findViewById(R.id.profile_pub);
 
         sm = new SessionManager(getActivity());
         data = sm.getDataFromSession();
@@ -63,14 +65,18 @@ public class ProfileRetailerFragment extends Fragment {
         usersPrefs = new boolean[10];
 
         usersPrefs[0] = data.get(sm.KEY_INTERESTS_COFFEESHOP).equals("true");
-        usersPrefs[1] = data.get(sm.KEY_INTERESTS_MUSEUM).equals("true");
-        usersPrefs[2] = data.get(sm.KEY_INTERESTS_NATURE).equals("true");
-        usersPrefs[3] = data.get(sm.KEY_INTERESTS_RESTAURANT).equals("true");
+        usersPrefs[1] = data.get(sm.KEY_INTERESTS_MALL).equals("true");
+        usersPrefs[2] = data.get(sm.KEY_INTERESTS_MUSEUM).equals("true");
+        usersPrefs[3] = data.get(sm.KEY_INTERESTS_NATURE).equals("true");
+        usersPrefs[4] = data.get(sm.KEY_INTERESTS_PUB).equals("true");
+        usersPrefs[5] = data.get(sm.KEY_INTERESTS_RESTAURANT).equals("true");
 
         cf.setChecked(usersPrefs[0]);
-        museum.setChecked(usersPrefs[1]);
-        nature.setChecked(usersPrefs[2]);
-        restaurant.setChecked(usersPrefs[3]);
+        mall.setChecked(usersPrefs[1]);
+        museum.setChecked(usersPrefs[2]);
+        nature.setChecked(usersPrefs[3]);
+        pub.setChecked(usersPrefs[4]);
+        restaurant.setChecked(usersPrefs[5]);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +127,14 @@ public class ProfileRetailerFragment extends Fragment {
             counter++;
             pref_Rest  = 1;
         }
+        if(pub.isChecked()){
+            counter++;
+            pref_Pub = 1;
+        }
+        if(mall.isChecked()){
+            counter++;
+            pref_Mall = 1;
+        }
 
         if(counter == 0){
             Toast.makeText(getActivity(), "You must select at least one", Toast.LENGTH_SHORT).show();
@@ -136,8 +150,8 @@ public class ProfileRetailerFragment extends Fragment {
             return;
         }
 
-        PrefsHelperClass prefsHelperClass = new PrefsHelperClass(pref_Nat, pref_Mus, pref_Rest, pref_Cf);
-        sm.changePrefs(pref_Nat, pref_Mus, pref_Rest, pref_Cf);
+        PrefsHelperClass prefsHelperClass = new PrefsHelperClass(pref_Nat, pref_Mus, pref_Rest, pref_Cf, pref_Mall, pref_Pub);
+        sm.changePrefs(pref_Nat, pref_Mus, pref_Rest, pref_Cf, pref_Mall, pref_Pub);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(data.get(sm.KEY_USERNAME)).child("Prefs");
         reference.setValue(prefsHelperClass);
 
@@ -159,6 +173,8 @@ public class ProfileRetailerFragment extends Fragment {
         museum.setEnabled(mode);
         nature.setEnabled(mode);
         restaurant.setEnabled(mode);
+        mall.setEnabled(mode);
+        pub.setEnabled(mode);
 
     }
 }

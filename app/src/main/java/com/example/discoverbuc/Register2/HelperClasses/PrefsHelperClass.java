@@ -2,16 +2,18 @@ package com.example.discoverbuc.Register2.HelperClasses;
 
 public class PrefsHelperClass {
 
-    int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
+    int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected, mallSelected, pubSelected;
 
     public PrefsHelperClass() {
     }
 
-    public PrefsHelperClass(int natureSelected, int museumSelected, int restaurantSelected, int coffee_shopSelected) {
+    public PrefsHelperClass(int natureSelected, int museumSelected, int restaurantSelected, int coffee_shopSelected, int mallSelected, int pubSelected) {
         this.natureSelected = natureSelected;
         this.museumSelected = museumSelected;
         this.restaurantSelected = restaurantSelected;
         this.coffee_shopSelected = coffee_shopSelected;
+        this.mallSelected = mallSelected;
+        this.pubSelected = pubSelected;
     }
 
     public boolean getNatureSelected() {
@@ -44,5 +46,21 @@ public class PrefsHelperClass {
 
     public void setCoffee_shopSelected(int coffee_shopSelected) {
         this.coffee_shopSelected = coffee_shopSelected;
+    }
+
+    public boolean getMallSelected() {
+        return mallSelected == 1;
+    }
+
+    public void setMallSelected(int mallSelected) {
+        this.mallSelected = mallSelected;
+    }
+
+    public boolean getPubSelected() {
+        return pubSelected == 1;
+    }
+
+    public void setPubSelected(int pubSelected) {
+        this.pubSelected = pubSelected;
     }
 }

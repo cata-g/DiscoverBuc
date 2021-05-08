@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     android:padding="30dp"
     tools:context=".Register2.Register.RegisterPreferences"
     android:transitionName="transition_back_to_prefs">
@@ -95,6 +94,28 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/museums"
+                    android:buttonTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+
+                <CheckBox
+                    android:id="@+id/register_hobby_pub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                    android:text="@string/pubs"
+                    android:buttonTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+
+                <CheckBox
+                    android:id="@+id/register_hobby_mall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                    android:text="@string/mall"
                     android:buttonTint="@color/white"
                     android:textColor="@color/white"
                     android:textSize="20sp"

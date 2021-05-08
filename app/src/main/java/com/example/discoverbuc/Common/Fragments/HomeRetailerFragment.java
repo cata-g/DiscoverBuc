@@ -1,5 +1,6 @@
 package com.example.discoverbuc.Common.Fragments;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -112,6 +115,7 @@ public class HomeRetailerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         recyclerView = getView().findViewById(R.id.recyclerView);
         categoriesView = getView().findViewById(R.id.categories_recycler);
         loading = getView().findViewById(R.id.progress_bar_menu);
@@ -156,9 +160,11 @@ public class HomeRetailerFragment extends Fragment {
 
         usersPrefs = new boolean[10];
         usersPrefs[0] = data.get(sm.KEY_INTERESTS_COFFEESHOP).equals("true");
-        usersPrefs[1] = data.get(sm.KEY_INTERESTS_MUSEUM).equals("true");
-        usersPrefs[2] = data.get(sm.KEY_INTERESTS_NATURE).equals("true");
-        usersPrefs[3] = data.get(sm.KEY_INTERESTS_RESTAURANT).equals("true");
+        usersPrefs[1] = data.get(sm.KEY_INTERESTS_MALL).equals("true");
+        usersPrefs[2] = data.get(sm.KEY_INTERESTS_MUSEUM).equals("true");
+        usersPrefs[3] = data.get(sm.KEY_INTERESTS_NATURE).equals("true");
+        usersPrefs[4] = data.get(sm.KEY_INTERESTS_PUB).equals("true");
+        usersPrefs[5] = data.get(sm.KEY_INTERESTS_RESTAURANT).equals("true");
 
         Calendar cal = Calendar.getInstance();
         date = cal.get(Calendar.DAY_OF_MONTH);
@@ -243,6 +249,7 @@ public class HomeRetailerFragment extends Fragment {
 
                 int size = locationsArray.size();
                 todaysRec = Math.max(size,date) % Math.min(size,date);
+                todaysRec = 0;
 
                 String tag = locationsArray.get(todaysRec).getTag();
                 String categoryTag = locationsArray.get(todaysRec).getCategoryTag();

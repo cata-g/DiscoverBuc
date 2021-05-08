@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pale_yellow"
+    android:orientation="vertical"
+    android:transitionName="transition_next_button">
+
+
+    <ImageView
+        android:id="@+id/image_starter"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@drawable/startup"
+        android:layout_marginTop="50dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:orientation="vertical"
+        android:background="@drawable/roundcornersbg">
+
+        <TextView
+            android:id="@+id/startup_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/squada_one"
+            android:text="@string/heading_startup"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="45sp"
+            android:layout_marginTop="30dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_startup"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:onClick="callLoginScreen"
+            android:text="@string/login"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20dp"
+            android:transitionName="transition_login"
+            android:layout_gravity="center"
+            android:background="@drawable/button_background"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/register_startup"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/register"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20dp"
+            android:onClick="callRegisterScreen"
+            android:background="@drawable/button_background"
+            android:layout_gravity="center"
+            android:transitionName="transition_register_page"
+            />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

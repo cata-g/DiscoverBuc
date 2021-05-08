@@ -346,6 +346,10 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
             src = R.drawable.icon_nature;
         }else if(cat.equals("restaurants")){
             src = R.drawable.icon_restaurant;
+        }else if(cat.equals("malls")){
+            src = R.drawable.icon_mall;
+        }else if(cat.equals("pubs")){
+            src = R.drawable.icon_pub;
         }
 
         int height = 75;

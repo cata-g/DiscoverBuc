@@ -28,6 +28,8 @@
     <string name="restaurants">Eating in a fancy restaurant</string>
     <string name="coffee_shops">Hanging out in a coffee shop</string>
     <string name="museums">Wandering in a museum </string>
+    <string name="mall">Shopping</string>
+    <string name="pubs">Spending time in a pub</string>
 
     <!-- Register -->
     <string name="register">Register</string>

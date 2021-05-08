@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.discoverbuc.Common.Fragments.HomeRetailerFragment;
 import com.example.discoverbuc.Common.Fragments.MapRetailerFragment;

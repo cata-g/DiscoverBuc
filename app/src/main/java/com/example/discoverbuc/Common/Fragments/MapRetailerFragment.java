@@ -21,6 +21,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Looper;
 import android.provider.Settings;
@@ -33,6 +35,8 @@ import android.widget.Toast;
 
 import com.example.discoverbuc.Common.HelperClasses.BikeRentPlaceHelperClass;
 import com.example.discoverbuc.Common.HelperClasses.CustomInfoWindowAdapter;
+import com.example.discoverbuc.Common.HelperClasses.IconCategoryAdapterHelperClass;
+import com.example.discoverbuc.Common.HelperClasses.IconCategoryHelperClass;
 import com.example.discoverbuc.Common.HelperClasses.MapMarkerInfoHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterCategoryHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
@@ -70,6 +74,8 @@ import java.util.Iterator;
 
 public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback{
 
+    private static MapRetailerFragment instance;
+
     GoogleMap mGoogleMap;
     double lat, lng;
 
@@ -78,9 +84,16 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
+    RecyclerView iconRecycler;
+    RecyclerView.Adapter adapter;
+    ArrayList<IconCategoryHelperClass> iconArray;
+    ArrayList<Marker> allMarkers;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        instance = this;
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map_retailer, container, false);
     }
@@ -89,11 +102,15 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loading = getView().findViewById(R.id.progress_bar_map);
+        iconRecycler = getView().findViewById(R.id.recycler_icon_map);
 
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
         checkPermission();
-
+        allMarkers = new ArrayList<>();
+        iconArray = new ArrayList<>();
+        iconArray.add(new IconCategoryHelperClass(BarIcons("all"), "all"));
+        iconArray.add(new IconCategoryHelperClass(BarIcons("bicycle"), "bicycle"));
 
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.bigmap_fragment);
         supportMapFragment.getMapAsync(this::onMapReady);
@@ -103,6 +120,9 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        iconRecycler.setHasFixedSize(true);
+        iconRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         mGoogleMap = googleMap;
 
@@ -119,6 +139,9 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                     DataSnapshot next = (DataSnapshot) category.next();
                     Iterable<DataSnapshot> locations = next.getChildren();
                     Iterator<DataSnapshot> locationDetails = locations.iterator();
+
+                    iconArray.add(new IconCategoryHelperClass(BarIcons(next.getKey()), next.getKey()));
+
                     while (locationDetails.hasNext()) {
                         DataSnapshot detail = (DataSnapshot) locationDetails.next();
                         String title,desc, imageName;
@@ -176,13 +199,18 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                 .icon(BitmapDescriptorFactory.fromBitmap(mapIcons(categoryTag)
                                 )));
                         marker.setTag(mapMarkerInfo);
-                        marker.showInfoWindow();
+                        marker.setVisible(false);
+                        allMarkers.add(marker);
                     }
                     loading.setVisibility(View.GONE);
                     mGoogleMap.setOnMarkerClickListener(MapRetailerFragment.this::onMarkerClick);
                     mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
                     mGoogleMap.setPadding(0, 0, 0, 150);
                     mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getActivity()));
+
+                    adapter = new IconCategoryAdapterHelperClass(iconArray, getActivity());
+                    iconRecycler.setAdapter(adapter);
+                    showMarkers("all");
 
                 }
 
@@ -199,6 +227,18 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
     public Bitmap mapIcons(String cat){
 
+        int src = BarIcons(cat);
+
+        int height = 75;
+        int width = 75;
+        BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(src);
+        Bitmap b = bitmapDrawable.getBitmap();
+        Bitmap icon = Bitmap.createScaledBitmap(b, width, height, false);
+        return icon;
+
+    }
+
+    public int BarIcons(String cat){
         int src = 0;
 
         if(cat.equals("museums")){
@@ -211,17 +251,34 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
             src = R.drawable.icon_restaurant;
         }else if(cat.equals("bicycle")){
             src = R.drawable.icon_bicycle;
+        }else if(cat.equals("malls")){
+            src = R.drawable.icon_mall;
+        }else if(cat.equals("pubs")){
+            src = R.drawable.icon_pub;
+        }else if(cat.equals("all")){
+            src = R.drawable.icon_user;
         }
 
-        int height = 75;
-        int width = 75;
-        BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(src);
-        Bitmap b = bitmapDrawable.getBitmap();
-        Bitmap icon = Bitmap.createScaledBitmap(b, width, height, false);
-        return icon;
-
+        return src;
     }
 
+    public void showMarkers(String cat){
+
+        if(cat == "all"){
+            for (Marker marker : allMarkers)
+                marker.setVisible(true);
+        }else{
+            for(Marker marker : allMarkers)
+            {
+                MapMarkerInfoHelperClass tag = (MapMarkerInfoHelperClass) marker.getTag();
+                if(tag.getCatTag().equals(cat))
+                    marker.setVisible(true);
+                else
+                    marker.setVisible(false);
+            }
+        }
+
+    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -266,15 +323,17 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                         Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                                 .position(locLatLng)
                                 .title(name)
-                                .icon(BitmapDescriptorFactory.fromBitmap(mapIcons("bicycle")
-                                )));
+                                .icon(BitmapDescriptorFactory.fromBitmap(mapIcons("bicycle"))
+                                ));
                         marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
-                        marker.showInfoWindow();
-                        marker.showInfoWindow();
+                        //marker.showInfoWindow();
+                        marker.setVisible(false);
+                        allMarkers.add(marker);
 
                     }
 
                 }
+                showMarkers("all");
             }
 
             @Override
@@ -371,6 +430,10 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
 
+    }
+
+    public static MapRetailerFragment getInstance(){
+        return instance;
     }
 
 }

@@ -40,7 +40,7 @@ public class Verification extends AppCompatActivity {
     //PinView userPin;
     Pinview userPin;
     String systemCode;
-    int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected;
+    int natureSelected, museumSelected, restaurantSelected, coffee_shopSelected, mallSelected, pubSelected;
     String username,password, name, birthday, phone, activity;
 
     @Override
@@ -65,6 +65,8 @@ public class Verification extends AppCompatActivity {
             museumSelected = intent.getIntExtra("isMuseumSelected", 0);
             restaurantSelected =  intent.getIntExtra("isRestaurantSelected", 0);
             coffee_shopSelected = intent.getIntExtra("isCoffeeShopSelected", 0);
+            mallSelected = intent.getIntExtra("isMallSelected", 0);
+            pubSelected = intent.getIntExtra("isPubSelected", 0);
         }
 
 
@@ -199,7 +201,7 @@ public class Verification extends AppCompatActivity {
 
 
         UserHelperClass helperClass = new UserHelperClass(name, username, password, birthday, phone);
-        PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected);
+        PrefsHelperClass prefsClass = new PrefsHelperClass(natureSelected, museumSelected, restaurantSelected, coffee_shopSelected, mallSelected, pubSelected);
 
         //UUID id = UUID.randomUUID();
         String id = username;

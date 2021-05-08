@@ -94,6 +94,29 @@
         android:textSize="20sp"
         android:enabled="false"
         />
+    <CheckBox
+        android:id="@+id/profile_pub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:text="@string/pubs"
+        android:buttonTint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:enabled="false"
+        />
+
+    <CheckBox
+        android:id="@+id/profile_mall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:text="@string/mall"
+        android:buttonTint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:enabled="false"
+        />
 
     <Button
         android:id="@+id/save_edit_prefs"
