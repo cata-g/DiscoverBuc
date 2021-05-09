@@ -30,7 +30,7 @@
                 android:transitionName="transition_login"
                 android:src="@drawable/icon_back"
                 android:scaleType="centerCrop"
-                android:background="#00000"/>
+                android:background="#00000000"/>
 
             <ImageView
                 android:id="@+id/image_starter"

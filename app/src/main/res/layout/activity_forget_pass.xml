@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             >
+
             <ImageButton
                 android:id="@+id/back_to_login_from_passChange"
                 android:layout_width="50dp"
@@ -29,7 +30,7 @@
                 android:transitionName="transition_login"
                 android:src="@drawable/icon_back"
                 android:scaleType="centerCrop"
-                android:background="#00000"/>
+                android:background="#00000000"/>
 
             <ImageView
                 android:id="@+id/image_starter"
