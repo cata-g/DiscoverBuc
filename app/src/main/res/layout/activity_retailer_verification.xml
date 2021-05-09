@@ -6,61 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".Register2.Register.Verification"
     android:transitionName="transition_verification_page"
+    android:background="@color/pale_yellow"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/close_validation"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/close_validation"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_close"
+                android:scaleType="centerCrop"
+                android:background="#00000"
+                android:onClick="closeVerif"
+                android:transitionName="transition_next_button"
+                />
+
+            <ImageView
+                android:id="@+id/image_starter"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/validation"
+                />
+
+        </RelativeLayout>
+
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/close_button"
-            android:textColor="@color/black"
-            android:background="#00000000"
-            android:onClick="closeVerif"
-            android:transitionName="transition_next_button"
+            android:text="@string/verify_code"
+            android:textSize="40sp"
+            android:textAllCaps="true"
+            android:layout_marginTop="20dp"
+
+            android:layout_gravity="center"
+            android:fontFamily="@font/squada_one"
+            android:textColor="@color/light_black"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/verify_code"
-            android:textColor="@color/black"
-            android:textSize="40sp"
-            android:padding="20dp"
-            android:textAllCaps="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/verify_code_text"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"
-            android:padding="20dp"/>
-
-<!--        <com.chaos.view.PinView-->
-<!--            android:id="@+id/pinView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:itemCount="6"-->
-<!--            app:itemWidth="50dp"-->
-<!--            app:itemHeight="50dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginTop="50dp"-->
-<!--            app:lineColor="@color/colorPrimary"-->
-<!--            style="@style/PinWidget.PinView"-->
-<!--            android:inputType="number"-->
-<!--            android:cursorVisible="true"-->
-<!--            app:cursorColor="@color/black"-->
-<!--            app:hideLineWhenFilled="true"-->
-<!--            app:itemRadius="15dp"-->
-<!--            />-->
+            android:textSize="30sp"
+            android:fontFamily="@font/squada_one"
+            android:textColor="@color/light_black"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            />
 
         <com.goodiebag.pinview.Pinview
             android:id="@+id/pinView"
@@ -80,10 +83,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/next_button"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:onClick="Finish"
             android:transitionName="transition_login"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
+            android:background="@drawable/button_background"
             />
 
 

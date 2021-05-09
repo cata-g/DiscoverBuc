@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -27,7 +28,8 @@ import java.util.HashMap;
 public class ProfileRetailerFragment extends Fragment {
 
     CheckBox cf, museum, nature, restaurant, mall, pub;
-    Button logout,save, edit;
+    Button  edit;
+    AppCompatButton logout,save;
 
     HashMap<String, String> data;
     boolean[] usersPrefs;
@@ -50,7 +52,7 @@ public class ProfileRetailerFragment extends Fragment {
         save = getView().findViewById(R.id.save_edit_prefs);
         edit = getView().findViewById(R.id.edit_prefs_button);
 
-        save.setVisibility(View.INVISIBLE);
+        save.setVisibility(View.GONE);
 
         cf = getView().findViewById(R.id.profile_cf);
         museum = getView().findViewById(R.id.profile_museum);
@@ -156,7 +158,7 @@ public class ProfileRetailerFragment extends Fragment {
         reference.setValue(prefsHelperClass);
 
         enable_check(false);
-        save.setVisibility(View.INVISIBLE);
+        save.setVisibility(View.GONE);
 
         Toast.makeText(getActivity(), "Preferences Successfully Updated", Toast.LENGTH_SHORT).show();
 

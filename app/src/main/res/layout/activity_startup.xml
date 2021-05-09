@@ -35,7 +35,7 @@
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="45sp"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="40dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_startup"

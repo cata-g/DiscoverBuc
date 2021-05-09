@@ -4,45 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
-    tools:context=".Register2.Register.RegisterName">
+    tools:context=".Register2.Register.RegisterName"
+    android:background="@color/pale_yellow">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/register_back_button"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+        <ImageButton
+            android:id="@+id/register_back_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="#00000000"
             android:padding="5dp"
-            android:text="@string/back_button"
+            android:src="@drawable/icon_back"
+            android:scaleType="centerCrop"
             android:transitionName="transition_back_button"
             android:onClick="callBackToRegister"/>
 
+        <ImageView
+            android:id="@+id/image_starter"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/register2"
+            />
 
-            <TextView
-                android:id="@+id/register_headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="20dp"
-                android:text="@string/register_headline"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:transitionName="transition_register_headline" />
+        </RelativeLayout>
 
         <TextView
-                android:layout_marginTop="30dp"
+            android:id="@+id/register_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_headline"
+            android:textColor="@color/light_black"
+            android:textSize="40sp"
+            android:fontFamily="@font/squada_one"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:transitionName="transition_register_headline"
+            />
+
+        <TextView
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ask_name"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textColor="@color/light_black"
+                android:fontFamily="@font/squada_one"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <!-- Name -->
@@ -50,13 +67,26 @@
                 android:id="@+id/register_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/hint_name"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:hintTextColor="@color/black">
+                app:hintTextColor="@color/black"
+
+                android:textColorHint="@color/light_black"
+                android:elevation="2dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+
+                app:startIconDrawable="@drawable/icon_register_name"
+                app:startIconTint="@color/light_black"
+
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -67,10 +97,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/ask_age"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textColor="@color/light_black"
+                android:fontFamily="@font/squada_one"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
 
@@ -80,9 +111,9 @@
             android:id="@+id/register_birthday"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:calendarTextColor="@color/black"
+            android:calendarTextColor="@color/light_black"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             android:spinnersShown="true" />
@@ -98,7 +129,7 @@
 
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,9 +137,14 @@
             android:elevation="5dp"
             android:onClick="callPrefsRegisterScreen"
             android:text="@string/next_button"
-            android:transitionName="transition_next_button" />
+            android:transitionName="transition_next_button"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
+            android:background="@drawable/button_background"
+            />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,8 +152,12 @@
             android:background="#00000000"
             android:elevation="5dp"
             android:text="@string/login"
+            android:textSize="20sp"
             android:transitionName="transition_login"
-            android:onClick="callLoginScreenFromRegName"/>
+            android:onClick="callLoginScreenFromRegName"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"

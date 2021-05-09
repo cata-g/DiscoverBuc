@@ -15,7 +15,7 @@
     <string name="next_button">Next</string>
     <string name="close_button">Close</string>
     <string name="ask_name">How should we call you?</string>
-    <string name="ask_age">Select your age</string>
+    <string name="ask_age">Enter your birthday</string>
     <string name="ask_prefs">What do you prefer?</string>
     <string name="ask_phone">Enter your phone number</string>
 

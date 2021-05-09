@@ -15,7 +15,7 @@
         app:cnb_menuResource="@menu/bottom_nav"
         android:layout_alignParentBottom="true"
         android:background="@drawable/roundcornersbg"
-        app:cnb_unselectedColor="@color/black"
+        app:cnb_unselectedColor="@color/light_black"
         app:cnb_radius="10dp"
         app:cnb_orientationMode="horizontal"
         android:layout_margin="30dp"

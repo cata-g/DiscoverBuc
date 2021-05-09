@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Common.Fragments.MapRetailerFragment"
-    android:padding="20dp">
+    >
 
 
     <ProgressBar
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
-        android:background="@color/white"
+        android:background="#40FFFFFF"
         />
 
 

@@ -5,45 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Register2.PasswordRecovery.ForgetPass"
-    android:padding="30dp"
+    android:background="@color/pale_yellow"
     android:transitionName="transition_to_forgetpass">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/back_to_login_from_passChange"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/back_button"
-            android:textSize="20dp"
-            android:padding="20dp"
-            android:onClick="callBackToLoginFromPass"
-            android:transitionName="transition_login"/>
+            android:layout_margin="10dp"
+            >
+            <ImageButton
+                android:id="@+id/back_to_login_from_passChange"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="5dp"
+                android:text="@string/back_button"
+                android:onClick="callBackToLoginFromPass"
+                android:transitionName="transition_login"
+                android:src="@drawable/icon_back"
+                android:scaleType="centerCrop"
+                android:background="#00000"/>
+
+            <ImageView
+                android:id="@+id/image_starter"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/pass1"
+                />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forgot_pass_headline"
             android:textSize="40sp"
-            android:layout_marginTop="40dp"
+
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:layout_gravity="center"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forgot_pass_details"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"
+            android:textSize="24sp"
+            android:layout_marginTop="50dp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
             />
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="50dp"
             android:id="@+id/forgot_pass_username"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
@@ -51,8 +69,20 @@
             android:hint="@string/hint_user"
             app:boxStrokeColor="@color/black"
             app:boxStrokeWidthFocused="2dp"
-            app:hintTextColor="@color/black">
-            <!-- starticondrawable, starticontine, endiconmmode, icontint -->
+            app:hintTextColor="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+
+            android:textColorHint="@color/light_black"
+            android:elevation="2dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+
+            app:startIconDrawable="@drawable/icon_register_user"
+            app:startIconTint="@color/light_black">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,15 +102,19 @@
             android:background="@drawable/loadingbg"
             android:elevation="10dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/next_to_verif_forgetpass"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:text="@string/next_button"
             android:onClick="callVerifyScreenFromPass"
             android:transitionName="transition_verification_page"
+            android:background="@drawable/button_background"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
             />
 
 

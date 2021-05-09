@@ -5,35 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Register2.Register.Register"
-    android:padding="30dp"
-    android:transitionName="transition_register_page">
+    android:transitionName="transition_register_page"
+    android:background="@color/pale_yellow"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        >
 
-        <Button
-            android:id="@+id/register_back_button"
-            android:layout_width="wrap_content"
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/back_button"
-            android:background="#00000000"
-            android:onClick="callBackToStartup"
-            android:transitionName="transition_back_button"
-            />
+            >
+            <ImageButton
+                android:id="@+id/register_back_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="5dp"
+                android:src="@drawable/icon_back"
+                android:scaleType="centerCrop"
+                android:background="#00000000"
+                android:onClick="callBackToStartup"
+                android:transitionName="transition_back_button"
+                />
+
+            <ImageView
+                android:id="@+id/image_starter"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/register1"
+                />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/register_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_headline"
-            android:textColor="@color/white"
+            android:fontFamily="@font/squada_one"
+            android:textColor="@color/light_black"
             android:textSize="40sp"
             android:textAllCaps="true"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
             android:transitionName="transition_register_headline"
             />
 
@@ -41,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="40dp">
+            android:layout_margin="20dp"
+            >
 
 
             <!-- Username -->
@@ -50,16 +70,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_user"
-                app:hintTextColor="@color/black"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:boxStrokeColor="@color/black"
+
+                android:textColorHint="@color/light_black"
+                android:elevation="2dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+
+                app:startIconDrawable="@drawable/icon_register_user"
+                app:startIconTint="@color/light_black"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:textColor="@color/light_black"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,37 +100,47 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp">
 
                 <com.hbb20.CountryCodePicker
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/country_code_picker"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="50dp"
                     app:ccp_autoDetectCountry="true"
                     app:ccp_showFlag="true"
                     app:ccp_showFullName="false"
                     app:ccp_showNameCode="false"
-                    android:background="@color/white"/>
+                    android:background="@drawable/semiroundedcircle"
+
+                    />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/register_phone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
                     android:hint="@string/hint_phone"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
-                    android:background="@color/white">
+
+                    android:layout_gravity="center_vertical"
+                    android:textColorHint="@color/light_black"
+                    android:elevation="2dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    >
+
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="phone" />
+
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,6 +161,17 @@
                 app:boxStrokeWidthFocused="2dp"
                 app:boxStrokeColor="@color/black"
                 android:layout_marginTop="20dp"
+
+                android:textColorHint="@color/light_black"
+                android:elevation="2dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+
+                app:startIconDrawable="@drawable/icon_register_password"
+                app:startIconTint="@color/light_black"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -141,6 +194,17 @@
                 app:boxStrokeWidthFocused="2dp"
                 app:boxStrokeColor="@color/black"
                 android:layout_marginTop="20dp"
+
+                android:textColorHint="@color/light_black"
+                android:elevation="2dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+
+                app:startIconDrawable="@drawable/icon_register_password"
+                app:startIconTint="@color/light_black"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -162,7 +226,7 @@
             android:background="@drawable/loadingbg"
             android:elevation="10dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -171,19 +235,30 @@
             android:elevation="5dp"
             android:transitionName="transition_next_button"
             android:onClick="callNameRegisterScreen"
+            android:background="@drawable/button_background"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
         />
-            <!--android:onClick="callNameRegisterScreen" -->
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:layout_marginTop="10dp"
-            android:background="#00000000"
+            android:background="#0000"
             android:elevation="5dp"
             android:transitionName="transition_login"
             android:onClick="callLoginScreenFromReg"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             />
 
 

@@ -10,6 +10,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,8 @@ import java.util.Calendar;
 public class RegisterName extends AppCompatActivity {
 
     TextView headline;
-    Button back, next, login;
+    Button next, login;
+    ImageButton back;
 
     TextInputLayout name;
     DatePicker datePicker;
@@ -193,7 +195,7 @@ public class RegisterName extends AppCompatActivity {
                 return false;
             }
 
-            else if(month == currentMonth && day < currentDay){
+            else if(month == currentMonth && day > currentDay){
                 Toast.makeText(this, "You must be at least 12", Toast.LENGTH_SHORT).show();
                 return false;
             }

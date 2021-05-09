@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +32,10 @@ public class Register extends AppCompatActivity {
 
     //Animation variables
     TextView headline;
-    Button back, next, login;
+    Button  next, login;
     ProgressBar loading;
     CountryCodePicker ccp;
+    ImageButton back;
 
     //UserInput variables
     TextInputLayout username, phone, password, confirmPassword;

@@ -4,56 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
     tools:context=".Register2.Register.RegisterPreferences"
-    android:transitionName="transition_back_to_prefs">
+    android:transitionName="transition_back_to_prefs"
+    android:background="@color/pale_yellow">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/register_back_button"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:padding="5dp"
-            android:text="@string/back_button"
-            android:transitionName="transition_back_button"
-            android:onClick="callBackToRegisterName"/>
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/register_back_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#00000000"
+                android:padding="5dp"
+                android:src="@drawable/icon_back"
+                android:scaleType="centerCrop"
+                android:transitionName="transition_back_button"
+                android:onClick="callBackToRegisterName"/>
+
+            <ImageView
+                android:id="@+id/image_starter"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/register3"
+                />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/register_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/register_headline"
             android:textAllCaps="true"
-            android:textColor="@color/white"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:transitionName="transition_register_headline" />
+            android:transitionName="transition_register_headline"
+            android:layout_gravity="center"
+
+            android:fontFamily="@font/squada_one"
+            android:textColor="@color/light_black"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="317dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ask_prefs"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:fontFamily="@font/squada_one"
+                android:textColor="@color/light_black"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <CheckBox
                     android:id="@+id/register_hobby_nature"
@@ -61,9 +81,11 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/nature"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:buttonTint="@color/light_black"
+                    android:fontFamily="@font/squada_one"
+                    android:textColor="@color/light_black"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
                     />
 
                 <CheckBox
@@ -72,9 +94,11 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/restaurants"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:buttonTint="@color/light_black"
+                    android:fontFamily="@font/squada_one"
+                    android:textColor="@color/light_black"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
                     />
 
                 <CheckBox
@@ -83,9 +107,11 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/coffee_shops"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:buttonTint="@color/light_black"
+                    android:fontFamily="@font/squada_one"
+                    android:textColor="@color/light_black"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
                     />
 
                 <CheckBox
@@ -94,9 +120,11 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/museums"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:buttonTint="@color/light_black"
+                    android:fontFamily="@font/squada_one"
+                    android:textColor="@color/light_black"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
                     />
 
                 <CheckBox
@@ -105,9 +133,11 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/pubs"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:buttonTint="@color/light_black"
+                    android:fontFamily="@font/squada_one"
+                    android:textColor="@color/light_black"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
                     />
 
                 <CheckBox
@@ -116,9 +146,11 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:text="@string/mall"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:buttonTint="@color/light_black"
+                    android:fontFamily="@font/squada_one"
+                    android:textColor="@color/light_black"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
                     />
 
             </LinearLayout>
@@ -127,7 +159,7 @@
         </LinearLayout>
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/next_to_verification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,9 +167,13 @@
             android:elevation="5dp"
             android:text="@string/next_button"
             android:onClick="callVerifyScreen"
-            android:transitionName="transition_verification_page" />
+            android:transitionName="transition_verification_page"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
+            android:background="@drawable/button_background"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,8 +182,15 @@
             android:elevation="5dp"
             android:text="@string/login"
             android:transitionName="transition_login"
-            android:onClick="callLoginScreenFromRegPrefs"/>
+            android:onClick="callLoginScreenFromRegPrefs"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            />
 
     </LinearLayout>
 

@@ -5,34 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Register2.PasswordRecovery.CreateNewPass"
-    android:padding="30dp"
-    android:transitionName="transition_login">
+    android:transitionName="transition_login"
+    android:background="@color/pale_yellow"
+    >
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/close_createPass"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/close_button"
-            android:textColor="@color/black"
-            android:background="#00000000"
-            android:onClick="closePassCreate"
-            android:transitionName="transition_next_button"
-            />
+            android:layout_margin="10dp"
+            >
+            <ImageButton
+                android:id="@+id/close_createPass"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_close"
+                android:scaleType="centerCrop"
+                android:textColor="@color/black"
+                android:background="#00000000"
+                android:onClick="closePassCreate"
+                android:transitionName="transition_next_button"
+                />
+
+            <ImageView
+                android:id="@+id/image_starter"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/pass2"
+                />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_pass_headline"
             android:textSize="40sp"
-            android:textColor="@color/black"
+
             android:gravity="center"
-            android:layout_marginTop="50dp"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:layout_gravity="center"
             />
 
         <!-- Password -->
@@ -48,6 +66,17 @@
             app:boxStrokeWidthFocused="2dp"
             app:boxStrokeColor="@color/black"
             android:layout_marginTop="50dp"
+
+            android:textColorHint="@color/light_black"
+            android:elevation="2dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+
+            app:startIconDrawable="@drawable/icon_register_password"
+            app:startIconTint="@color/light_black"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -70,6 +99,17 @@
             app:boxStrokeWidthFocused="2dp"
             app:boxStrokeColor="@color/black"
             android:layout_marginTop="20dp"
+
+            android:textColorHint="@color/light_black"
+            android:elevation="2dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+
+            app:startIconDrawable="@drawable/icon_register_password"
+            app:startIconTint="@color/light_black"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -80,15 +120,19 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/next_to_changedPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/next_button"
-            android:textSize="25sp"
             android:layout_marginTop="50dp"
             android:onClick="changePass"
             android:transitionName="transition_changedPass"
+
+            android:background="@drawable/button_background"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
             />
 
 

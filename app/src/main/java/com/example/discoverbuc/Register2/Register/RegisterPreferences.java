@@ -9,6 +9,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,8 @@ import com.example.discoverbuc.Register2.Login.Login;
 public class RegisterPreferences extends AppCompatActivity {
 
     TextView headline;
-    Button back, next, login;
+    Button next, login;
+    ImageButton back;
 
     String username,password, name, birthday, phone;
 

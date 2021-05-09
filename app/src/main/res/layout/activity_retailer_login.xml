@@ -4,40 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:padding="30dp"
+    android:background="@color/pale_yellow"
     tools:context=".Register2.Login.Login"
-    android:transitionName="transition_login">
+    android:transitionName="transition_login"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/login_back_button"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/back_button"
-            android:onClick="callBackToStartup"
-            android:transitionName="transition_login"/>
+            android:layout_margin="10dp"
+            >
+            <ImageButton
+                android:id="@+id/login_back_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="5dp"
+                android:text="@string/back_button"
+                android:onClick="callBackToStartup"
+                android:transitionName="transition_login"
+                android:src="@drawable/icon_back"
+                android:scaleType="centerCrop"
+                android:background="#00000"/>
+
+            <ImageView
+                android:id="@+id/image_starter"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/login"
+                />
+        </RelativeLayout>
+
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:text="@string/login"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+
             android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+
+            android:fontFamily="@font/squada_one"
+            android:textColor="@color/light_black"
+            android:layout_gravity="center"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
             <!--        Username-->
             <com.google.android.material.textfield.TextInputLayout
@@ -48,9 +69,22 @@
                 android:hint="@string/hint_user"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/black">
-                <!-- starticondrawable, starticontine, endiconmmode, icontint -->
+                app:hintTextColor="@color/black"
 
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+
+                android:textColorHint="@color/light_black"
+                android:elevation="2dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+
+                app:startIconDrawable="@drawable/icon_register_user"
+                app:startIconTint="@color/light_black"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -70,8 +104,23 @@
                 android:hint="@string/hint_password"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/black">
-                <!--  starticondrawable, starticontine, endiconmmode, icontint -->
+                app:hintTextColor="@color/black"
+
+                android:textColorHint="@color/light_black"
+                android:elevation="2dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+
+                app:startIconDrawable="@drawable/icon_register_password"
+                app:startIconTint="@color/light_black"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/black"
+                app:endIconTint="@color/black"
+                >
+
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -87,23 +136,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
-
-            <ProgressBar
-                android:id="@+id/progress_bar_login"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/loadingbg"
-                android:elevation="10dp"
-                />
-
-        </LinearLayout>
 
 
         <RelativeLayout
@@ -118,9 +150,13 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                 android:text="@string/remember_me"
-                android:buttonTint="@color/white"
-                android:textColor="@color/white"
-                android:layout_centerVertical="true"/>
+                android:textSize="20dp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/squada_one"
+                android:buttonTint="@color/light_black"
+                android:textColor="@color/light_black"
+                android:layout_centerVertical="true"
+                />
 
             <Button
                 android:id="@+id/go_to_forgetPass"
@@ -128,24 +164,39 @@
                 android:layout_height="wrap_content"
                 android:text="@string/forgotPass"
                 android:background="#00000000"
-                android:textSize="12sp"
+                android:textSize="18sp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:transitionName="transition_to_forgetpass"
                 android:onClick="callForgetPassword"
+
+                android:fontFamily="@font/squada_one"
+                android:textColor="@color/light_black"
                 />
 
         </RelativeLayout>
 
-        <Button
+        <ProgressBar
+            android:id="@+id/progress_bar_login"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/loadingbg"
+            android:elevation="10dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_to_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@color/white"
             android:layout_marginTop="20dp"
             android:onClick="loginUser"
             android:transitionName="transition_login_to_dashboard"
+            android:background="@drawable/button_background"
+            android:textColor="@color/light_black"
+            android:fontFamily="@font/squada_one"
+            android:textSize="20sp"
             />
 
         <Button
@@ -158,6 +209,10 @@
             android:layout_marginTop="20dp"
             android:transitionName="transition_register_page"
             android:onClick="callRegisterFromLogin"
+
+            android:fontFamily="@font/squada_one"
+            android:textColor="@color/light_black"
+            android:textSize="24dp"
             />
 
 
