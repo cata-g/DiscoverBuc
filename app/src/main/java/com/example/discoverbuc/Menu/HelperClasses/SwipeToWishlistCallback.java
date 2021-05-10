@@ -31,7 +31,7 @@ public class SwipeToWishlistCallback extends ItemTouchHelper.Callback {
     protected SwipeToWishlistCallback(Context context){
         this.context = context;
         background = new ColorDrawable();
-        backgroundColor = Color.parseColor("#7fffd4");
+        backgroundColor = Color.parseColor("#fab73d");
         clearPaint = new Paint();
         clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         deleteDrawable = ContextCompat.getDrawable(this.context, R.drawable.icon_wishlist);

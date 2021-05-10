@@ -338,7 +338,7 @@ public class HomeRetailerFragment extends Fragment {
                     JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
                     temp = jsonObjectMain.getDouble("temp");
 
-                    String textShown = decimalFormat.format(temp) + "°C" + "\n" + weatherDesc;
+                    String textShown = decimalFormat.format(temp) + "°C";
                     weatherText.setText(textShown);
                     weatherCode /= 100;
                     shouldRecommendOutdoor = weatherCode == 8;

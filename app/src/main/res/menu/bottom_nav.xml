@@ -6,32 +6,32 @@
         android:id="@+id/bottom_nav_home"
         android:title="@string/nav_home"
         android:icon="@drawable/icon_home"
-        android:iconTint="@color/pale_yellow"
-        app:cnb_backgroundColor = "@color/green"
+        android:iconTint="@color/light_black"
+        app:cnb_backgroundColor = "@color/yellow"
         />
 
     <item
         android:id="@+id/bottom_nav_wishlist"
         android:title="@string/nav_wishlist"
         android:icon="@drawable/icon_wishlist"
-        android:iconTint="@color/pale_yellow"
-        app:cnb_backgroundColor = "@color/green"
+        android:iconTint="@color/light_black"
+        app:cnb_backgroundColor = "@color/yellow"
         />
 
     <item
         android:id="@+id/bottom_nav_map"
         android:title="@string/nav_map"
         android:icon="@drawable/icon_map"
-        android:iconTint="@color/pale_yellow"
-        app:cnb_backgroundColor = "@color/green"
+        android:iconTint="@color/light_black"
+        app:cnb_backgroundColor = "@color/yellow"
         />
 
     <item
         android:id="@+id/bottom_nav_profile"
         android:title="@string/nav_prof"
         android:icon="@drawable/icon_user"
-        android:iconTint="@color/pale_yellow"
-        app:cnb_backgroundColor = "@color/green"
+        android:iconTint="@color/light_black"
+        app:cnb_backgroundColor = "@color/yellow"
         />
 
 

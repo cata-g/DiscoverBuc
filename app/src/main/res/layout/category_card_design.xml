@@ -3,22 +3,23 @@
     android:layout_height="40dp"
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="80dp"
+    app:cardCornerRadius="60dp"
     android:elevation="8dp"
     android:layout_margin="5dp"
-    android:background="#00000000"
+    app:cardBackgroundColor="#00000000"
     >
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/category_title_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="TITLU"
-        android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textColor="@color/light_black"
+        android:textSize="18sp"
         android:gravity="center"
         android:textAllCaps="true"
-
+        android:fontFamily="@font/squada_one"
+        android:background="@drawable/button_background"
         />
 
 </androidx.cardview.widget.CardView>

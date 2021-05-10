@@ -15,7 +15,9 @@
 
     <!-- Custom Color Pallete -->
     <color name="yellow">#fab73d</color>
+    <color name="yellow_transparent">#98fddca5</color>
     <color name="pale_yellow">#fddca5</color>
+    <color name="pale_yellow_transparent">#80fddca5</color>
     <color name="grey">#bbc8ba</color>
     <color name="green">#546747</color>
     <color name="dark_green">#2b331f</color>

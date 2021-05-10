@@ -4,8 +4,8 @@
     android:layout_width="250dp"
     android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="40dp"
-    app:cardElevation="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
     android:layout_margin="10dp"
     >
 
@@ -19,17 +19,19 @@
 
         <ImageView
             android:id="@+id/locationCard_cover"
-            android:layout_width="match_parent"
+            android:layout_width="230dp"
             android:layout_height="150dp"
             android:src="@drawable/palatul_parlamentului"
             android:scaleType="centerCrop"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:layout_margin="5dp">
 
             <TextView
                 android:layout_marginTop="15dp"

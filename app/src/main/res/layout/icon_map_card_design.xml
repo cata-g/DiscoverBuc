@@ -6,6 +6,7 @@
     app:cardCornerRadius="80dp"
     android:elevation="8dp"
     android:layout_marginRight="5dp"
+    app:cardBackgroundColor="@color/pale_yellow"
     >
 
     <ImageButton
@@ -19,6 +20,7 @@
         android:gravity="center"
         android:layout_margin="10dp"
         android:textAllCaps="true"
+        android:background="#00000000"
         />
 
 </androidx.cardview.widget.CardView>
