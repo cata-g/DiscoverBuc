@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="300dp"
+    android:layout_height="125dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="#D1D5DE"
     app:cardCornerRadius="30dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/pale_yellow"
         >
 
@@ -18,13 +18,13 @@
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/palatul_parlamentului"
-            android:layout_margin="10dp"/>
+            android:layout_margin="12dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp"
+            android:padding="12dp"
             android:gravity="center"
             >
 

@@ -55,6 +55,7 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterVert
                 intent.putExtra("rating", cardHelperClass.getRating());
                 intent.putExtra("category", cardHelperClass.getCategoryTag());
                 intent.putExtra("wishedSrc", cardHelperClass.getWishedSrc());
+                intent.putExtra("desc", cardHelperClass.getDesc());
                 context.startActivity(intent);
             }
         });

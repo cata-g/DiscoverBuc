@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="40dp"
     app:cardElevation="10dp"
-    android:layout_margin="12dp">
+    >
 
     <ImageView
         android:id="@+id/image_pop_design"

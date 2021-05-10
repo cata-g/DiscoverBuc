@@ -71,6 +71,8 @@ public class HomeRetailerFragment extends Fragment {
     RecyclerView categoriesView;
     RecyclerView.Adapter categoriesAdapter;
 
+    boolean isVertical = false;
+
     ProgressBar loading;
 
     SessionManager sm;
@@ -142,6 +144,7 @@ public class HomeRetailerFragment extends Fragment {
                     adapter = new AdapterHelperClass(showArray, getActivity());
                     recyclerView.setAdapter(adapter);
                     recyclerView.setHasFixedSize(true);
+                    isVertical = false;
                 }else{
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                     seeMoreDetails.setText("SEE LESS");
@@ -149,6 +152,7 @@ public class HomeRetailerFragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                     recyclerView.setHasFixedSize(true);
                     enableSwipeToWishlistAndUndo();
+                    isVertical = true;
                 }
 
 
@@ -240,7 +244,7 @@ public class HomeRetailerFragment extends Fragment {
                                 continue;
                             }
 
-                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, tag, categoryTag, wishedSrc));
+                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
 
                         }
                     }
@@ -316,7 +320,8 @@ public class HomeRetailerFragment extends Fragment {
                     showArray.add(card);
         }
 
-        adapter = new AdapterHelperClass(showArray, getActivity());
+
+        adapter = isVertical ? new AdapterVerticalHelperClass(showArray, getActivity()) : new AdapterHelperClass(showArray, getActivity());
         recyclerView.setAdapter(adapter);
 
     }

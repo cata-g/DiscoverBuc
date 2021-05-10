@@ -112,7 +112,7 @@ public class WishlistRetailerFragment extends Fragment {
                             float rating = snapshot.child("rating").getValue(float.class);
                             String imageName = snapshot.child("image").getValue(String.class);
                             int imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
-                            locationsWished.add(new CardHelperClass(imageLoc, rating, title, locId, locCat, R.drawable.full_heart));
+                            locationsWished.add(new CardHelperClass(imageLoc, rating, title, desc, locId, locCat, R.drawable.full_heart));
 
                             adapter = new AdapterVerticalHelperClass(locationsWished, getContext());
                             recyclerView.setAdapter(adapter);
