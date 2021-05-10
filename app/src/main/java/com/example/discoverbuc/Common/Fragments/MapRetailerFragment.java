@@ -229,8 +229,8 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
         int src = BarIcons(cat);
 
-        int height = 75;
-        int width = 75;
+        int height = 50;
+        int width = 50;
         BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(src);
         Bitmap b = bitmapDrawable.getBitmap();
         Bitmap icon = Bitmap.createScaledBitmap(b, width, height, false);

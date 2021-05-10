@@ -43,7 +43,6 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterVert
 
         holder.cover.setImageResource(cardHelperClass.getImageSrc());
         holder.title.setText(cardHelperClass.getTitle());
-        holder.desc.setText(cardHelperClass.getDesc());
         holder.rating.setRating(cardHelperClass.getRating());
         holder.moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +52,6 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterVert
                 intent.putExtra("tag", cardHelperClass.getTag());
                 intent.putExtra("imageRes", cardHelperClass.getImageSrc());
                 intent.putExtra("title", cardHelperClass.getTitle());
-                intent.putExtra("desc", cardHelperClass.getDesc());
                 intent.putExtra("rating", cardHelperClass.getRating());
                 intent.putExtra("category", cardHelperClass.getCategoryTag());
                 intent.putExtra("wishedSrc", cardHelperClass.getWishedSrc());
@@ -86,7 +84,6 @@ public class AdapterVerticalHelperClass extends RecyclerView.Adapter<AdapterVert
 
             cover = itemView.findViewById(R.id.locationCard_cover);
             title = itemView.findViewById(R.id.locationCard_title);
-            desc = itemView.findViewById(R.id.locationCard_desc);
             rating = itemView.findViewById(R.id.locationCard_rating);
             moreDetails = itemView.findViewById(R.id.btn_more);
             heartImage = itemView.findViewById(R.id.heart_image);

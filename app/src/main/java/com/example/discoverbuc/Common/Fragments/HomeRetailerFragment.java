@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -85,7 +86,7 @@ public class HomeRetailerFragment extends Fragment {
     TextView todaysTitle, todaysDesc, weatherText, casesText;
     RatingBar todaysRating;
     ImageView todaysCover;
-    Button moreDetails;
+    AppCompatButton moreDetails;
 
     double temp;
     int weatherCode;
@@ -121,7 +122,6 @@ public class HomeRetailerFragment extends Fragment {
         loading = getView().findViewById(R.id.progress_bar_menu);
         loading.setVisibility(View.GONE);
         todaysCover = getView().findViewById(R.id.todaysCover);
-        todaysDesc = getView().findViewById(R.id.todaysDesc);
         todaysRating = getView().findViewById(R.id.todaysRating);
         todaysTitle = getView().findViewById(R.id.todaysTitle);
         weatherText = getView().findViewById(R.id.weatherText);
@@ -240,7 +240,7 @@ public class HomeRetailerFragment extends Fragment {
                                 continue;
                             }
 
-                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
+                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, tag, categoryTag, wishedSrc));
 
                         }
                     }
@@ -254,14 +254,12 @@ public class HomeRetailerFragment extends Fragment {
                 String tag = locationsArray.get(todaysRec).getTag();
                 String categoryTag = locationsArray.get(todaysRec).getCategoryTag();
                 String title = locationsArray.get(todaysRec).getTitle();
-                String desc = locationsArray.get(todaysRec).getDesc();
                 float rating = locationsArray.get(todaysRec).getRating();
                 int imageLoc =  locationsArray.get(todaysRec).getImageSrc();
 
                 todaysCover.setImageResource(imageLoc);
                 todaysTitle.setText(title);
                 todaysRating.setRating(rating);
-                todaysDesc.setText(desc);
 
                 moreDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
