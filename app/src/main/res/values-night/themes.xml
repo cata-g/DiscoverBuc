@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/yellow</item>
         <item name="colorPrimaryVariant">@color/pale_yellow</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/light_black</item>
 
         <item name="colorSecondary">@color/green</item>
         <item name="colorSecondaryVariant">@color/dark_green</item>
@@ -12,5 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
+    </style>
+
+    <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
+        <item name="android:textColorPrimary">@color/light_black</item>
+        <item name="backgroundColor">@color/green</item>
     </style>
 </resources>

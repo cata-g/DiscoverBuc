@@ -2,13 +2,16 @@ package com.example.discoverbuc.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Pair;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.discoverbuc.R;
+import com.example.discoverbuc.Register2.Register.RegisterPreferences;
 import com.example.discoverbuc.Register2.StartupScreen;
 
 public class LoadingActivity extends AppCompatActivity {
@@ -54,8 +57,9 @@ public class LoadingActivity extends AppCompatActivity {
                     intent = new Intent(LoadingActivity.this, StartupScreen.class);
                 }
                 startActivity(intent);
+                LoadingActivity.this.finish();
             }
-        }, 5000);
+        }, 4500);
 
 
     }

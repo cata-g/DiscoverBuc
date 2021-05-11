@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="125dp"
+    android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="#D1D5DE"
-    app:cardCornerRadius="30dp">
+    app:cardCornerRadius="60dp"
+    app:cardBackgroundColor="@color/pale_yellow"
+    app:cardElevation="10dp"
+    android:layout_margin="10dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/pale_yellow"
+        android:background="@drawable/roundedwithstroke"
+        android:padding="10dp"
         >
 
         <ImageView
             android:id="@+id/image_infoW"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="90dp"
+            android:layout_height="70dp"
             android:scaleType="centerCrop"
             android:src="@drawable/palatul_parlamentului"
-            android:layout_margin="12dp"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="12dp"
             android:gravity="center"
             >
 
@@ -33,9 +37,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:text="TED'S COFFEE SHOP"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textColor="@color/light_black"
+                android:fontFamily="@font/squada_one"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/click_infoW"
@@ -43,8 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/click_info"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/light_black"
+                android:fontFamily="@font/squada_one"
+                android:textSize="12sp" />
 
             <RatingBar
                 android:id="@+id/rating_infoW"

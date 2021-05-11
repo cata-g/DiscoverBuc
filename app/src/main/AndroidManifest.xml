@@ -45,10 +45,12 @@
         <activity android:name=".Register2.PasswordRecovery.CreateNewPass" />
         <activity android:name=".Register2.PasswordRecovery.PasswordChanged" />
         <activity android:name=".Register2.PasswordRecovery.ForgetPass" />
-        <activity android:name=".Register2.Register.Verification" />
+        <activity android:name=".Register2.Register.Verification" >
+
+        </activity>
         <activity android:name=".Common.Dashboard" />
         <activity android:name=".Register2.Register.RegisterPreferences" />
-        <activity android:name=".Register2.Register.RegisterName" />
+        <activity android:name=".Register2.Register.RegisterName" ></activity>
         <activity android:name=".Register2.Register.Register" />
         <activity android:name=".Register2.Login.Login" />
         <activity android:name=".Register2.StartupScreen" />

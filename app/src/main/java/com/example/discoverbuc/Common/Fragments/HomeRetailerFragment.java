@@ -58,6 +58,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -82,6 +84,8 @@ public class HomeRetailerFragment extends Fragment {
     ArrayList<CardHelperClass> showArray;
     ArrayList<CategoryCardsHelperClass> categoriesArray;
 
+    HashMap<String, Integer> locInCat = new HashMap<String, Integer>();
+
     boolean usersPrefs[];
 
     int todaysRec,date;
@@ -97,7 +101,7 @@ public class HomeRetailerFragment extends Fragment {
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     TextView dailyAdvice;
-    String[] coronaMessages = {"Don't forget to use the mask!", "Take care of your friends and family!", "If you have symptoms of any kind remain at home!",
+    static String[] coronaMessages = {"Don't forget to use the mask!", "Take care of your friends and family!", "If you have symptoms of any kind remain at home!",
             "Use the hand sanitizer as often as you can!", "Don't go out in groups larger than six!", "Respect the circulation rules!", "Keep the distance from the people around!", "Respect the hygiene rules!"};
 
     Button seeMoreDetails;
@@ -174,17 +178,19 @@ public class HomeRetailerFragment extends Fragment {
         date = cal.get(Calendar.DAY_OF_MONTH);
         date = date/10 + date%10;
 
-
         getWeatherDetails();
+        shouldRecommendOutdoor = false;
         getCoronaData();
         recyclerView();
-        dailyAdvice.setText(coronaMessages[ThreadLocalRandom.current().nextInt(0, coronaMessages.length)]);
+        dailyAdvice.setText(coronaMessages[new Random().nextInt(coronaMessages.length)]);
 
 
     }
 
     private void recyclerView() {
 
+
+        loading.setVisibility(View.VISIBLE);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -207,6 +213,7 @@ public class HomeRetailerFragment extends Fragment {
 
                 int i = 0;
                 while(category.hasNext()){
+                    int j = 0;
                     DataSnapshot next = (DataSnapshot) category.next();
                     categoriesArray.add(new CategoryCardsHelperClass(next.getKey()));
                     if(usersPrefs[i])
@@ -236,7 +243,7 @@ public class HomeRetailerFragment extends Fragment {
                                 continue;
                             }
 
-                            if(detail.child("rating").exists())
+                            if(detail.child("image").exists())
                             {
                                 imageName = detail.child("image").getValue(String.class);
                                 imageLoc = getActivity().getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
@@ -244,16 +251,28 @@ public class HomeRetailerFragment extends Fragment {
                                 continue;
                             }
 
-                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
+                            boolean outdoor;
+                            if(detail.child("outdoor").exists()){
+                                outdoor = detail.child("outdoor").getValue(boolean.class);
+                            }else{
+                                continue;
+                            }
 
+                            if(!shouldRecommendOutdoor)
+                                if(outdoor)
+                                    continue;
+                            locationsArray.add(new CardHelperClass(imageLoc, rating, title, desc, tag, categoryTag, wishedSrc));
+                            j++;
                         }
+
                     }
+
+                    locInCat.put(next.getKey(), j);
                     i++;
                 }
 
                 int size = locationsArray.size();
-                todaysRec = Math.max(size,date) % Math.min(size,date);
-                todaysRec = 0;
+                todaysRec = Math.max(size,date) / Math.min(size,date);
 
                 String tag = locationsArray.get(todaysRec).getTag();
                 String categoryTag = locationsArray.get(todaysRec).getCategoryTag();
@@ -290,6 +309,7 @@ public class HomeRetailerFragment extends Fragment {
                 adapter = new AdapterHelperClass(showArray, getActivity());
                 recyclerView.setAdapter(adapter);
 
+                checkCat();
                 categoriesAdapter = new AdapterCategoryHelperClass(categoriesArray, getActivity());
                 categoriesView.setAdapter(categoriesAdapter);
 
@@ -326,6 +346,19 @@ public class HomeRetailerFragment extends Fragment {
 
     }
 
+    private void checkCat(){
+        int i = 1;
+        for(Map.Entry<String, Integer> cat : locInCat.entrySet())
+        {
+
+            if(cat.getValue() == 0)
+            {
+                categoriesArray.remove(i);
+            }
+            i++;
+        }
+    }
+
     public void getWeatherDetails(){
 
         String url = "http://api.openweathermap.org/data/2.5/weather?q=Bucharest,RO&appid=a6b1360c11727203d8744d2d3dad55a6&units=metric";
@@ -347,6 +380,8 @@ public class HomeRetailerFragment extends Fragment {
                     weatherText.setText(textShown);
                     weatherCode /= 100;
                     shouldRecommendOutdoor = weatherCode == 8;
+                    if(temp < 5)
+                        shouldRecommendOutdoor = false;
 
                 } catch (JSONException e) {
                     e.printStackTrace();

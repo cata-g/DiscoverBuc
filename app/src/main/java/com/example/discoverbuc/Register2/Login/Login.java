@@ -200,7 +200,7 @@ public class Login extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), Dashboard.class);
 
                         Pair[] pairs = new Pair[1];
-                        pairs[0] = new Pair(findViewById(R.id.login_to_dashboard), "transition_login_to_dashboard");
+                        pairs[0] = new Pair(findViewById(R.id.login_to_dashboard), "transitionLogin");
 
 
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

@@ -71,6 +71,7 @@ import com.google.android.gms.location.LocationListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback{
 
@@ -231,7 +232,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
         int height = 50;
         int width = 50;
-        BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(src);
+        @SuppressLint("UseCompatLoadingForDrawables") BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(src);
         Bitmap b = bitmapDrawable.getBitmap();
         Bitmap icon = Bitmap.createScaledBitmap(b, width, height, false);
         return icon;
@@ -271,10 +272,8 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
             for(Marker marker : allMarkers)
             {
                 MapMarkerInfoHelperClass tag = (MapMarkerInfoHelperClass) marker.getTag();
-                if(tag.getCatTag().equals(cat))
-                    marker.setVisible(true);
-                else
-                    marker.setVisible(false);
+                assert tag != null;
+                marker.setVisible(tag.getCatTag().equals(cat));
             }
         }
 
@@ -345,7 +344,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
     }
 
     private void checkPermission(){
-        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+        if(ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
         ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             getCurrentLocation();
         } else{
@@ -374,7 +373,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
     private void getCurrentLocation() {
 
 
-        LocationManager locationManager = (LocationManager) getActivity() .getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getSystemService(Context.LOCATION_SERVICE);
         if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
             client.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override

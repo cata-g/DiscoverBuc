@@ -95,7 +95,7 @@ public class Register extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 loading.setVisibility(View.GONE);
-                                phone.setError("Email is already taken!");
+                                phone.setError("Phone is already taken!");
                                 phone.requestFocus();
                             } else {
 

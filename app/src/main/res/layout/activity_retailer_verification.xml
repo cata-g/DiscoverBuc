@@ -76,7 +76,9 @@
             app:password="false"
             app:splitWidth="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            app:pinBackground="@color/yellow"
+            />
 
         <Button
             android:id="@+id/next_verifyButton"
