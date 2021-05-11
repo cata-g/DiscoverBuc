@@ -89,7 +89,7 @@ public class HomeRetailerFragment extends Fragment {
     boolean usersPrefs[];
 
     int todaysRec,date;
-    TextView todaysTitle, todaysDesc, weatherText, casesText;
+    TextView todaysTitle, weatherText, casesText;
     RatingBar todaysRating;
     ImageView todaysCover;
     AppCompatButton moreDetails;
@@ -215,7 +215,6 @@ public class HomeRetailerFragment extends Fragment {
                 while(category.hasNext()){
                     int j = 0;
                     DataSnapshot next = (DataSnapshot) category.next();
-                    categoriesArray.add(new CategoryCardsHelperClass(next.getKey()));
                     if(usersPrefs[i])
                     {
                         Iterable<DataSnapshot> locations = next.getChildren();
@@ -267,12 +266,16 @@ public class HomeRetailerFragment extends Fragment {
 
                     }
 
-                    locInCat.put(next.getKey(), j);
+                    if(j != 0)
+                    {
+                        locInCat.put(next.getKey(), j);
+                        categoriesArray.add(new CategoryCardsHelperClass(next.getKey()));
+                    }
                     i++;
                 }
 
                 int size = locationsArray.size();
-                todaysRec = Math.max(size,date) / Math.min(size,date);
+                todaysRec = Math.max(size, date) / Math.min(size, date);
 
                 String tag = locationsArray.get(todaysRec).getTag();
                 String categoryTag = locationsArray.get(todaysRec).getCategoryTag();
@@ -350,7 +353,6 @@ public class HomeRetailerFragment extends Fragment {
         int i = 1;
         for(Map.Entry<String, Integer> cat : locInCat.entrySet())
         {
-
             if(cat.getValue() == 0)
             {
                 categoriesArray.remove(i);
