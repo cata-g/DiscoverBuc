@@ -20,11 +20,12 @@ public class PasswordChanged extends AppCompatActivity {
     }
 
     public void BackToLogin(View view){
+
         Intent intent = new Intent(getApplicationContext(), Login.class);
 
 
         Pair[] pairs = new Pair[1];
-        pairs[0] = new Pair(findViewById(R.id.back_to_login_from_passChange), "transition_login");
+        pairs[0] = new Pair(findViewById(R.id.back_to_login_from_passChanged), "transition_login");
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

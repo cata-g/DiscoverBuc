@@ -37,6 +37,7 @@ public class Register extends AppCompatActivity {
     CountryCodePicker ccp;
     ImageButton back;
 
+
     //UserInput variables
     TextInputLayout username, phone, password, confirmPassword;
 
