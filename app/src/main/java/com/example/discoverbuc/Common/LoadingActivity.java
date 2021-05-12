@@ -59,7 +59,7 @@ public class LoadingActivity extends AppCompatActivity {
                 startActivity(intent);
                 LoadingActivity.this.finish();
             }
-        }, 4500);
+        }, 5000);
 
 
     }

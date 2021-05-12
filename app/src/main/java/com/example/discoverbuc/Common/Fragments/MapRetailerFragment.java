@@ -38,6 +38,7 @@ import com.example.discoverbuc.Common.HelperClasses.CustomInfoWindowAdapter;
 import com.example.discoverbuc.Common.HelperClasses.IconCategoryAdapterHelperClass;
 import com.example.discoverbuc.Common.HelperClasses.IconCategoryHelperClass;
 import com.example.discoverbuc.Common.HelperClasses.MapMarkerInfoHelperClass;
+import com.example.discoverbuc.Common.SessionManager;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterCategoryHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.AdapterHelperClass;
 import com.example.discoverbuc.Menu.HelperClasses.CardHelperClass;
@@ -70,6 +71,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.android.gms.location.LocationListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -84,6 +86,10 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
+
+    boolean[] usersPrefs;
+    SessionManager sm;
+    HashMap<String, String> data;
 
     RecyclerView iconRecycler;
     RecyclerView.Adapter adapter;
@@ -107,6 +113,17 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
 
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
+        sm = new SessionManager(getActivity());
+        data = sm.getDataFromSession();
+
+        usersPrefs = new boolean[10];
+        usersPrefs[0] = data.get(sm.KEY_INTERESTS_COFFEESHOP).equals("true");
+        usersPrefs[1] = data.get(sm.KEY_INTERESTS_MALL).equals("true");
+        usersPrefs[2] = data.get(sm.KEY_INTERESTS_MUSEUM).equals("true");
+        usersPrefs[3] = data.get(sm.KEY_INTERESTS_NATURE).equals("true");
+        usersPrefs[4] = data.get(sm.KEY_INTERESTS_PUB).equals("true");
+        usersPrefs[5] = data.get(sm.KEY_INTERESTS_RESTAURANT).equals("true");
+
         checkPermission();
         allMarkers = new ArrayList<>();
         iconArray = new ArrayList<>();
@@ -122,6 +139,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+
         iconRecycler.setHasFixedSize(true);
         iconRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -130,6 +148,7 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
+            int i = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -141,9 +160,12 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                     Iterable<DataSnapshot> locations = next.getChildren();
                     Iterator<DataSnapshot> locationDetails = locations.iterator();
 
-                    iconArray.add(new IconCategoryHelperClass(BarIcons(next.getKey()), next.getKey()));
 
-                    while (locationDetails.hasNext()) {
+
+                    if(usersPrefs[i])
+                    {
+                        iconArray.add(new IconCategoryHelperClass(BarIcons(next.getKey()), next.getKey()));
+                        while (locationDetails.hasNext()) {
                         DataSnapshot detail = (DataSnapshot) locationDetails.next();
                         String title,desc, imageName;
                         float rating;
@@ -203,17 +225,21 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                         marker.setVisible(false);
                         allMarkers.add(marker);
                     }
-                    loading.setVisibility(View.GONE);
-                    mGoogleMap.setOnMarkerClickListener(MapRetailerFragment.this::onMarkerClick);
-                    mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
-                    mGoogleMap.setPadding(0, 0, 0, 150);
-                    mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getActivity()));
+                        loading.setVisibility(View.GONE);
+                        mGoogleMap.setOnMarkerClickListener(MapRetailerFragment.this::onMarkerClick);
+                        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+                        mGoogleMap.setPadding(0, 0, 0, 150);
+                        mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getActivity()));
 
-                    adapter = new IconCategoryAdapterHelperClass(iconArray, getActivity());
-                    iconRecycler.setAdapter(adapter);
-                    showMarkers("all");
+                        adapter = new IconCategoryAdapterHelperClass(iconArray, getActivity());
+                        iconRecycler.setAdapter(adapter);
+                        showMarkers("all");
 
                 }
+                    i++;
+            }
+
+
 
             }
             @Override
@@ -325,7 +351,6 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                 .icon(BitmapDescriptorFactory.fromBitmap(mapIcons("bicycle"))
                                 ));
                         marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
-                        //marker.showInfoWindow();
                         marker.setVisible(false);
                         allMarkers.add(marker);
 
@@ -390,7 +415,6 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 );
                         marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
-                        marker.showInfoWindow();
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
                         mGoogleMap.animateCamera(cameraUpdate);
                     }else{
@@ -415,7 +439,6 @@ public class MapRetailerFragment extends Fragment implements GoogleMap.OnMarkerC
                                 );
 
                                 marker.setTag(new MapMarkerInfoHelperClass(0, "bicycle", marker.getTitle(), getActivity()));
-                                marker.showInfoWindow();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
                                 mGoogleMap.animateCamera(cameraUpdate);
                             }
