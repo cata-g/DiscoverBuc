@@ -274,6 +274,20 @@ public class PopActivity extends FragmentActivity implements OnMapReadyCallback{
 
                     program_text.setText(programToSet);
 
+                    DatabaseReference wishRef = FirebaseDatabase.getInstance().getReference("users").child(data.get(sm.KEY_USERNAME)).child("wishlist").child(tag);
+                    wishRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                addWishlist.setImageResource(R.drawable.full_heart);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
                 }else{
                     contact.setVisibility(View.GONE);
