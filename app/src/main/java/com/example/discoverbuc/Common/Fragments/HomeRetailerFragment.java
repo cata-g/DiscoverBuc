@@ -402,7 +402,7 @@ public class HomeRetailerFragment extends Fragment {
 
     public void getCoronaData(){
 
-        String url = "https://wrapapi.com/use/imN0oB/corona_virus_buc/cases_buc/0.0.2?wrapAPIKey=T4wPZdfHGDGzU6WIaHXPUtKKmNn41FMF";
+        String url = "https://wrapapi.com/use/imN0oB/corona_virus_buc/coronabucv2/latest?wrapAPIKey=T4wPZdfHGDGzU6WIaHXPUtKKmNn41FMF";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -410,12 +410,16 @@ public class HomeRetailerFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
 
                     JSONObject dataObject = jsonObject.getJSONObject("data");
-                    JSONArray outputArray = dataObject.getJSONArray("output");
+                    JSONObject outputArray = dataObject.getJSONObject("output");
 
-                    double cases = outputArray.getDouble(3);
+                    String casesStr = outputArray.toString();
+                    if(casesStr.charAt(21) < 9 && casesStr.charAt(21) > 0)
+                        casesStr = casesStr.substring(18,22);
+                    else
+                        casesStr = casesStr.substring(18,21) + '0';
 
 
-                    String textShown = decimalFormat.format(cases) + "‰";
+                    String textShown = casesStr + "‰";
                     casesText.setText(textShown);
 
                 } catch (JSONException e) {
