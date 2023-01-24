@@ -363,7 +363,7 @@ public class HomeRetailerFragment extends Fragment {
 
     public void getWeatherDetails(){
 
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=Bucharest,RO&appid=a6b1360c11727203d8744d2d3dad55a6&units=metric";
+        String url = "API";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
