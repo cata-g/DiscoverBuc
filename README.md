@@ -54,10 +54,5 @@
 <h2>Note</h2>
 <p>This is my first android app, so there may be some bugs, please let me know if you find any.</p>
 
-<h2>Author</h2>
-<ul>
-  <li><a href="link to your website or Github profile">Catalin aka imN0oB</a></li>
-</ul>
-
 <h2>Contact</h2>
 <p>If you have any questions or suggestions, feel free to contact me at [your email address].</p>
