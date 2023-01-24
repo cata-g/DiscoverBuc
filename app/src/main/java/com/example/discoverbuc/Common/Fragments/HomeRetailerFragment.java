@@ -402,7 +402,7 @@ public class HomeRetailerFragment extends Fragment {
 
     public void getCoronaData(){
 
-        String url = "https://wrapapi.com/use/imN0oB/corona_virus_buc/coronabucv2/latest?wrapAPIKey=T4wPZdfHGDGzU6WIaHXPUtKKmNn41FMF";
+        String url = "API";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
